@@ -5,3 +5,36 @@
 ~*
 *.pyc
 __pycache__
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Java Package Files
+*.jar
+*.war
+*.nar
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+
+# macOS
+.DS_Store
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# ANTLR4 VSCode extension
+.antlr/
