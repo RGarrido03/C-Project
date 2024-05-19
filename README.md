@@ -13,7 +13,16 @@
 
 ## Relatório
 
-- Use esta secção para fazer um relatório sucinto mas explicativo dos objetivos concretizados.
+ - Cadeira: Compiladores
+ - Ano Letivo: 2023/2024
+
+Este projeto tem como objectivo construir uma linguagem de programação em que seja possível executar desenhos a 2D com a uso de canetas. Com o ANTLR (ANother Tool for Language Recognition) atingimos este objetivo, um poderoso gerador para ler, processar, executar ou traduzir texto estruturado ou ficheiros binários.
+
+O [ANTLR4](https://www.antlr.org/download.html) (versão 4) é o que foi usado na implementação do pdraw.
+
+Para além desta poderosa ferramenta foi necessário o envolvimento com __StringTemplates__ para a geração de código na linguagem destino (Python).
+
+
 
 ## Contribuições
 
