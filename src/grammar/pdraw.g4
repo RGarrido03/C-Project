@@ -1,13 +1,13 @@
 grammar pdraw;
-import Elements;
+// import Elements;
 import Class;
 
 main: (statement)* EOF;
 statement: (instruction | assignment | class | object) ';';
 
 instruction:
-	variable moveAction angle	# MoveAction
-	| variable penAction		# PenAction;
+	variable moveAction angle	# ElementsMoveAction
+	| variable penAction		# ElementsPenAction;
 
 assignment: variable '=' expression ';';
 
