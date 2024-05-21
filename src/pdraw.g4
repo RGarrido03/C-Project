@@ -14,7 +14,7 @@ statement: (
 	) ';';
 
 instruction:
-	variable moveAction angle	# InatructionMoveAction
+	variable moveAction angle	# InstructionMoveAction
 	| variable penAction		# InstructionPenAction;
 
 assignment: Type variable '=' expression;
