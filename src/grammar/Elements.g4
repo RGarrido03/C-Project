@@ -1,15 +1,19 @@
 grammar Elements;
-variable: Name;
+variable: Name | Word;
 expression:
-	expression op = ('*' | '/' | '%') expression	# ExprMultDivMod
-	| expression op = ('+' | '-') expression		# ExprAddSub
-	| INT											# ExprInteger
-	| FLOAT											# ExprFloat
-	| <assoc = right> expression '^' expression		# ExprPow
-	| Name											# ExprId
-	| '(' expression ')'							# ExprParent;
+	expression op = ('*' | '/' | '%' | '//') expression	# ExprMultDivMod
+	| expression op = ('+' | '-') expression			# ExprAddSub
+	| op = ('+' | '-') e2 = expression					# ExprUnary
+	| INT												# ExprInteger
+	| FLOAT												# ExprFloat
+	| <assoc = right> expression '^' expression			# ExprPow
+	| (Name | Word)										# ExprId
+	| typeCast											# ExprCast
+	| stdin												# ExprStdIn
+	| '(' expression ')'								# ExprParent;
 
 execute: 'execute' String ';';
+stdin: 'stdin' String;
 
 tuple: '(' expression ',' expression ')';
 angle:
@@ -24,7 +28,12 @@ moveAction:
 
 penAction: 'down' # down | 'up' # up;
 
-Type: 'pen' | 'real' | 'canvas' | 'int' | 'string' | 'bool';
+Type:
+	'real'
+	| 'canvas'
+	| 'int'
+	| 'string'
+	| 'bool'; //| 'pen' **REMOVED** porque a caneta tem de ser criada com o new e ja tem p `object`;
 typeCast: Type '(' expression ')';
 
 // Numerical
@@ -33,8 +42,10 @@ FLOAT: [0-9]+ '.' [0-9]+;
 FRACTION: INT '/' INT;
 
 // Misc
+
 Word: [a-zA-Z]+;
 Name: Word [a-zA-Z0-9_]*;
+HexaColor: '#' [0-9a-fA-F]+;
 ESC: '\\' .;
 String: '"' (. | ESC)*? '"' | '\'' (. | ESC)*? '\'';
 
