@@ -6,8 +6,8 @@ main: (statement)* EOF;
 statement: (instruction | assignment | class | object) ';';
 
 instruction:
-	variable moveAction angle	# ElementsMoveAction
-	| variable penAction		# ElementsPenAction;
+	variable moveAction angle	# InatructionMoveAction
+	| variable penAction		# InstructionPenAction;
 
 assignment: variable '=' expression ';';
 
