@@ -15,8 +15,11 @@
 ## **run like this**
 
 ```bash
-antlr4 -o ../garbage -visitor pdraw.g4 -listener pdraw.g4
-cat ../../examples/p1.pdraw  | antlr4-test pdraw main -gui
+antlr4 -o ../compiler -visitor pdraw.g4 -listener pdraw.g4
+cd src
+../antlr4-build_mod.sh -o compiler
+# TO RUN WITH GUI
+# cat ../../examples/p1.pdraw  | antlr4-test pdraw main -gui
 ```
 
 ## Relatório
