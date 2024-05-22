@@ -6,6 +6,7 @@ main: (statement)* EOF;
 statement: (
 		instruction
 		| assignment
+		| cast
 		| class
 		| object
 		| execute

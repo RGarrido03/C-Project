@@ -7,16 +7,15 @@ import types.*;
 @SuppressWarnings("CheckReturnValue")
 public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
-  private Map<String, Symbol> symbolTable = new HashMap<>();
+  private final Map<String, Symbol> symbolTable = new HashMap<>();
 
   @Override
   public Boolean visitMain(pdrawParser.MainContext ctx) {
-    Iterator<pdrawParser.StatementContext> iter = ctx.statement().iterator();
-    while (iter.hasNext()) {
-      if (!visit(iter.next())) {
-        return false;
+      for (pdrawParser.StatementContext statementContext : ctx.statement()) {
+          if (!visit(statementContext)) {
+              return false;
+          }
       }
-    }
     return true;
   }
 
@@ -138,9 +137,12 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitPause(pdrawParser.PauseContext ctx) {
-    Boolean res = null;
-    return visitChildren(ctx);
-    // return res;
+    try {
+      Integer.parseInt(ctx.INT().getText());
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
   }
 
   @Override
