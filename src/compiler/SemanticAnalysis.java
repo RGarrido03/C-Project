@@ -1,6 +1,9 @@
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.antlr.v4.runtime.tree.ParseTree;
+
 import types.*;
 
 @SuppressWarnings("CheckReturnValue")
@@ -27,11 +30,10 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitInstructionMoveAction(
-    pdrawParser.InstructionMoveActionContext ctx
-  ) {
+      pdrawParser.InstructionMoveActionContext ctx) {
     Boolean res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
@@ -86,9 +88,25 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitAssignmentPen(pdrawParser.AssignmentPenContext ctx) {
-    Boolean res = null;
-    return visitChildren(ctx);
-    // return res;
+    String name = ctx.object().getText();
+    Boolean res = symbolTable.containsKey(name);
+
+    if (res) {
+      if (!(symbolTable.get(name).getName().equals("pen"))) {
+        ErrorHandling.printError(
+            ctx,
+            String.format("Variable %s is not a pen", name));
+      } else {
+        // object: 'pen' variable '=' 'new' variable?;
+        res = visit((ParseTree) ctx.object().variable()); // had to cast, dont know if this is the way
+      }
+    } else {
+      ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s not defined", name));
+    }
+
+    return res;
   }
 
   @Override
