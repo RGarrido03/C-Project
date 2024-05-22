@@ -53,7 +53,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     if (!symbolTable.containsKey(name)) {
       if (ctx.Type().getText().equals("int")) {
         // o tipo bate certo?
-        // 
+        //
       } else {
         switch (type) {
           case "int":
@@ -77,9 +77,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     } else {
       res = false;
       ErrorHandling.printError(
-        ctx,
-        String.format("Variable %s already defined", name)
-      );
+          ctx,
+          String.format("Variable %s already defined", name));
     }
     return visitChildren(ctx);
     // return res;
