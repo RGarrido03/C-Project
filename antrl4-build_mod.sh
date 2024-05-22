@@ -43,7 +43,11 @@ function process() {
          if (grep Visitor *java &>/dev/null); then opt="-visitor"; else opt=""; fi
          if [ -n "${output}" ]; then opt="$opt -o $output"; fi
          antlr4 $opt $(basename $g)*.g4
-      ) && javac ./$(dirname $g)${outpath}/*.java
+      ) && javac $(find ./"$(dirname "$g")${outpath}" -name "*.java")  \
+     
+            # go recursive and compile all folders inside the output folder
+
+
       ;;
    cpp)
       (
