@@ -1,7 +1,12 @@
 import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
+import org.stringtemplate.v4.STGroupFile;
 
 @SuppressWarnings("CheckReturnValue")
 public class Compiler extends pdrawBaseVisitor<ST> {
+    private final STGroup classTemplate = new STGroupFile("st/Class.stg");
+    private final STGroup elementsTemplate = new STGroupFile("st/Elements.stg");
+    private final STGroup pdrawTemplate = new STGroupFile("st/pdraw.stg");
 
     @Override
     public ST visitMain(pdrawParser.MainContext ctx) {
@@ -65,9 +70,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
     @Override
     public ST visitPause(pdrawParser.PauseContext ctx) {
-        ST res = null;
-        return visitChildren(ctx);
-        //return res;
+        ST pause = pdrawTemplate.getInstanceOf("pause");
+        int sec = Integer.parseInt(ctx.INT().getText());
+
+        pause.add("seconds", sec);
+        return pause;
     }
 
     @Override
