@@ -1,9 +1,7 @@
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.antlr.v4.runtime.tree.ParseTree;
-
 import types.*;
 
 @SuppressWarnings("CheckReturnValue")
@@ -30,7 +28,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitInstructionMoveAction(
-      pdrawParser.InstructionMoveActionContext ctx) {
+    pdrawParser.InstructionMoveActionContext ctx
+  ) {
     Boolean res = null;
     return visitChildren(ctx);
     // return res;
@@ -38,7 +37,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitInstructionPenAction(
-      pdrawParser.InstructionPenActionContext ctx) {
+    pdrawParser.InstructionPenActionContext ctx
+  ) {
     Boolean res = null;
     return visitChildren(ctx);
     // return res;
@@ -53,7 +53,17 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     String value = ctx.expression().getText(); // desnecessario para o analisador
 
     if (!symbolTable.containsKey(name)) {
-      if (ctx.Type().getText().equals("int")) {
+      if (!value.getClass().getSimpleName().equals(type)) {
+        res = false;
+        ErrorHandling.printError(
+          ctx,
+          String.format(
+            "Variable %s has wrong type. Expected %s, got %s",
+            name,
+            type,
+            value.getClass().getSimpleName()
+          )
+        );
         // o tipo bate certo?
         //
       } else {
@@ -79,8 +89,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     } else {
       res = false;
       ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s already defined", name));
+        ctx,
+        String.format("Variable %s already defined", name)
+      );
     }
     return visitChildren(ctx);
     // return res;
@@ -94,16 +105,18 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     if (res) {
       if (!(symbolTable.get(name).getName().equals("pen"))) {
         ErrorHandling.printError(
-            ctx,
-            String.format("Variable %s is not a pen", name));
+          ctx,
+          String.format("Variable %s is not a pen", name)
+        );
       } else {
         // object: 'pen' variable '=' 'new' variable?;
         res = visit((ParseTree) ctx.object().variable()); // had to cast, dont know if this is the way
       }
     } else {
       ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s not defined", name));
+        ctx,
+        String.format("Variable %s not defined", name)
+      );
     }
 
     return res;
