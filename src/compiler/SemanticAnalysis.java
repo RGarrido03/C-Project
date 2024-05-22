@@ -45,25 +45,38 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
     String type = ctx.Type().getText();
     String name = ctx.variable().getText();
-    String value = ctx.expression().getText();
+    String value = ctx.expression().getText(); // desnecessario para o analisador
 
-    switch (type) {
-      case "int":
-        symbolTable.put(name, new Symbol(new IntType(), name, value));
-        break;
-      case "real":
-        symbolTable.put(name, new Symbol(new RealType(), name, value));
-        break;
-      case "string":
-        symbolTable.put(name, new Symbol(new StringType(), name, value));
-        break;
-      case "bool":
-        symbolTable.put(name, new Symbol(new BoolType(), name, value));
-        break;
-      default:
-        // TODO: throw exception
+    if (!symbolTable.containsKey(name)) {
+      if (ctx.Type().getText().equals("int")) {
+        // o tipo bate certo?
+        // 
+      } else {
+        switch (type) {
+          case "int":
+            symbolTable.put(name, new Symbol(new IntType(), name));
+            break;
+          case "real":
+            symbolTable.put(name, new Symbol(new RealType(), name));
+            break;
+          case "string":
+            symbolTable.put(name, new Symbol(new StringType(), name));
+            break;
+          case "bool":
+            symbolTable.put(name, new Symbol(new BoolType(), name));
+            break;
+          default:
+            // TODO: throw exception
 
-        break;
+            break;
+        }
+      }
+    } else {
+      res = false;
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s already defined", name)
+      );
     }
     return visitChildren(ctx);
     //return res;
