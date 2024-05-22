@@ -1,0 +1,4 @@
+real myRealVar = 1.0;
+int myIntVar = 1;
+% string myStringVar = "Hello";
+bool myBoolVar = true;
