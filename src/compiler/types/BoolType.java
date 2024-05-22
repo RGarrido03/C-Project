@@ -1,7 +1,5 @@
 package types;
 
-import org.antlr.v4.parse.ANTLRParser.parserRule_return;
-
 /**
  * BoolType
  */
