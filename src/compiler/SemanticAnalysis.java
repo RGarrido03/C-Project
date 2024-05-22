@@ -124,9 +124,12 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitPause(pdrawParser.PauseContext ctx) {
-    Boolean res = null;
-    return visitChildren(ctx);
-    // return res;
+    try {
+      Integer.parseInt(ctx.INT().getText());
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
   }
 
   @Override
