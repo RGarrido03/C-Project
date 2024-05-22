@@ -5,7 +5,7 @@ expression:
 	| expression op = ('+' | '-') expression			# ExprAddSub
 	| op = ('+' | '-') e2 = expression					# ExprUnary
 	| INT												# ExprInteger
-	| FLOAT												# ExprFloat
+	| FLOAT												# ExprFloat // FIXME change this
 	| <assoc = right> expression '^' expression			# ExprPow
 	| (Name | Word)										# ExprId
 	| typeCast											# ExprCast
