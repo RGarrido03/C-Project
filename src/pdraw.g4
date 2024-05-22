@@ -17,7 +17,10 @@ instruction:
 	variable moveAction angle	# InstructionMoveAction
 	| variable penAction		# InstructionPenAction;
 
-assignment: Type variable '=' expression;
+assignment:
+	Type variable '=' expression	# AssignmentVar
+	| object						# AssignmentPen // SEE ME TODO: Adicionei 2 hipoteses de assignment, ver se é necessário
+	| variable '=' expression		# ReAssignmentVar;
 
 // Medium level
 cast: Type '(' expression ')' ';';

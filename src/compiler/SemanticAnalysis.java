@@ -1,9 +1,13 @@
 import java.util.HashMap;
 import java.util.Map;
-import types.*;
+import types.BoolType;
+import types.IntType;
+import types.RealType;
+import types.StringType;
+import types.Symbol;
 
 @SuppressWarnings("CheckReturnValue")
-public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
+public class SemanticAnalysis1 extends pdrawBaseVisitor<Boolean> {
 
   private Map<String, Symbol> symbolTable = new HashMap<>();
 
@@ -40,9 +44,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitAssignment(pdrawParser.AssignmentContext ctx) {
+  public Boolean visitAssignmentVar(pdrawParser.AssignmentVarContext ctx) {
     Boolean res = null;
-    // Verificacao de tipos e adicao na tabela de simbolos
+
     String type = ctx.Type().getText();
     String name = ctx.variable().getText();
     String value = ctx.expression().getText();
@@ -65,7 +69,20 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
         break;
     }
+    return visitChildren(ctx);
+    //return res;
+  }
 
+  @Override
+  public Boolean visitAssignmentPen(pdrawParser.AssignmentPenContext ctx) {
+    Boolean res = null;
+    return visitChildren(ctx);
+    //return res;
+  }
+
+  @Override
+  public Boolean visitReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx) {
+    Boolean res = null;
     return visitChildren(ctx);
     //return res;
   }
