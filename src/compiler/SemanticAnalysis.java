@@ -1,13 +1,9 @@
 import java.util.HashMap;
 import java.util.Map;
-import types.BoolType;
-import types.IntType;
-import types.RealType;
-import types.StringType;
-import types.Symbol;
+import types.*;
 
 @SuppressWarnings("CheckReturnValue")
-public class SemanticAnalysis1 extends pdrawBaseVisitor<Boolean> {
+public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   private Map<String, Symbol> symbolTable = new HashMap<>();
 

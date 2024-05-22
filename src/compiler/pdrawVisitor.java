@@ -36,11 +36,26 @@ public interface pdrawVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInstructionPenAction(pdrawParser.InstructionPenActionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link pdrawParser#assignment}.
+	 * Visit a parse tree produced by the {@code AssignmentVar}
+	 * labeled alternative in {@link pdrawParser#assignment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssignment(pdrawParser.AssignmentContext ctx);
+	T visitAssignmentVar(pdrawParser.AssignmentVarContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AssignmentPen}
+	 * labeled alternative in {@link pdrawParser#assignment}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignmentPen(pdrawParser.AssignmentPenContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ReAssignmentVar}
+	 * labeled alternative in {@link pdrawParser#assignment}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link pdrawParser#cast}.
 	 * @param ctx the parse tree

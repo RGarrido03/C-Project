@@ -64,13 +64,37 @@ public class pdrawBaseListener implements pdrawListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssignment(pdrawParser.AssignmentContext ctx) { }
+	@Override public void enterAssignmentVar(pdrawParser.AssignmentVarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssignment(pdrawParser.AssignmentContext ctx) { }
+	@Override public void exitAssignmentVar(pdrawParser.AssignmentVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssignmentPen(pdrawParser.AssignmentPenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignmentPen(pdrawParser.AssignmentPenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

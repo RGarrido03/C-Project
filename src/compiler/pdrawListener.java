@@ -51,15 +51,41 @@ public interface pdrawListener extends ParseTreeListener {
 	 */
 	void exitInstructionPenAction(pdrawParser.InstructionPenActionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link pdrawParser#assignment}.
+	 * Enter a parse tree produced by the {@code AssignmentVar}
+	 * labeled alternative in {@link pdrawParser#assignment}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssignment(pdrawParser.AssignmentContext ctx);
+	void enterAssignmentVar(pdrawParser.AssignmentVarContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link pdrawParser#assignment}.
+	 * Exit a parse tree produced by the {@code AssignmentVar}
+	 * labeled alternative in {@link pdrawParser#assignment}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssignment(pdrawParser.AssignmentContext ctx);
+	void exitAssignmentVar(pdrawParser.AssignmentVarContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AssignmentPen}
+	 * labeled alternative in {@link pdrawParser#assignment}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentPen(pdrawParser.AssignmentPenContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignmentPen}
+	 * labeled alternative in {@link pdrawParser#assignment}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentPen(pdrawParser.AssignmentPenContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ReAssignmentVar}
+	 * labeled alternative in {@link pdrawParser#assignment}.
+	 * @param ctx the parse tree
+	 */
+	void enterReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ReAssignmentVar}
+	 * labeled alternative in {@link pdrawParser#assignment}.
+	 * @param ctx the parse tree
+	 */
+	void exitReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pdrawParser#cast}.
 	 * @param ctx the parse tree
