@@ -1,0 +1,27 @@
+group Class;
+
+class(penDefinition, canvaDefinition, variable, canvaType) ::=<<
+<if(penDefinition)>
+define pen <variable> {
+    <props; separator="\n">;
+}
+<elseif(canvasDefinition)>
+
+define canvas <variable>
+    <if(canvasType)>
+        <canvasType>
+    <endif>
+
+    <if(tuple)>
+        <tuple>
+    <endif>
+<endif>
+>>
+
+classProps(word, value) ::= <<
+    <word> = <value>
+>>
+
+object(variable, penType) ::= <<
+pen <variable> = new <penType>
+>>
