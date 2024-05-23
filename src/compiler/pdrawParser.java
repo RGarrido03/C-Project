@@ -130,11 +130,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitMain(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitMain(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MainContext main() throws RecognitionException {
@@ -210,11 +205,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitStatement(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitStatement(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -323,11 +313,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitInstructionMoveAction(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitInstructionMoveAction(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class InstructionPenActionContext extends InstructionContext {
@@ -345,11 +330,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitInstructionPenAction(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitInstructionPenAction(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -421,11 +401,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitAssignmentPen(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitAssignmentPen(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ReAssignmentVarContext extends AssignmentContext {
@@ -443,11 +418,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitReAssignmentVar(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitReAssignmentVar(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -467,11 +437,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitAssignmentVar(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitAssignmentVar(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -550,11 +515,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitCast(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitCast(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final CastContext cast() throws RecognitionException {
@@ -600,11 +560,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitPause(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitPause(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -661,11 +616,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitStdout(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitStdout(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class StderrContext extends PrintContext {
@@ -681,11 +631,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitStderr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitStderr(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -795,11 +740,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExecute(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExecute(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ExecuteContext execute() throws RecognitionException {
@@ -861,11 +801,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitCreatePen(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitCreatePen(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class CreateCanvasContext extends ClassContext {
@@ -884,11 +819,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitCreateCanvas(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitCreateCanvas(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1002,11 +932,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitClassProps(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitClassProps(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ClassPropsContext classProps() throws RecognitionException {
@@ -1115,11 +1040,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitObject(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitObject(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ObjectContext object() throws RecognitionException {
@@ -1175,11 +1095,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitVariable(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitVariable(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1243,11 +1158,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprAddSub(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprAddSub(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprPowContext extends ExpressionContext {
@@ -1266,11 +1176,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprPow(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprPow(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprCastContext extends ExpressionContext {
@@ -1286,11 +1191,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprCast(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprCast(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprParentContext extends ExpressionContext {
@@ -1305,11 +1205,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprParent(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprParent(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -1328,11 +1223,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprUnary(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprUnary(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprFloatContext extends ExpressionContext {
@@ -1345,11 +1235,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprFloat(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprFloat(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -1366,11 +1251,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprStdIn(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprStdIn(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprIntegerContext extends ExpressionContext {
@@ -1383,11 +1263,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprInteger(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprInteger(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -1402,11 +1277,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprId(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprId(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -1426,11 +1296,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprMultDivMod(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprMultDivMod(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1646,11 +1511,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitStdin(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitStdin(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final StdinContext stdin() throws RecognitionException {
@@ -1695,11 +1555,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitTuple(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitTuple(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1758,11 +1613,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitRadian(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitRadian(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class DegreeContext extends AngleContext {
@@ -1777,11 +1627,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitDegree(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitDegree(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1865,11 +1710,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitLeft(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitLeft(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ForwardContext extends MoveActionContext {
@@ -1881,11 +1721,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitForward(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitForward(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -1899,11 +1734,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitBackward(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitBackward(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class RightContext extends MoveActionContext {
@@ -1915,11 +1745,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitRight(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitRight(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2000,11 +1825,6 @@ public class pdrawParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitUp(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitUp(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class DownContext extends PenActionContext {
@@ -2016,11 +1836,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitDown(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitDown(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2079,11 +1894,6 @@ public class pdrawParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitTypeCast(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitTypeCast(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
