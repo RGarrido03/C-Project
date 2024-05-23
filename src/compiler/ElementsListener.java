@@ -137,6 +137,18 @@ public interface ElementsListener extends ParseTreeListener {
 	 */
 	void exitExprId(ElementsParser.ExprIdContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprVariable}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprVariable(ElementsParser.ExprVariableContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprVariable}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprVariable(ElementsParser.ExprVariableContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprMultDivMod}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree

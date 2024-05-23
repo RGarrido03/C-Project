@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import org.antlr.v4.runtime.tree.ParseTree;
 import types.*;
@@ -185,6 +186,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
             value = Integer.parseInt(valueStr);
             break;
           case "real":
+            System.out.println(valueStr + "pila");
             value = Double.parseDouble(valueStr);
             break;
           case "string":
@@ -214,7 +216,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
       if (isTypeMatching(value, type)) {
         // Update the value in the symbol table (assuming Symbol class has a setValue method)
-        symbol.setValue((String) value);
+        symbol.setValue(value);
         res = true;
       } else {
         ErrorHandling.printError(
@@ -285,6 +287,28 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitCreatePen(pdrawParser.CreatePenContext ctx) {
     Boolean res = false;
+    String penTAD = ctx.variable().getText();
+    List<pdrawParser.ClassPropsContext> props = ctx.classProps();
+    if (!symbolTable.containsKey(penTAD)) {
+      if (/*symbolTable.get(penTAD).getType() instanceof PenTAD*/true) {
+        for (pdrawParser.ClassPropsContext prop : props) {
+          if (!visit(prop)) {
+            return false;
+          }
+        }
+        return true;
+      } else {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s is not a pen", penTAD)
+        );
+      }
+    } else {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s not defined", penTAD)
+      );
+    }
     return visitChildren(ctx);
     // return res;
   }
@@ -292,21 +316,72 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitClassProps(pdrawParser.ClassPropsContext ctx) {
     Boolean res = false;
-    return visitChildren(ctx);
+    System.out.println(
+      ctx.getText() +
+      ctx.HexaColor() +
+      " " +
+      ctx.Word() +
+      " " +
+      ctx.expression() +
+      " " +
+      ctx.tuple() +
+      " " +
+      ctx.angle() +
+      "PILA\n"
+    );
+    String prop = ctx.getText().split("=")[0].trim();
+    switch (prop) {
+      case "color":
+        // TODO check if it's a color
+        return true;
+
+        break;
+      case "position":
+        // TODO check if it's a position
+
+        break;
+      case "orientation":
+        // TODO check if it's an orientation
+
+        break;
+      case "thickness":
+        // TODO check if it's a thickness
+        break;
+      case "pressure":
+        // TODO check if it's a pressure
+
+        break;
+      default:
+        break;
+    }
+    // possible props
+    // color, position, orientation, thickness, pressure
+
+    return visitChildren(ctx); //TODO see if we should visit variable
+    // we can visit tuple, expression, or angle
     // return res;
   }
 
   @Override
   public Boolean visitObject(pdrawParser.ObjectContext ctx) {
     Boolean res = false;
-    return visitChildren(ctx);
+    String[] vars = new String[ctx.getChildCount()];
+    // for( pdrawParser.VariableContext var: ctx.variable()) {
+    // };
+    for (int i = 0; i < ctx.getChildCount(); i++) {
+      vars[i] = ((pdrawParser.VariableContext) ctx.getChild(i)).getText(); // this was harder to get
+    }
+    System.out.println(vars);
+
+    return false;
     // return res;
   }
 
   @Override
   public Boolean visitVariable(pdrawParser.VariableContext ctx) {
     Boolean res = false;
-    return visitChildren(ctx);
+    ctx.getText();
+    return false;
     // return res;
   }
 
@@ -320,6 +395,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitExprPow(pdrawParser.ExprPowContext ctx) {
     Boolean res = false;
+
     return visitChildren(ctx);
     // return res;
   }

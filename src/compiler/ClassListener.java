@@ -181,6 +181,18 @@ public interface ClassListener extends ParseTreeListener {
 	 */
 	void exitExprId(ClassParser.ExprIdContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprVariable}
+	 * labeled alternative in {@link ClassParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprVariable(ClassParser.ExprVariableContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprVariable}
+	 * labeled alternative in {@link ClassParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprVariable(ClassParser.ExprVariableContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprMultDivMod}
 	 * labeled alternative in {@link ClassParser#expression}.
 	 * @param ctx the parse tree

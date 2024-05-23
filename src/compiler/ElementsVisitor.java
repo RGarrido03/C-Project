@@ -86,6 +86,13 @@ public interface ElementsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprId(ElementsParser.ExprIdContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprVariable}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprVariable(ElementsParser.ExprVariableContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprMultDivMod}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree

@@ -122,6 +122,13 @@ public class ClassBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitExprVariable(ClassParser.ExprVariableContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitExprMultDivMod(ClassParser.ExprMultDivModContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

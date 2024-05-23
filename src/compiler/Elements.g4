@@ -11,6 +11,7 @@ expression:
 	| INT												# ExprInteger
 	| FLOAT												# ExprFloat // FIXME change this
 	| String											# ExprString
+	| variable											# ExprVariable
 	| '(' expression ')'								# ExprParent;
 
 execute: 'execute' String ';';

@@ -7,7 +7,7 @@ public class Symbol {
 
   private Type type;
   private String name;
-  private String value;
+  private Object value;
 
   public Symbol(Type type, String name, String value) {
     this.type = type;
@@ -28,7 +28,7 @@ public class Symbol {
     return name;
   }
 
-  public String getValue() {
+  public Object getValue() {
     return value;
   }
 
@@ -41,6 +41,10 @@ public class Symbol {
   }
 
   public void setValue(String value) {
+    this.value = value;
+  }
+
+  public void setValue(Object value) {
     this.value = value;
   }
 }

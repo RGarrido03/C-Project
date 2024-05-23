@@ -37,3 +37,25 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
 
 - Use esta secção para expôr as contribuições individuais dos vários elementos do grupo e que
   justificam as participações individuais globais apresentadas no início.
+
+## Duvidas
+
+O classProps deve aceitar variaveis globais?
+dEVE SER POSSIVEL redifinir as pens
+
+```pdraw
+define pen penTypeGrossa {
+
+    color= "black";
+    thickness= 10000;
+}
+
+ou seja redifinir?
+
+define pen penTypeGrossa {
+
+    color= "black";
+    thickness= 10000;
+    position=(0,0);
+}
+```

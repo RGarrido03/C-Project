@@ -206,6 +206,13 @@ public class pdrawBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitExprVariable(pdrawParser.ExprVariableContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

@@ -196,6 +196,18 @@ public class ClassBaseListener implements ClassListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprVariable(ClassParser.ExprVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprVariable(ClassParser.ExprVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprMultDivMod(ClassParser.ExprMultDivModContext ctx) { }
 	/**
 	 * {@inheritDoc}

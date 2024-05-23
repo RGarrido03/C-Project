@@ -191,6 +191,13 @@ public interface pdrawVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprId(pdrawParser.ExprIdContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprVariable}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprVariable(pdrawParser.ExprVariableContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprMultDivMod}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree

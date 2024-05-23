@@ -148,6 +148,18 @@ public class ElementsBaseListener implements ElementsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprVariable(ElementsParser.ExprVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprVariable(ElementsParser.ExprVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprMultDivMod(ElementsParser.ExprMultDivModContext ctx) { }
 	/**
 	 * {@inheritDoc}

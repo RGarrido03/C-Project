@@ -340,6 +340,18 @@ public class pdrawBaseListener implements pdrawListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprVariable(pdrawParser.ExprVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprVariable(pdrawParser.ExprVariableContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) { }
 	/**
 	 * {@inheritDoc}

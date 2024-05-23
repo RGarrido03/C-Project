@@ -1,0 +1,8 @@
+define pen penTypeGrossa {
+    color= green;
+    position=(0,0);
+    thickness= 2;
+
+};
+
+pen instanciaPenTypeGrossa = new penTypeGrossa;
