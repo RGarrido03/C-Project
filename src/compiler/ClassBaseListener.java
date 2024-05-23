@@ -100,6 +100,18 @@ public class ClassBaseListener implements ClassListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprString(ClassParser.ExprStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprString(ClassParser.ExprStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprCast(ClassParser.ExprCastContext ctx) { }
 	/**
 	 * {@inheritDoc}

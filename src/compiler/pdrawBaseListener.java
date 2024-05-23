@@ -244,6 +244,18 @@ public class pdrawBaseListener implements pdrawListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprString(pdrawParser.ExprStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprString(pdrawParser.ExprStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprCast(pdrawParser.ExprCastContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -41,6 +41,18 @@ public interface ElementsListener extends ParseTreeListener {
 	 */
 	void exitExprPow(ElementsParser.ExprPowContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprString(ElementsParser.ExprStringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprString(ElementsParser.ExprStringContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprCast}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree

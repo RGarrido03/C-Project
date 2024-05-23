@@ -30,6 +30,13 @@ public interface ElementsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprPow(ElementsParser.ExprPowContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprString(ElementsParser.ExprStringContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprCast}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree

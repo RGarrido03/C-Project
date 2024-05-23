@@ -46,13 +46,50 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitAssignmentVar(pdrawParser.AssignmentVarContext ctx) {
     Boolean res = false;
-    System.out.println("CHEGEUEI AQUI");
     String type = ctx.Type().getText();
     String name = ctx.variable().getText();
-    String value = ctx.expression().getText();
+    String valueStr = ctx.expression().getText();
+    Object value = null;
+
+    try {
+      switch (type) {
+        case "int":
+          value = Integer.parseInt(valueStr);
+          break;
+        case "real":
+          value = Double.parseDouble(valueStr);
+          break;
+        case "string":
+          value = valueStr;
+          break;
+        case "bool":
+          value = Boolean.parseBoolean(valueStr);
+          break;
+        default:
+          throw new IllegalArgumentException(
+            String.format("Unsupported type: %s", type)
+          );
+      }
+    } catch (NumberFormatException e) {
+      ErrorHandling.printError(
+        ctx,
+        String.format(
+          "Variable %s has wrong type. Expected %s but got value %s",
+          name,
+          type,
+          valueStr
+        )
+      );
+      return res;
+    } catch (IllegalArgumentException e) {
+      ErrorHandling.printError(ctx, e.getMessage());
+      return res;
+    }
+
+    System.out.println(type + " " + name + " " + value);
 
     if (!symbolTable.containsKey(name)) {
-      if (!value.getClass().getSimpleName().equals(type)) {
+      if (!isTypeMatching(value, type)) {
         res = false;
         ErrorHandling.printError(
           ctx,
@@ -60,30 +97,12 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
             "Variable %s has wrong type. Expected %s, got %s",
             name,
             type,
-            value.getClass().getSimpleName()
+            value != null ? value.getClass().getSimpleName() : "null"
           )
         );
-        // o tipo bate certo?
-        //
       } else {
-        switch (type) {
-          case "int":
-            symbolTable.put(name, new Symbol(new IntType(), name));
-            break;
-          case "real":
-            symbolTable.put(name, new Symbol(new RealType(), name));
-            break;
-          case "string":
-            symbolTable.put(name, new Symbol(new StringType(), name));
-            break;
-          case "bool":
-            symbolTable.put(name, new Symbol(new BoolType(), name));
-            break;
-          default:
-            // TODO: throw exception
-
-            break;
-        }
+        symbolTable.put(name, new Symbol(createType(type), name));
+        res = true;
       }
     } else {
       res = false;
@@ -92,8 +111,37 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         String.format("Variable %s already defined", name)
       );
     }
-    // return visitChildren(ctx);
+
     return res;
+  }
+
+  // our made not antlr
+  private boolean isTypeMatching(Object value, String type) {
+    return switch (type.toLowerCase()) {
+      case "int" -> value instanceof Integer;
+      case "real" -> value instanceof Double;
+      case "string" -> value instanceof String;
+      case "bool" -> value instanceof Boolean;
+      default -> false;
+    };
+  }
+
+  // our made not antlr
+  private Type createType(String type) {
+    switch (type.toLowerCase()) {
+      case "int":
+        return new IntType();
+      case "real":
+        return new RealType();
+      case "string":
+        return new StringType();
+      case "bool":
+        return new BoolType();
+      default:
+        throw new IllegalArgumentException(
+          String.format("Unsupported type: %s", type)
+        );
+    }
   }
 
   @Override
@@ -117,15 +165,76 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         String.format("Variable %s not defined", name)
       );
     }
-
     return res;
   }
 
   @Override
   public Boolean visitReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx) {
     Boolean res = false;
-    return visitChildren(ctx);
-    // return res;
+    String name = ctx.variable().getText();
+    String valueStr = ctx.expression().getText();
+
+    if (symbolTable.containsKey(name)) {
+      Symbol symbol = symbolTable.get(name);
+      String type = symbol.getType().toString();
+      Object value = null;
+
+      try {
+        switch (type.toLowerCase()) {
+          case "int":
+            value = Integer.parseInt(valueStr);
+            break;
+          case "real":
+            value = Double.parseDouble(valueStr);
+            break;
+          case "string":
+            value = valueStr;
+            break;
+          case "bool":
+            value = Boolean.parseBoolean(valueStr);
+            break;
+          default:
+            ErrorHandling.printError(
+              ctx,
+              String.format("Unsupported type: %s", type)
+            );
+        }
+      } catch (NumberFormatException e) {
+        ErrorHandling.printError(
+          ctx,
+          String.format(
+            "Variable %s has wrong type. Expected %s but got value %s",
+            name,
+            type,
+            valueStr
+          )
+        );
+        return res;
+      }
+
+      if (isTypeMatching(value, type)) {
+        // Update the value in the symbol table (assuming Symbol class has a setValue method)
+        symbol.setValue((String) value);
+        res = true;
+      } else {
+        ErrorHandling.printError(
+          ctx,
+          String.format(
+            "Variable %s has wrong type. Expected %s, got %s",
+            name,
+            type,
+            value != null ? value.getClass().getSimpleName() : "null"
+          )
+        );
+      }
+    } else {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not defined", name)
+      );
+    }
+
+    return res;
   }
 
   @Override
@@ -256,6 +365,14 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     Boolean res = true;
     IntType x = (IntType) ctx.INT();
     new Symbol(new IntType(), x.toString());
+    return res;
+  }
+
+  @Override
+  public Boolean visitExprString(pdrawParser.ExprStringContext ctx) {
+    Boolean res = true;
+    StringType x = (StringType) ctx.String();
+    new Symbol(new StringType(), x.toString());
     return res;
   }
 

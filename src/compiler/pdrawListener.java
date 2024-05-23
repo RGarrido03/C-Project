@@ -219,6 +219,18 @@ public interface pdrawListener extends ParseTreeListener {
 	 */
 	void exitExprPow(pdrawParser.ExprPowContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprString(pdrawParser.ExprStringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprString(pdrawParser.ExprStringContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprCast}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree

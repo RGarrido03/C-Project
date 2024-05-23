@@ -1,4 +1,12 @@
+%% this should work
 real myRealVar = 1.0;
 int myIntVar = 1;
-% string myStringVar = "Hello";
+string myStringVar = "Hello";
 bool myBoolVar = true;
+
+% this should not work
+real myRealVar = 1;
+int myIntVar = 1.0;
+string myStringVar = 1;
+bool myBoolVar = 1; %??
+

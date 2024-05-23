@@ -85,6 +85,18 @@ public interface ClassListener extends ParseTreeListener {
 	 */
 	void exitExprPow(ClassParser.ExprPowContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link ClassParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprString(ClassParser.ExprStringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link ClassParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprString(ClassParser.ExprStringContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprCast}
 	 * labeled alternative in {@link ClassParser#expression}.
 	 * @param ctx the parse tree
