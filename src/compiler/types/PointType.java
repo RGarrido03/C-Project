@@ -1,18 +1,8 @@
 package types;
 
-public class PointType {
+public class PointType extends Type{
 
-    private int x;
-    private int y;
-
-    public PointType(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public PointType() {
+        super("point");
     }
-
-    public int getX() {return x;}
-    public int getY() {return y;}
-    public void setX(int x) {this.x = x;}
-    public void setY(int y) {this.y = y;}
-
 }

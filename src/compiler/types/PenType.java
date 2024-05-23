@@ -1,10 +1,6 @@
 package types;
 
-public class PenType{
+public class PenType extends Type{
 
-    private StringType color;
-    private PointType pointType;
-    private AngleType orientation;
-    private IntType thickness;
-    private IntType pressure;
+    public PenType(){super("pen");}
 }
