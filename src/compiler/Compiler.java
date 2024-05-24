@@ -192,13 +192,6 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
-  public ST visitExprId(pdrawParser.ExprIdContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
-  }
-
-  @Override
   public ST visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) {
     ST res = null;
     return visitChildren(ctx);

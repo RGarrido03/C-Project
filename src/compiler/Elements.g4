@@ -2,19 +2,18 @@ grammar Elements;
 variable: Name | Word;
 expression
 	returns[types.Symbol symbol]:
-	expression op = ('*' | '/' | '%' | '//') expression	# ExprMultDivMod
-	| expression op = ('+' | '-') expression			# ExprAddSub
-	| op = ('+' | '-') e2 = expression					# ExprUnary
-	| <assoc = right> expression '^' expression			# ExprPow
-	| (Name | Word)										# ExprId
-	| typeCast											# ExprCast
-	| stdin												# ExprStdIn
-	| INT												# ExprInteger
-	| FLOAT												# ExprFloat // FIXME change this
-	| String											# ExprString
-	| BOOL												# ExprBool
-	| variable											# ExprVariable
-	| '(' expression ')'								# ExprParent;
+	expression op = ('/' | '*' | '%') expression	# ExprMultDivMod
+	| expression op = ('+' | '-') expression		# ExprAddSub
+	| op = ('+' | '-') e2 = expression				# ExprUnary
+	| <assoc = right> expression '^' expression		# ExprPow
+	| typeCast										# ExprCast
+	| stdin											# ExprStdIn
+	| INT											# ExprInteger
+	| FLOAT											# ExprFloat // FIXME change this
+	| String										# ExprString
+	| BOOL											# ExprBool
+	| variable										# ExprVariable
+	| '(' expression ')'							# ExprParent;
 
 execute: 'execute' String ';';
 stdin: 'stdin' String;

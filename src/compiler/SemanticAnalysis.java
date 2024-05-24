@@ -140,70 +140,21 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     Boolean res = false;
     String name = ctx.variable().getText();
 
-    String valueStr = ctx.expression().getText();
-
-    if (symbolTable.containsKey(name)) {
-      Symbol symbol = symbolTable.get(name);
-      String type = symbol.getType().toString();
-      Object value = null;
-
-      try {
-        switch (type.toLowerCase()) {
-          case "int":
-            value = Integer.parseInt(valueStr);
-            break;
-          case "real":
-            System.out.println(valueStr + "pila");
-            value = Double.parseDouble(valueStr);
-            break;
-          case "string":
-            value = valueStr;
-            break;
-          case "bool":
-            value = Boolean.parseBoolean(valueStr);
-            break;
-          default:
-            ErrorHandling.printError(
-              ctx,
-              String.format("Unsupported type: %s", type)
-            );
-        }
-      } catch (NumberFormatException e) {
-        ErrorHandling.printError(
-          ctx,
-          String.format(
-            "Variable %s has wrong type. Expected %s but got value %s",
-            name,
-            type,
-            valueStr
-          )
-        );
-        return res;
-      }
-
-      if (isTypeMatching(value, type)) {
-        // Update the value in the symbol table (assuming Symbol class has a setValue method)
-        symbol.setValue(value);
-        res = true;
-      } else {
-        ErrorHandling.printError(
-          ctx,
-          String.format(
-            "Variable %s has wrong type. Expected %s, got %s",
-            name,
-            type,
-            value != null ? value.getClass().getSimpleName() : "null"
-          )
-        );
-      }
-    } else {
+    if (!symbolTable.containsKey(name)) {
       ErrorHandling.printError(
         ctx,
-        String.format("Variable %s is not defined", name)
+        String.format("Variable %s not defined", name)
       );
+      return false;
+    } else {
+      pdrawParser.ExpressionContext expressionCtx = ctx.expression();
+      Boolean expressionResult = visit(expressionCtx);
+      if (!expressionResult) {
+        ErrorHandling.printError(ctx, "Expression is not valid");
+        return false;
+      }
+      return true;
     }
-
-    return res;
   }
 
   @Override
@@ -425,8 +376,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitExprParent(pdrawParser.ExprParentContext ctx) {
-    Boolean res = false;
-    return visitChildren(ctx);
+    Boolean res = visit(ctx.expression());
+    ctx.symbol = ctx.expression().symbol;
+    return res;
     // return res;
   }
 
@@ -469,17 +421,21 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitExprId(pdrawParser.ExprIdContext ctx) {
-    Boolean res = false;
-    return visitChildren(ctx);
-    // return res;
-  }
-
-  @Override
   public Boolean visitExprBool(pdrawParser.ExprBoolContext ctx) {
     Boolean res = true;
     String x = ctx.BOOL().getText();
     ctx.symbol = new Symbol(new BoolType(), (x)); // TODO this should be a random string
+    return res;
+  }
+
+  @Override
+  public Boolean visitExprVariable(pdrawParser.ExprVariableContext ctx) {
+    System.out.println("PILA");
+    Boolean res = true;
+    if (!symbolTable.containsKey(ctx.getText())) {
+      return false;
+    }
+    ctx.symbol = symbolTable.get(ctx.getText()); // TODO this should be a random string
     return res;
   }
 
@@ -488,10 +444,65 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     Boolean rightResult = visit(ctx.expression(1));
 
     if (!leftResult || !rightResult) {
+      ErrorHandling.printError(
+        ctx,
+        String.format(
+          "Expression %s or %s are not valid",
+          ctx.expression(0).getText(),
+          ctx.expression(1).getText()
+        )
+      ); // TODO improve this
       return false;
     }
+    pdrawParser.ExpressionContext left_ctx = ctx.expression(0);
+    pdrawParser.ExpressionContext right_ctx = ctx.expression(1);
+    String left = left_ctx.getText();
+    String right = right_ctx.getText();
 
-    return true;
+    // preciso de saber se é uma variavel ou nao
+    if (symbolTable.containsKey(left)) {
+      // TODO: fazer verificação de tipos
+      Type leftType = symbolTable.get(left).getType();
+      if (!leftType.isNumeric()) {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s is not a number", left)
+        );
+        return false;
+      }
+    }
+    if (symbolTable.containsKey(right)) {
+      // TODO: fazer verificação de tipos
+      Type rightType = symbolTable.get(right).getType();
+      if (!rightType.isNumeric()) {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s is not a number", right)
+        );
+        return false;
+      }
+    }
+    // ja verifico as variaveis agora significa que passaram pelo if e se nao for variavel?
+    // tenho de ver o seu tipo
+    if (
+      left_ctx.symbol.getType().isNumeric() &&
+      right_ctx.symbol.getType().isNumeric()
+    ) {
+      if (ctx.op.getText() == "/") {
+        ctx.symbol = new Symbol(new RealType(), left); // o da esquerda define o tipo final
+      } else ctx.symbol = new Symbol(left_ctx.symbol.getType(), left); // o da esquerda define o tipo final
+      return true;
+    } else {
+      ErrorHandling.printError(
+        ctx,
+        String.format(
+          "Expression %s or %s are not valid",
+          ctx.expression(0).getText(),
+          ctx.expression(1).getText()
+        )
+      ); // TODO improve this
+      return false;
+    }
   }
 
   @Override
