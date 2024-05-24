@@ -1,6 +1,8 @@
 %% this should work
 real myRealVar = 1.0;
 int myIntVar = 1;
+int myIntVar2 = (1+1+1)*1+9 /8;
+int myIntVar3 = 9 / 8 + myIntVar2;
 string myStringVar = "Hello";
 bool myBoolVar = true;
 myRealVar = 2.0;

@@ -115,7 +115,7 @@ public class ClassBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExprId(ClassParser.ExprIdContext ctx) { return visitChildren(ctx); }
+	@Override public T visitExprBool(ClassParser.ExprBoolContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

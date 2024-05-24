@@ -125,17 +125,17 @@ public interface ElementsListener extends ParseTreeListener {
 	 */
 	void exitExprInteger(ElementsParser.ExprIntegerContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ExprId}
+	 * Enter a parse tree produced by the {@code ExprBool}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterExprId(ElementsParser.ExprIdContext ctx);
+	void enterExprBool(ElementsParser.ExprBoolContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ExprId}
+	 * Exit a parse tree produced by the {@code ExprBool}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitExprId(ElementsParser.ExprIdContext ctx);
+	void exitExprBool(ElementsParser.ExprBoolContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link ElementsParser#expression}.

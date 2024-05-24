@@ -105,12 +105,12 @@ public interface ClassVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprInteger(ClassParser.ExprIntegerContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExprId}
+	 * Visit a parse tree produced by the {@code ExprBool}
 	 * labeled alternative in {@link ClassParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExprId(ClassParser.ExprIdContext ctx);
+	T visitExprBool(ClassParser.ExprBoolContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link ClassParser#expression}.

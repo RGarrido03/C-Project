@@ -169,17 +169,17 @@ public interface ClassListener extends ParseTreeListener {
 	 */
 	void exitExprInteger(ClassParser.ExprIntegerContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ExprId}
+	 * Enter a parse tree produced by the {@code ExprBool}
 	 * labeled alternative in {@link ClassParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterExprId(ClassParser.ExprIdContext ctx);
+	void enterExprBool(ClassParser.ExprBoolContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ExprId}
+	 * Exit a parse tree produced by the {@code ExprBool}
 	 * labeled alternative in {@link ClassParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitExprId(ClassParser.ExprIdContext ctx);
+	void exitExprBool(ClassParser.ExprBoolContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link ClassParser#expression}.

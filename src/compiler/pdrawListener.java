@@ -303,17 +303,17 @@ public interface pdrawListener extends ParseTreeListener {
 	 */
 	void exitExprInteger(pdrawParser.ExprIntegerContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ExprId}
+	 * Enter a parse tree produced by the {@code ExprBool}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterExprId(pdrawParser.ExprIdContext ctx);
+	void enterExprBool(pdrawParser.ExprBoolContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ExprId}
+	 * Exit a parse tree produced by the {@code ExprBool}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitExprId(pdrawParser.ExprIdContext ctx);
+	void exitExprBool(pdrawParser.ExprBoolContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link pdrawParser#expression}.

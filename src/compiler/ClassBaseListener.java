@@ -184,13 +184,13 @@ public class ClassBaseListener implements ClassListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprId(ClassParser.ExprIdContext ctx) { }
+	@Override public void enterExprBool(ClassParser.ExprBoolContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprId(ClassParser.ExprIdContext ctx) { }
+	@Override public void exitExprBool(ClassParser.ExprBoolContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

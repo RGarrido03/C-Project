@@ -20,8 +20,8 @@ public class ClassParser extends Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		T__31=32, T__32=33, T__33=34, Type=35, INT=36, FLOAT=37, FRACTION=38, 
-		Word=39, Name=40, HexaColor=41, ESC=42, String=43, Comment=44, WS=45;
+		T__31=32, T__32=33, Type=34, INT=35, FLOAT=36, FRACTION=37, BOOL=38, Word=39, 
+		Name=40, HexaColor=41, ESC=42, String=43, Comment=44, WS=45;
 	public static final int
 		RULE_class = 0, RULE_classProps = 1, RULE_object = 2, RULE_variable = 3, 
 		RULE_expression = 4, RULE_execute = 5, RULE_stdin = 6, RULE_tuple = 7, 
@@ -38,7 +38,7 @@ public class ClassParser extends Parser {
 		return new String[] {
 			null, "'define'", "'canvas'", "'pen'", "'{'", "';'", "'}'", "'color'", 
 			"'='", "'position'", "'orientation'", "'thickness'", "'pressure'", "'new'", 
-			"'*'", "'/'", "'%'", "'//'", "'+'", "'-'", "'^'", "'('", "')'", "'execute'", 
+			"'/'", "'*'", "'%'", "'+'", "'-'", "'^'", "'('", "')'", "'execute'", 
 			"'stdin'", "','", "'\\u00BA'", "'deg'", "'rad'", "'forward'", "'backward'", 
 			"'left'", "'right'", "'down'", "'up'"
 		};
@@ -48,8 +48,8 @@ public class ClassParser extends Parser {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, null, null, null, null, "Type", 
-			"INT", "FLOAT", "FRACTION", "Word", "Name", "HexaColor", "ESC", "String", 
+			null, null, null, null, null, null, null, null, null, null, "Type", "INT", 
+			"FLOAT", "FRACTION", "BOOL", "Word", "Name", "HexaColor", "ESC", "String", 
 			"Comment", "WS"
 		};
 	}
@@ -198,7 +198,7 @@ public class ClassParser extends Parser {
 				setState(31);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==T__20) {
+				if (_la==T__19) {
 					{
 					setState(30);
 					tuple();
@@ -490,6 +490,7 @@ public class ClassParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionContext extends ParserRuleContext {
+		public types.Symbol symbol;
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -498,6 +499,7 @@ public class ClassParser extends Parser {
 		public ExpressionContext() { }
 		public void copyFrom(ExpressionContext ctx) {
 			super.copyFrom(ctx);
+			this.symbol = ctx.symbol;
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -684,21 +686,20 @@ public class ClassParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ExprIdContext extends ExpressionContext {
-		public TerminalNode Name() { return getToken(ClassParser.Name, 0); }
-		public TerminalNode Word() { return getToken(ClassParser.Word, 0); }
-		public ExprIdContext(ExpressionContext ctx) { copyFrom(ctx); }
+	public static class ExprBoolContext extends ExpressionContext {
+		public TerminalNode BOOL() { return getToken(ClassParser.BOOL, 0); }
+		public ExprBoolContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ClassListener ) ((ClassListener)listener).enterExprId(this);
+			if ( listener instanceof ClassListener ) ((ClassListener)listener).enterExprBool(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ClassListener ) ((ClassListener)listener).exitExprId(this);
+			if ( listener instanceof ClassListener ) ((ClassListener)listener).exitExprBool(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ClassVisitor ) return ((ClassVisitor<? extends T>)visitor).visitExprId(this);
+			if ( visitor instanceof ClassVisitor ) return ((ClassVisitor<? extends T>)visitor).visitExprBool(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -765,8 +766,9 @@ public class ClassParser extends Parser {
 			{
 			setState(89);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
-			case 1:
+			switch (_input.LA(1)) {
+			case T__16:
+			case T__17:
 				{
 				_localctx = new ExprUnaryContext(_localctx);
 				_ctx = _localctx;
@@ -775,7 +777,7 @@ public class ClassParser extends Parser {
 				setState(76);
 				((ExprUnaryContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !(_la==T__17 || _la==T__18) ) {
+				if ( !(_la==T__16 || _la==T__17) ) {
 					((ExprUnaryContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
@@ -787,69 +789,62 @@ public class ClassParser extends Parser {
 				((ExprUnaryContext)_localctx).e2 = expression(10);
 				}
 				break;
-			case 2:
-				{
-				_localctx = new ExprIdContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(78);
-				_la = _input.LA(1);
-				if ( !(_la==Word || _la==Name) ) {
-				_errHandler.recoverInline(this);
-				}
-				else {
-					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-					_errHandler.reportMatch(this);
-					consume();
-				}
-				}
-				break;
-			case 3:
+			case Type:
 				{
 				_localctx = new ExprCastContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(79);
+				setState(78);
 				typeCast();
 				}
 				break;
-			case 4:
+			case T__22:
 				{
 				_localctx = new ExprStdInContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(80);
+				setState(79);
 				stdin();
 				}
 				break;
-			case 5:
+			case INT:
 				{
 				_localctx = new ExprIntegerContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(81);
+				setState(80);
 				match(INT);
 				}
 				break;
-			case 6:
+			case FLOAT:
 				{
 				_localctx = new ExprFloatContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(82);
+				setState(81);
 				match(FLOAT);
 				}
 				break;
-			case 7:
+			case String:
 				{
 				_localctx = new ExprStringContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(83);
+				setState(82);
 				match(String);
 				}
 				break;
-			case 8:
+			case BOOL:
+				{
+				_localctx = new ExprBoolContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(83);
+				match(BOOL);
+				}
+				break;
+			case Word:
+			case Name:
 				{
 				_localctx = new ExprVariableContext(_localctx);
 				_ctx = _localctx;
@@ -858,19 +853,21 @@ public class ClassParser extends Parser {
 				variable();
 				}
 				break;
-			case 9:
+			case T__19:
 				{
 				_localctx = new ExprParentContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(85);
-				match(T__20);
+				match(T__19);
 				setState(86);
 				expression(0);
 				setState(87);
-				match(T__21);
+				match(T__20);
 				}
 				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
 			setState(102);
@@ -893,7 +890,7 @@ public class ClassParser extends Parser {
 						setState(92);
 						((ExprMultDivModContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 245760L) != 0)) ) {
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 114688L) != 0)) ) {
 							((ExprMultDivModContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -914,7 +911,7 @@ public class ClassParser extends Parser {
 						setState(95);
 						((ExprAddSubContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==T__17 || _la==T__18) ) {
+						if ( !(_la==T__16 || _la==T__17) ) {
 							((ExprAddSubContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -933,7 +930,7 @@ public class ClassParser extends Parser {
 						setState(97);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
 						setState(98);
-						match(T__19);
+						match(T__18);
 						setState(99);
 						expression(9);
 						}
@@ -987,7 +984,7 @@ public class ClassParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(105);
-			match(T__22);
+			match(T__21);
 			setState(106);
 			match(String);
 			setState(107);
@@ -1034,7 +1031,7 @@ public class ClassParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(109);
-			match(T__23);
+			match(T__22);
 			setState(110);
 			match(String);
 			}
@@ -1084,15 +1081,15 @@ public class ClassParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(112);
-			match(T__20);
+			match(T__19);
 			setState(113);
 			expression(0);
 			setState(114);
-			match(T__24);
+			match(T__23);
 			setState(115);
 			expression(0);
 			setState(116);
-			match(T__21);
+			match(T__20);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1140,6 +1137,7 @@ public class ClassParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class DegreeContext extends AngleContext {
+		public Token d;
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1174,9 +1172,10 @@ public class ClassParser extends Parser {
 				setState(118);
 				expression(0);
 				setState(119);
+				((DegreeContext)_localctx).d = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !(_la==T__25 || _la==T__26) ) {
-				_errHandler.recoverInline(this);
+				if ( !(_la==T__24 || _la==T__25) ) {
+					((DegreeContext)_localctx).d = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1194,10 +1193,10 @@ public class ClassParser extends Parser {
 				setState(123);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==T__27) {
+				if (_la==T__26) {
 					{
 					setState(122);
-					match(T__27);
+					match(T__26);
 					}
 				}
 
@@ -1304,36 +1303,36 @@ public class ClassParser extends Parser {
 			setState(131);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__28:
+			case T__27:
 				_localctx = new ForwardContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(127);
-				match(T__28);
+				match(T__27);
 				}
 				break;
-			case T__29:
+			case T__28:
 				_localctx = new BackwardContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(128);
-				match(T__29);
+				match(T__28);
 				}
 				break;
-			case T__30:
+			case T__29:
 				_localctx = new LeftContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(129);
-				match(T__30);
+				match(T__29);
 				}
 				break;
-			case T__31:
+			case T__30:
 				_localctx = new RightContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(130);
-				match(T__31);
+				match(T__30);
 				}
 				break;
 			default:
@@ -1405,20 +1404,20 @@ public class ClassParser extends Parser {
 			setState(135);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__32:
+			case T__31:
 				_localctx = new DownContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(133);
-				match(T__32);
+				match(T__31);
 				}
 				break;
-			case T__33:
+			case T__32:
 				_localctx = new UpContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(134);
-				match(T__33);
+				match(T__32);
 				}
 				break;
 			default:
@@ -1470,11 +1469,11 @@ public class ClassParser extends Parser {
 			setState(137);
 			match(Type);
 			setState(138);
-			match(T__20);
+			match(T__19);
 			setState(139);
 			expression(0);
 			setState(140);
-			match(T__21);
+			match(T__20);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1532,7 +1531,7 @@ public class ClassParser extends Parser {
 		"\n\u0003\n\u0088\b\n\u0001\u000b\u0001\u000b\u0001\u000b\u0001\u000b\u0001"+
 		"\u000b\u0001\u000b\u0000\u0001\b\f\u0000\u0002\u0004\u0006\b\n\f\u000e"+
 		"\u0010\u0012\u0014\u0016\u0000\u0005\u0002\u0000\'\'))\u0001\u0000\'("+
-		"\u0001\u0000\u0012\u0013\u0001\u0000\u000e\u0011\u0001\u0000\u001a\u001b"+
+		"\u0001\u0000\u0011\u0012\u0001\u0000\u000e\u0010\u0001\u0000\u0019\u001a"+
 		"\u009c\u0000/\u0001\u0000\u0000\u0000\u0002@\u0001\u0000\u0000\u0000\u0004"+
 		"B\u0001\u0000\u0000\u0000\u0006I\u0001\u0000\u0000\u0000\bY\u0001\u0000"+
 		"\u0000\u0000\ni\u0001\u0000\u0000\u0000\fm\u0001\u0000\u0000\u0000\u000e"+
@@ -1562,37 +1561,37 @@ public class ClassParser extends Parser {
 		"\u0000\u0000\u0000GH\u0001\u0000\u0000\u0000H\u0005\u0001\u0000\u0000"+
 		"\u0000IJ\u0007\u0001\u0000\u0000J\u0007\u0001\u0000\u0000\u0000KL\u0006"+
 		"\u0004\uffff\uffff\u0000LM\u0007\u0002\u0000\u0000MZ\u0003\b\u0004\nN"+
-		"Z\u0007\u0001\u0000\u0000OZ\u0003\u0016\u000b\u0000PZ\u0003\f\u0006\u0000"+
-		"QZ\u0005$\u0000\u0000RZ\u0005%\u0000\u0000SZ\u0005+\u0000\u0000TZ\u0003"+
-		"\u0006\u0003\u0000UV\u0005\u0015\u0000\u0000VW\u0003\b\u0004\u0000WX\u0005"+
-		"\u0016\u0000\u0000XZ\u0001\u0000\u0000\u0000YK\u0001\u0000\u0000\u0000"+
+		"Z\u0003\u0016\u000b\u0000OZ\u0003\f\u0006\u0000PZ\u0005#\u0000\u0000Q"+
+		"Z\u0005$\u0000\u0000RZ\u0005+\u0000\u0000SZ\u0005&\u0000\u0000TZ\u0003"+
+		"\u0006\u0003\u0000UV\u0005\u0014\u0000\u0000VW\u0003\b\u0004\u0000WX\u0005"+
+		"\u0015\u0000\u0000XZ\u0001\u0000\u0000\u0000YK\u0001\u0000\u0000\u0000"+
 		"YN\u0001\u0000\u0000\u0000YO\u0001\u0000\u0000\u0000YP\u0001\u0000\u0000"+
 		"\u0000YQ\u0001\u0000\u0000\u0000YR\u0001\u0000\u0000\u0000YS\u0001\u0000"+
 		"\u0000\u0000YT\u0001\u0000\u0000\u0000YU\u0001\u0000\u0000\u0000Zf\u0001"+
 		"\u0000\u0000\u0000[\\\n\f\u0000\u0000\\]\u0007\u0003\u0000\u0000]e\u0003"+
 		"\b\u0004\r^_\n\u000b\u0000\u0000_`\u0007\u0002\u0000\u0000`e\u0003\b\u0004"+
-		"\fab\n\t\u0000\u0000bc\u0005\u0014\u0000\u0000ce\u0003\b\u0004\td[\u0001"+
+		"\fab\n\t\u0000\u0000bc\u0005\u0013\u0000\u0000ce\u0003\b\u0004\td[\u0001"+
 		"\u0000\u0000\u0000d^\u0001\u0000\u0000\u0000da\u0001\u0000\u0000\u0000"+
 		"eh\u0001\u0000\u0000\u0000fd\u0001\u0000\u0000\u0000fg\u0001\u0000\u0000"+
-		"\u0000g\t\u0001\u0000\u0000\u0000hf\u0001\u0000\u0000\u0000ij\u0005\u0017"+
+		"\u0000g\t\u0001\u0000\u0000\u0000hf\u0001\u0000\u0000\u0000ij\u0005\u0016"+
 		"\u0000\u0000jk\u0005+\u0000\u0000kl\u0005\u0005\u0000\u0000l\u000b\u0001"+
-		"\u0000\u0000\u0000mn\u0005\u0018\u0000\u0000no\u0005+\u0000\u0000o\r\u0001"+
-		"\u0000\u0000\u0000pq\u0005\u0015\u0000\u0000qr\u0003\b\u0004\u0000rs\u0005"+
-		"\u0019\u0000\u0000st\u0003\b\u0004\u0000tu\u0005\u0016\u0000\u0000u\u000f"+
+		"\u0000\u0000\u0000mn\u0005\u0017\u0000\u0000no\u0005+\u0000\u0000o\r\u0001"+
+		"\u0000\u0000\u0000pq\u0005\u0014\u0000\u0000qr\u0003\b\u0004\u0000rs\u0005"+
+		"\u0018\u0000\u0000st\u0003\b\u0004\u0000tu\u0005\u0015\u0000\u0000u\u000f"+
 		"\u0001\u0000\u0000\u0000vw\u0003\b\u0004\u0000wx\u0007\u0004\u0000\u0000"+
-		"x~\u0001\u0000\u0000\u0000y{\u0003\b\u0004\u0000z|\u0005\u001c\u0000\u0000"+
+		"x~\u0001\u0000\u0000\u0000y{\u0003\b\u0004\u0000z|\u0005\u001b\u0000\u0000"+
 		"{z\u0001\u0000\u0000\u0000{|\u0001\u0000\u0000\u0000|~\u0001\u0000\u0000"+
 		"\u0000}v\u0001\u0000\u0000\u0000}y\u0001\u0000\u0000\u0000~\u0011\u0001"+
-		"\u0000\u0000\u0000\u007f\u0084\u0005\u001d\u0000\u0000\u0080\u0084\u0005"+
-		"\u001e\u0000\u0000\u0081\u0084\u0005\u001f\u0000\u0000\u0082\u0084\u0005"+
-		" \u0000\u0000\u0083\u007f\u0001\u0000\u0000\u0000\u0083\u0080\u0001\u0000"+
-		"\u0000\u0000\u0083\u0081\u0001\u0000\u0000\u0000\u0083\u0082\u0001\u0000"+
-		"\u0000\u0000\u0084\u0013\u0001\u0000\u0000\u0000\u0085\u0088\u0005!\u0000"+
-		"\u0000\u0086\u0088\u0005\"\u0000\u0000\u0087\u0085\u0001\u0000\u0000\u0000"+
-		"\u0087\u0086\u0001\u0000\u0000\u0000\u0088\u0015\u0001\u0000\u0000\u0000"+
-		"\u0089\u008a\u0005#\u0000\u0000\u008a\u008b\u0005\u0015\u0000\u0000\u008b"+
-		"\u008c\u0003\b\u0004\u0000\u008c\u008d\u0005\u0016\u0000\u0000\u008d\u0017"+
-		"\u0001\u0000\u0000\u0000\r\u001c\u001f*/@GYdf{}\u0083\u0087";
+		"\u0000\u0000\u0000\u007f\u0084\u0005\u001c\u0000\u0000\u0080\u0084\u0005"+
+		"\u001d\u0000\u0000\u0081\u0084\u0005\u001e\u0000\u0000\u0082\u0084\u0005"+
+		"\u001f\u0000\u0000\u0083\u007f\u0001\u0000\u0000\u0000\u0083\u0080\u0001"+
+		"\u0000\u0000\u0000\u0083\u0081\u0001\u0000\u0000\u0000\u0083\u0082\u0001"+
+		"\u0000\u0000\u0000\u0084\u0013\u0001\u0000\u0000\u0000\u0085\u0088\u0005"+
+		" \u0000\u0000\u0086\u0088\u0005!\u0000\u0000\u0087\u0085\u0001\u0000\u0000"+
+		"\u0000\u0087\u0086\u0001\u0000\u0000\u0000\u0088\u0015\u0001\u0000\u0000"+
+		"\u0000\u0089\u008a\u0005\"\u0000\u0000\u008a\u008b\u0005\u0014\u0000\u0000"+
+		"\u008b\u008c\u0003\b\u0004\u0000\u008c\u008d\u0005\u0015\u0000\u0000\u008d"+
+		"\u0017\u0001\u0000\u0000\u0000\r\u001c\u001f*/@GYdf{}\u0083\u0087";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

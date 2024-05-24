@@ -21,7 +21,7 @@ public class pdrawParser extends Parser {
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
 		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, 
-		T__38=39, Type=40, INT=41, FLOAT=42, FRACTION=43, Word=44, Name=45, HexaColor=46, 
+		Type=39, INT=40, FLOAT=41, FRACTION=42, BOOL=43, Word=44, Name=45, HexaColor=46, 
 		ESC=47, String=48, Comment=49, WS=50;
 	public static final int
 		RULE_main = 0, RULE_statement = 1, RULE_instruction = 2, RULE_assignment = 3, 
@@ -43,7 +43,7 @@ public class pdrawParser extends Parser {
 			null, "';'", "'='", "'('", "')'", "'pause'", "'->'", "'stdout'", "'stderr'", 
 			"'<-'", "'execute'", "'define'", "'canvas'", "'pen'", "'{'", "'}'", "'color'", 
 			"'position'", "'orientation'", "'thickness'", "'pressure'", "'new'", 
-			"'*'", "'/'", "'%'", "'//'", "'+'", "'-'", "'^'", "'stdin'", "','", "'\\u00BA'", 
+			"'/'", "'*'", "'%'", "'+'", "'-'", "'^'", "'stdin'", "','", "'\\u00BA'", 
 			"'deg'", "'rad'", "'forward'", "'backward'", "'left'", "'right'", "'down'", 
 			"'up'"
 		};
@@ -54,8 +54,8 @@ public class pdrawParser extends Parser {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, "Type", "INT", "FLOAT", "FRACTION", "Word", "Name", 
-			"HexaColor", "ESC", "String", "Comment", "WS"
+			null, null, null, "Type", "INT", "FLOAT", "FRACTION", "BOOL", "Word", 
+			"Name", "HexaColor", "ESC", "String", "Comment", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -147,7 +147,7 @@ public class pdrawParser extends Parser {
 			setState(41);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 341948854446120L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 346896287672360L) != 0)) {
 				{
 				{
 				setState(38);
@@ -397,6 +397,7 @@ public class pdrawParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class AssignmentContext extends ParserRuleContext {
+		public types.Symbol symbol;
 		public AssignmentContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -405,6 +406,7 @@ public class pdrawParser extends Parser {
 		public AssignmentContext() { }
 		public void copyFrom(AssignmentContext ctx) {
 			super.copyFrom(ctx);
+			this.symbol = ctx.symbol;
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -1205,6 +1207,7 @@ public class pdrawParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionContext extends ParserRuleContext {
+		public types.Symbol symbol;
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1213,6 +1216,7 @@ public class pdrawParser extends Parser {
 		public ExpressionContext() { }
 		public void copyFrom(ExpressionContext ctx) {
 			super.copyFrom(ctx);
+			this.symbol = ctx.symbol;
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -1399,21 +1403,20 @@ public class pdrawParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ExprIdContext extends ExpressionContext {
-		public TerminalNode Name() { return getToken(pdrawParser.Name, 0); }
-		public TerminalNode Word() { return getToken(pdrawParser.Word, 0); }
-		public ExprIdContext(ExpressionContext ctx) { copyFrom(ctx); }
+	public static class ExprBoolContext extends ExpressionContext {
+		public TerminalNode BOOL() { return getToken(pdrawParser.BOOL, 0); }
+		public ExprBoolContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).enterExprId(this);
+			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).enterExprBool(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprId(this);
+			if ( listener instanceof pdrawListener ) ((pdrawListener)listener).exitExprBool(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprId(this);
+			if ( visitor instanceof pdrawVisitor ) return ((pdrawVisitor<? extends T>)visitor).visitExprBool(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1480,8 +1483,9 @@ public class pdrawParser extends Parser {
 			{
 			setState(173);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
-			case 1:
+			switch (_input.LA(1)) {
+			case T__24:
+			case T__25:
 				{
 				_localctx = new ExprUnaryContext(_localctx);
 				_ctx = _localctx;
@@ -1490,7 +1494,7 @@ public class pdrawParser extends Parser {
 				setState(160);
 				((ExprUnaryContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !(_la==T__25 || _la==T__26) ) {
+				if ( !(_la==T__24 || _la==T__25) ) {
 					((ExprUnaryContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				else {
@@ -1502,69 +1506,62 @@ public class pdrawParser extends Parser {
 				((ExprUnaryContext)_localctx).e2 = expression(10);
 				}
 				break;
-			case 2:
-				{
-				_localctx = new ExprIdContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(162);
-				_la = _input.LA(1);
-				if ( !(_la==Word || _la==Name) ) {
-				_errHandler.recoverInline(this);
-				}
-				else {
-					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-					_errHandler.reportMatch(this);
-					consume();
-				}
-				}
-				break;
-			case 3:
+			case Type:
 				{
 				_localctx = new ExprCastContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(163);
+				setState(162);
 				typeCast();
 				}
 				break;
-			case 4:
+			case T__27:
 				{
 				_localctx = new ExprStdInContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(164);
+				setState(163);
 				stdin();
 				}
 				break;
-			case 5:
+			case INT:
 				{
 				_localctx = new ExprIntegerContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(165);
+				setState(164);
 				match(INT);
 				}
 				break;
-			case 6:
+			case FLOAT:
 				{
 				_localctx = new ExprFloatContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(166);
+				setState(165);
 				match(FLOAT);
 				}
 				break;
-			case 7:
+			case String:
 				{
 				_localctx = new ExprStringContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(167);
+				setState(166);
 				match(String);
 				}
 				break;
-			case 8:
+			case BOOL:
+				{
+				_localctx = new ExprBoolContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(167);
+				match(BOOL);
+				}
+				break;
+			case Word:
+			case Name:
 				{
 				_localctx = new ExprVariableContext(_localctx);
 				_ctx = _localctx;
@@ -1573,7 +1570,7 @@ public class pdrawParser extends Parser {
 				variable();
 				}
 				break;
-			case 9:
+			case T__2:
 				{
 				_localctx = new ExprParentContext(_localctx);
 				_ctx = _localctx;
@@ -1586,6 +1583,8 @@ public class pdrawParser extends Parser {
 				match(T__3);
 				}
 				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
 			setState(186);
@@ -1608,7 +1607,7 @@ public class pdrawParser extends Parser {
 						setState(176);
 						((ExprMultDivModContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 62914560L) != 0)) ) {
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 29360128L) != 0)) ) {
 							((ExprMultDivModContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -1629,7 +1628,7 @@ public class pdrawParser extends Parser {
 						setState(179);
 						((ExprAddSubContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==T__25 || _la==T__26) ) {
+						if ( !(_la==T__24 || _la==T__25) ) {
 							((ExprAddSubContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
@@ -1648,7 +1647,7 @@ public class pdrawParser extends Parser {
 						setState(181);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
 						setState(182);
-						match(T__27);
+						match(T__26);
 						setState(183);
 						expression(9);
 						}
@@ -1702,7 +1701,7 @@ public class pdrawParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(189);
-			match(T__28);
+			match(T__27);
 			setState(190);
 			match(String);
 			}
@@ -1756,7 +1755,7 @@ public class pdrawParser extends Parser {
 			setState(193);
 			expression(0);
 			setState(194);
-			match(T__29);
+			match(T__28);
 			setState(195);
 			expression(0);
 			setState(196);
@@ -1808,6 +1807,7 @@ public class pdrawParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class DegreeContext extends AngleContext {
+		public Token d;
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1842,9 +1842,10 @@ public class pdrawParser extends Parser {
 				setState(198);
 				expression(0);
 				setState(199);
+				((DegreeContext)_localctx).d = _input.LT(1);
 				_la = _input.LA(1);
-				if ( !(_la==T__30 || _la==T__31) ) {
-				_errHandler.recoverInline(this);
+				if ( !(_la==T__29 || _la==T__30) ) {
+					((DegreeContext)_localctx).d = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1862,10 +1863,10 @@ public class pdrawParser extends Parser {
 				setState(203);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==T__32) {
+				if (_la==T__31) {
 					{
 					setState(202);
-					match(T__32);
+					match(T__31);
 					}
 				}
 
@@ -1972,36 +1973,36 @@ public class pdrawParser extends Parser {
 			setState(211);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__33:
+			case T__32:
 				_localctx = new ForwardContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(207);
-				match(T__33);
+				match(T__32);
 				}
 				break;
-			case T__34:
+			case T__33:
 				_localctx = new BackwardContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(208);
-				match(T__34);
+				match(T__33);
 				}
 				break;
-			case T__35:
+			case T__34:
 				_localctx = new LeftContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(209);
-				match(T__35);
+				match(T__34);
 				}
 				break;
-			case T__36:
+			case T__35:
 				_localctx = new RightContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(210);
-				match(T__36);
+				match(T__35);
 				}
 				break;
 			default:
@@ -2073,20 +2074,20 @@ public class pdrawParser extends Parser {
 			setState(215);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__37:
+			case T__36:
 				_localctx = new DownContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(213);
-				match(T__37);
+				match(T__36);
 				}
 				break;
-			case T__38:
+			case T__37:
 				_localctx = new UpContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(214);
-				match(T__38);
+				match(T__37);
 				}
 				break;
 			default:
@@ -2210,8 +2211,8 @@ public class pdrawParser extends Parser {
 		"\u0001\u0012\u0001\u0012\u0001\u0012\u0001\u0012\u0001\u0012\u0001\u0012"+
 		"\u0000\u0001\u0018\u0013\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012"+
 		"\u0014\u0016\u0018\u001a\u001c\u001e \"$\u0000\u0005\u0002\u0000,,..\u0001"+
-		"\u0000,-\u0001\u0000\u001a\u001b\u0001\u0000\u0016\u0019\u0001\u0000\u001f"+
-		" \u00f4\u0000)\u0001\u0000\u0000\u0000\u00026\u0001\u0000\u0000\u0000"+
+		"\u0000,-\u0001\u0000\u0019\u001a\u0001\u0000\u0016\u0018\u0001\u0000\u001e"+
+		"\u001f\u00f4\u0000)\u0001\u0000\u0000\u0000\u00026\u0001\u0000\u0000\u0000"+
 		"\u0004A\u0001\u0000\u0000\u0000\u0006M\u0001\u0000\u0000\u0000\bO\u0001"+
 		"\u0000\u0000\u0000\nU\u0001\u0000\u0000\u0000\fe\u0001\u0000\u0000\u0000"+
 		"\u000eg\u0001\u0000\u0000\u0000\u0010\u0083\u0001\u0000\u0000\u0000\u0012"+
@@ -2233,14 +2234,14 @@ public class pdrawParser extends Parser {
 		"\u0016\u000b\u0000;<\u0003 \u0010\u0000<=\u0003\u001e\u000f\u0000=B\u0001"+
 		"\u0000\u0000\u0000>?\u0003\u0016\u000b\u0000?@\u0003\"\u0011\u0000@B\u0001"+
 		"\u0000\u0000\u0000A:\u0001\u0000\u0000\u0000A>\u0001\u0000\u0000\u0000"+
-		"B\u0005\u0001\u0000\u0000\u0000CD\u0005(\u0000\u0000DE\u0003\u0016\u000b"+
+		"B\u0005\u0001\u0000\u0000\u0000CD\u0005\'\u0000\u0000DE\u0003\u0016\u000b"+
 		"\u0000EF\u0005\u0002\u0000\u0000FG\u0003\u0018\f\u0000GN\u0001\u0000\u0000"+
 		"\u0000HN\u0003\u0014\n\u0000IJ\u0003\u0016\u000b\u0000JK\u0005\u0002\u0000"+
 		"\u0000KL\u0003\u0018\f\u0000LN\u0001\u0000\u0000\u0000MC\u0001\u0000\u0000"+
 		"\u0000MH\u0001\u0000\u0000\u0000MI\u0001\u0000\u0000\u0000N\u0007\u0001"+
-		"\u0000\u0000\u0000OP\u0005(\u0000\u0000PQ\u0005\u0003\u0000\u0000QR\u0003"+
+		"\u0000\u0000\u0000OP\u0005\'\u0000\u0000PQ\u0005\u0003\u0000\u0000QR\u0003"+
 		"\u0018\f\u0000RS\u0005\u0004\u0000\u0000ST\u0005\u0001\u0000\u0000T\t"+
-		"\u0001\u0000\u0000\u0000UV\u0005\u0005\u0000\u0000VW\u0005)\u0000\u0000"+
+		"\u0001\u0000\u0000\u0000UV\u0005\u0005\u0000\u0000VW\u0005(\u0000\u0000"+
 		"W\u000b\u0001\u0000\u0000\u0000X\\\u0003\u0018\f\u0000Y\\\u0003\u0016"+
 		"\u000b\u0000Z\\\u00050\u0000\u0000[X\u0001\u0000\u0000\u0000[Y\u0001\u0000"+
 		"\u0000\u0000[Z\u0001\u0000\u0000\u0000\\]\u0001\u0000\u0000\u0000]^\u0005"+
@@ -2277,41 +2278,41 @@ public class pdrawParser extends Parser {
 		"\u0000\u0000\u009b\u009c\u0001\u0000\u0000\u0000\u009c\u0015\u0001\u0000"+
 		"\u0000\u0000\u009d\u009e\u0007\u0001\u0000\u0000\u009e\u0017\u0001\u0000"+
 		"\u0000\u0000\u009f\u00a0\u0006\f\uffff\uffff\u0000\u00a0\u00a1\u0007\u0002"+
-		"\u0000\u0000\u00a1\u00ae\u0003\u0018\f\n\u00a2\u00ae\u0007\u0001\u0000"+
-		"\u0000\u00a3\u00ae\u0003$\u0012\u0000\u00a4\u00ae\u0003\u001a\r\u0000"+
-		"\u00a5\u00ae\u0005)\u0000\u0000\u00a6\u00ae\u0005*\u0000\u0000\u00a7\u00ae"+
-		"\u00050\u0000\u0000\u00a8\u00ae\u0003\u0016\u000b\u0000\u00a9\u00aa\u0005"+
-		"\u0003\u0000\u0000\u00aa\u00ab\u0003\u0018\f\u0000\u00ab\u00ac\u0005\u0004"+
-		"\u0000\u0000\u00ac\u00ae\u0001\u0000\u0000\u0000\u00ad\u009f\u0001\u0000"+
-		"\u0000\u0000\u00ad\u00a2\u0001\u0000\u0000\u0000\u00ad\u00a3\u0001\u0000"+
-		"\u0000\u0000\u00ad\u00a4\u0001\u0000\u0000\u0000\u00ad\u00a5\u0001\u0000"+
-		"\u0000\u0000\u00ad\u00a6\u0001\u0000\u0000\u0000\u00ad\u00a7\u0001\u0000"+
-		"\u0000\u0000\u00ad\u00a8\u0001\u0000\u0000\u0000\u00ad\u00a9\u0001\u0000"+
-		"\u0000\u0000\u00ae\u00ba\u0001\u0000\u0000\u0000\u00af\u00b0\n\f\u0000"+
-		"\u0000\u00b0\u00b1\u0007\u0003\u0000\u0000\u00b1\u00b9\u0003\u0018\f\r"+
-		"\u00b2\u00b3\n\u000b\u0000\u0000\u00b3\u00b4\u0007\u0002\u0000\u0000\u00b4"+
-		"\u00b9\u0003\u0018\f\f\u00b5\u00b6\n\t\u0000\u0000\u00b6\u00b7\u0005\u001c"+
-		"\u0000\u0000\u00b7\u00b9\u0003\u0018\f\t\u00b8\u00af\u0001\u0000\u0000"+
-		"\u0000\u00b8\u00b2\u0001\u0000\u0000\u0000\u00b8\u00b5\u0001\u0000\u0000"+
-		"\u0000\u00b9\u00bc\u0001\u0000\u0000\u0000\u00ba\u00b8\u0001\u0000\u0000"+
-		"\u0000\u00ba\u00bb\u0001\u0000\u0000\u0000\u00bb\u0019\u0001\u0000\u0000"+
-		"\u0000\u00bc\u00ba\u0001\u0000\u0000\u0000\u00bd\u00be\u0005\u001d\u0000"+
-		"\u0000\u00be\u00bf\u00050\u0000\u0000\u00bf\u001b\u0001\u0000\u0000\u0000"+
-		"\u00c0\u00c1\u0005\u0003\u0000\u0000\u00c1\u00c2\u0003\u0018\f\u0000\u00c2"+
-		"\u00c3\u0005\u001e\u0000\u0000\u00c3\u00c4\u0003\u0018\f\u0000\u00c4\u00c5"+
-		"\u0005\u0004\u0000\u0000\u00c5\u001d\u0001\u0000\u0000\u0000\u00c6\u00c7"+
-		"\u0003\u0018\f\u0000\u00c7\u00c8\u0007\u0004\u0000\u0000\u00c8\u00ce\u0001"+
-		"\u0000\u0000\u0000\u00c9\u00cb\u0003\u0018\f\u0000\u00ca\u00cc\u0005!"+
-		"\u0000\u0000\u00cb\u00ca\u0001\u0000\u0000\u0000\u00cb\u00cc\u0001\u0000"+
-		"\u0000\u0000\u00cc\u00ce\u0001\u0000\u0000\u0000\u00cd\u00c6\u0001\u0000"+
-		"\u0000\u0000\u00cd\u00c9\u0001\u0000\u0000\u0000\u00ce\u001f\u0001\u0000"+
-		"\u0000\u0000\u00cf\u00d4\u0005\"\u0000\u0000\u00d0\u00d4\u0005#\u0000"+
-		"\u0000\u00d1\u00d4\u0005$\u0000\u0000\u00d2\u00d4\u0005%\u0000\u0000\u00d3"+
-		"\u00cf\u0001\u0000\u0000\u0000\u00d3\u00d0\u0001\u0000\u0000\u0000\u00d3"+
-		"\u00d1\u0001\u0000\u0000\u0000\u00d3\u00d2\u0001\u0000\u0000\u0000\u00d4"+
-		"!\u0001\u0000\u0000\u0000\u00d5\u00d8\u0005&\u0000\u0000\u00d6\u00d8\u0005"+
-		"\'\u0000\u0000\u00d7\u00d5\u0001\u0000\u0000\u0000\u00d7\u00d6\u0001\u0000"+
-		"\u0000\u0000\u00d8#\u0001\u0000\u0000\u0000\u00d9\u00da\u0005(\u0000\u0000"+
+		"\u0000\u0000\u00a1\u00ae\u0003\u0018\f\n\u00a2\u00ae\u0003$\u0012\u0000"+
+		"\u00a3\u00ae\u0003\u001a\r\u0000\u00a4\u00ae\u0005(\u0000\u0000\u00a5"+
+		"\u00ae\u0005)\u0000\u0000\u00a6\u00ae\u00050\u0000\u0000\u00a7\u00ae\u0005"+
+		"+\u0000\u0000\u00a8\u00ae\u0003\u0016\u000b\u0000\u00a9\u00aa\u0005\u0003"+
+		"\u0000\u0000\u00aa\u00ab\u0003\u0018\f\u0000\u00ab\u00ac\u0005\u0004\u0000"+
+		"\u0000\u00ac\u00ae\u0001\u0000\u0000\u0000\u00ad\u009f\u0001\u0000\u0000"+
+		"\u0000\u00ad\u00a2\u0001\u0000\u0000\u0000\u00ad\u00a3\u0001\u0000\u0000"+
+		"\u0000\u00ad\u00a4\u0001\u0000\u0000\u0000\u00ad\u00a5\u0001\u0000\u0000"+
+		"\u0000\u00ad\u00a6\u0001\u0000\u0000\u0000\u00ad\u00a7\u0001\u0000\u0000"+
+		"\u0000\u00ad\u00a8\u0001\u0000\u0000\u0000\u00ad\u00a9\u0001\u0000\u0000"+
+		"\u0000\u00ae\u00ba\u0001\u0000\u0000\u0000\u00af\u00b0\n\f\u0000\u0000"+
+		"\u00b0\u00b1\u0007\u0003\u0000\u0000\u00b1\u00b9\u0003\u0018\f\r\u00b2"+
+		"\u00b3\n\u000b\u0000\u0000\u00b3\u00b4\u0007\u0002\u0000\u0000\u00b4\u00b9"+
+		"\u0003\u0018\f\f\u00b5\u00b6\n\t\u0000\u0000\u00b6\u00b7\u0005\u001b\u0000"+
+		"\u0000\u00b7\u00b9\u0003\u0018\f\t\u00b8\u00af\u0001\u0000\u0000\u0000"+
+		"\u00b8\u00b2\u0001\u0000\u0000\u0000\u00b8\u00b5\u0001\u0000\u0000\u0000"+
+		"\u00b9\u00bc\u0001\u0000\u0000\u0000\u00ba\u00b8\u0001\u0000\u0000\u0000"+
+		"\u00ba\u00bb\u0001\u0000\u0000\u0000\u00bb\u0019\u0001\u0000\u0000\u0000"+
+		"\u00bc\u00ba\u0001\u0000\u0000\u0000\u00bd\u00be\u0005\u001c\u0000\u0000"+
+		"\u00be\u00bf\u00050\u0000\u0000\u00bf\u001b\u0001\u0000\u0000\u0000\u00c0"+
+		"\u00c1\u0005\u0003\u0000\u0000\u00c1\u00c2\u0003\u0018\f\u0000\u00c2\u00c3"+
+		"\u0005\u001d\u0000\u0000\u00c3\u00c4\u0003\u0018\f\u0000\u00c4\u00c5\u0005"+
+		"\u0004\u0000\u0000\u00c5\u001d\u0001\u0000\u0000\u0000\u00c6\u00c7\u0003"+
+		"\u0018\f\u0000\u00c7\u00c8\u0007\u0004\u0000\u0000\u00c8\u00ce\u0001\u0000"+
+		"\u0000\u0000\u00c9\u00cb\u0003\u0018\f\u0000\u00ca\u00cc\u0005 \u0000"+
+		"\u0000\u00cb\u00ca\u0001\u0000\u0000\u0000\u00cb\u00cc\u0001\u0000\u0000"+
+		"\u0000\u00cc\u00ce\u0001\u0000\u0000\u0000\u00cd\u00c6\u0001\u0000\u0000"+
+		"\u0000\u00cd\u00c9\u0001\u0000\u0000\u0000\u00ce\u001f\u0001\u0000\u0000"+
+		"\u0000\u00cf\u00d4\u0005!\u0000\u0000\u00d0\u00d4\u0005\"\u0000\u0000"+
+		"\u00d1\u00d4\u0005#\u0000\u0000\u00d2\u00d4\u0005$\u0000\u0000\u00d3\u00cf"+
+		"\u0001\u0000\u0000\u0000\u00d3\u00d0\u0001\u0000\u0000\u0000\u00d3\u00d1"+
+		"\u0001\u0000\u0000\u0000\u00d3\u00d2\u0001\u0000\u0000\u0000\u00d4!\u0001"+
+		"\u0000\u0000\u0000\u00d5\u00d8\u0005%\u0000\u0000\u00d6\u00d8\u0005&\u0000"+
+		"\u0000\u00d7\u00d5\u0001\u0000\u0000\u0000\u00d7\u00d6\u0001\u0000\u0000"+
+		"\u0000\u00d8#\u0001\u0000\u0000\u0000\u00d9\u00da\u0005\'\u0000\u0000"+
 		"\u00da\u00db\u0005\u0003\u0000\u0000\u00db\u00dc\u0003\u0018\f\u0000\u00dc"+
 		"\u00dd\u0005\u0004\u0000\u0000\u00dd%\u0001\u0000\u0000\u0000\u0014)6"+
 		"AM[aeps~\u0083\u0094\u009b\u00ad\u00b8\u00ba\u00cb\u00cd\u00d3\u00d7";

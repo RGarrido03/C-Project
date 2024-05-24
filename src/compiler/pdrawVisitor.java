@@ -184,12 +184,12 @@ public interface pdrawVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprInteger(pdrawParser.ExprIntegerContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExprId}
+	 * Visit a parse tree produced by the {@code ExprBool}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExprId(pdrawParser.ExprIdContext ctx);
+	T visitExprBool(pdrawParser.ExprBoolContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link pdrawParser#expression}.
