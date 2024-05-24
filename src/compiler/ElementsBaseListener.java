@@ -172,18 +172,6 @@ public class ElementsBaseListener implements ElementsListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExecute(ElementsParser.ExecuteContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExecute(ElementsParser.ExecuteContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterStdin(ElementsParser.StdinContext ctx) { }
 	/**
 	 * {@inheritDoc}

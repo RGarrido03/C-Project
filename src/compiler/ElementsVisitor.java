@@ -100,12 +100,6 @@ public interface ElementsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprMultDivMod(ElementsParser.ExprMultDivModContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ElementsParser#execute}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExecute(ElementsParser.ExecuteContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ElementsParser#stdin}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -2,7 +2,7 @@ grammar Class;
 import Elements;
 
 class:
-	'define' 'canvas' variable String? tuple?			# CreateCanvas
+	'define' 'canvas' variable STRING? tuple?			# CreateCanvas
 	| 'define' 'pen' variable '{' (classProps ';')* '}'	# CreatePen;
 
 classProps:

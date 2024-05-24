@@ -89,6 +89,12 @@ public interface pdrawVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExecute(pdrawParser.ExecuteContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link pdrawParser#stdin}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStdin(pdrawParser.StdinContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code CreateCanvas}
 	 * labeled alternative in {@link pdrawParser#class}.
 	 * @param ctx the parse tree
@@ -204,12 +210,6 @@ public interface pdrawVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link pdrawParser#stdin}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStdin(pdrawParser.StdinContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link pdrawParser#tuple}.
 	 * @param ctx the parse tree

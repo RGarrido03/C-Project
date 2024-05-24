@@ -384,9 +384,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitExprUnary(pdrawParser.ExprUnaryContext ctx) {
-    Boolean res = false;
-    return visitChildren(ctx);
-    // return res;
+    Boolean res = visit(ctx.expression());
+    ctx.symbol = ctx.expression().symbol;
+    return res;
   }
 
   @Override
@@ -399,9 +399,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitExprStdIn(pdrawParser.ExprStdInContext ctx) {
-    Boolean res = false;
-    return visitChildren(ctx);
-    // return res;
+    Boolean res = true;
+    ctx.symbol = new Symbol(new StringType(), "stdin");
+    return res;
   }
 
   @Override
@@ -415,7 +415,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitExprString(pdrawParser.ExprStringContext ctx) {
     Boolean res = true;
-    String x = ctx.String().getText();
+    String x = ctx.STRING().getText();
     ctx.symbol = new Symbol(new StringType(), (x)); // TODO this should be a random string
     return res;
   }
@@ -430,7 +430,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitExprVariable(pdrawParser.ExprVariableContext ctx) {
-    System.out.println("PILA");
     Boolean res = true;
     if (!symbolTable.containsKey(ctx.getText())) {
       return false;
@@ -507,9 +506,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitStdin(pdrawParser.StdinContext ctx) {
-    Boolean res = false;
-    return visitChildren(ctx);
-    // return res;
+    return true;
   }
 
   @Override

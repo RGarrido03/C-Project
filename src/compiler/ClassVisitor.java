@@ -126,12 +126,6 @@ public interface ClassVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprMultDivMod(ClassParser.ExprMultDivModContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ClassParser#execute}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExecute(ClassParser.ExecuteContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ClassParser#stdin}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

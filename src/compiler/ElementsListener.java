@@ -161,16 +161,6 @@ public interface ElementsListener extends ParseTreeListener {
 	 */
 	void exitExprMultDivMod(ElementsParser.ExprMultDivModContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ElementsParser#execute}.
-	 * @param ctx the parse tree
-	 */
-	void enterExecute(ElementsParser.ExecuteContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ElementsParser#execute}.
-	 * @param ctx the parse tree
-	 */
-	void exitExecute(ElementsParser.ExecuteContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ElementsParser#stdin}.
 	 * @param ctx the parse tree
 	 */

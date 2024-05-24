@@ -141,6 +141,16 @@ public interface pdrawListener extends ParseTreeListener {
 	 */
 	void exitExecute(pdrawParser.ExecuteContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link pdrawParser#stdin}.
+	 * @param ctx the parse tree
+	 */
+	void enterStdin(pdrawParser.StdinContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link pdrawParser#stdin}.
+	 * @param ctx the parse tree
+	 */
+	void exitStdin(pdrawParser.StdinContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code CreateCanvas}
 	 * labeled alternative in {@link pdrawParser#class}.
 	 * @param ctx the parse tree
@@ -338,16 +348,6 @@ public interface pdrawListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link pdrawParser#stdin}.
-	 * @param ctx the parse tree
-	 */
-	void enterStdin(pdrawParser.StdinContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link pdrawParser#stdin}.
-	 * @param ctx the parse tree
-	 */
-	void exitStdin(pdrawParser.StdinContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pdrawParser#tuple}.
 	 * @param ctx the parse tree

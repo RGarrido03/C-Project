@@ -28,8 +28,9 @@ assignment
 cast: Type '(' expression ')' ';';
 pause: 'pause' INT;
 print:
-	(expression | variable | String) '->' 'stdout'	# stdout
-	| (expression | String) '->' 'stderr'			# stderr;
+	(expression | variable | STRING) '->' 'stdout'	# stdout
+	| (expression | STRING) '->' 'stderr'			# stderr;
 
-execute: variable '<-' 'execute' String;
+execute: variable '<-' 'execute' STRING;
+stdin: 'stdin' STRING;
 // TODO: Refactor to expression TODO aqui vai surgir uma feature poder redirecionar para todo o lado

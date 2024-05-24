@@ -220,18 +220,6 @@ public class ClassBaseListener implements ClassListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExecute(ClassParser.ExecuteContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExecute(ClassParser.ExecuteContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterStdin(ClassParser.StdinContext ctx) { }
 	/**
 	 * {@inheritDoc}

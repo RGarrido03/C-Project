@@ -205,16 +205,6 @@ public interface ClassListener extends ParseTreeListener {
 	 */
 	void exitExprMultDivMod(ClassParser.ExprMultDivModContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ClassParser#execute}.
-	 * @param ctx the parse tree
-	 */
-	void enterExecute(ClassParser.ExecuteContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ClassParser#execute}.
-	 * @param ctx the parse tree
-	 */
-	void exitExecute(ClassParser.ExecuteContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ClassParser#stdin}.
 	 * @param ctx the parse tree
 	 */

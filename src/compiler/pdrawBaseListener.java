@@ -160,6 +160,18 @@ public class pdrawBaseListener implements pdrawListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStdin(pdrawParser.StdinContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStdin(pdrawParser.StdinContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCreateCanvas(pdrawParser.CreateCanvasContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -359,18 +371,6 @@ public class pdrawBaseListener implements pdrawListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterStdin(pdrawParser.StdinContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitStdin(pdrawParser.StdinContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
