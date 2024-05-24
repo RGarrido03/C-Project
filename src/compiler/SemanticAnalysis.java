@@ -425,13 +425,13 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     }
   }
 
-  @Override
-  public Boolean visitVariable(pdrawParser.VariableContext ctx) {
-    Boolean res = false;
-    ctx.getText();
-    return false;
-    // return res;
-  }
+  // @Override
+  // public Boolean visitVariable(pdrawParser.VariableContext ctx) {
+  //   Boolean res = false;
+  //   ctx.getText();
+  //   return false;
+  //   // return res;
+  // }
 
   @Override
   public Boolean visitExprAddSub(pdrawParser.ExprAddSubContext ctx) {
@@ -517,8 +517,12 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitExprCast(pdrawParser.ExprCastContext ctx) {
     Boolean res = false;
+    String castType = ctx.typeCast().Type().getText();
+    String expr = ctx.typeCast().expression().getText();
 
-    return visitChildren(ctx);
+    ctx.symbol = new Symbol(createType(castType), expr);
+
+    return true;
     // return res;
   }
 

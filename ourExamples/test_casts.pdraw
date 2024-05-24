@@ -1,0 +1,9 @@
+int i = 5;
+string s = string(i);
+
+string t = "5";
+t = string(8);
+
+real r = 5.0;
+r = real(1);
+r = real("1");
