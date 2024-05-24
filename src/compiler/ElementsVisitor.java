@@ -16,6 +16,34 @@ public interface ElementsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(ElementsParser.VariableContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprString(ElementsParser.ExprStringContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprParent}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprParent(ElementsParser.ExprParentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprFloat}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprFloat(ElementsParser.ExprFloatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprMultDivMod}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprMultDivMod(ElementsParser.ExprMultDivModContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprAddSub}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
@@ -30,13 +58,6 @@ public interface ElementsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprPow(ElementsParser.ExprPowContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExprString}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprString(ElementsParser.ExprStringContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ExprCast}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
@@ -44,26 +65,12 @@ public interface ElementsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprCast(ElementsParser.ExprCastContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExprParent}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprParent(ElementsParser.ExprParentContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ExprUnary}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExprUnary(ElementsParser.ExprUnaryContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ExprFloat}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprFloat(ElementsParser.ExprFloatContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ExprStdIn}
 	 * labeled alternative in {@link ElementsParser#expression}.
@@ -86,19 +93,19 @@ public interface ElementsVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprId(ElementsParser.ExprIdContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprBool}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprBool(ElementsParser.ExprBoolContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExprVariable(ElementsParser.ExprVariableContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ExprMultDivMod}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprMultDivMod(ElementsParser.ExprMultDivModContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ElementsParser#execute}.
 	 * @param ctx the parse tree

@@ -121,6 +121,34 @@ public interface pdrawVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(pdrawParser.VariableContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprString(pdrawParser.ExprStringContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprParent}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprParent(pdrawParser.ExprParentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprFloat}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprFloat(pdrawParser.ExprFloatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprMultDivMod}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprAddSub}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
@@ -135,13 +163,6 @@ public interface pdrawVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprPow(pdrawParser.ExprPowContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExprString}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprString(pdrawParser.ExprStringContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ExprCast}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
@@ -149,26 +170,12 @@ public interface pdrawVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprCast(pdrawParser.ExprCastContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExprParent}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprParent(pdrawParser.ExprParentContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ExprUnary}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExprUnary(pdrawParser.ExprUnaryContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ExprFloat}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprFloat(pdrawParser.ExprFloatContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ExprStdIn}
 	 * labeled alternative in {@link pdrawParser#expression}.
@@ -191,19 +198,19 @@ public interface pdrawVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprId(pdrawParser.ExprIdContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprBool}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprBool(pdrawParser.ExprBoolContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExprVariable(pdrawParser.ExprVariableContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ExprMultDivMod}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link pdrawParser#stdin}.
 	 * @param ctx the parse tree

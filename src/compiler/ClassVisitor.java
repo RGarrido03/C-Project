@@ -42,6 +42,34 @@ public interface ClassVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(ClassParser.VariableContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link ClassParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprString(ClassParser.ExprStringContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprParent}
+	 * labeled alternative in {@link ClassParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprParent(ClassParser.ExprParentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprFloat}
+	 * labeled alternative in {@link ClassParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprFloat(ClassParser.ExprFloatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprMultDivMod}
+	 * labeled alternative in {@link ClassParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprMultDivMod(ClassParser.ExprMultDivModContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprAddSub}
 	 * labeled alternative in {@link ClassParser#expression}.
 	 * @param ctx the parse tree
@@ -56,13 +84,6 @@ public interface ClassVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprPow(ClassParser.ExprPowContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExprString}
-	 * labeled alternative in {@link ClassParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprString(ClassParser.ExprStringContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ExprCast}
 	 * labeled alternative in {@link ClassParser#expression}.
 	 * @param ctx the parse tree
@@ -70,26 +91,12 @@ public interface ClassVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprCast(ClassParser.ExprCastContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExprParent}
-	 * labeled alternative in {@link ClassParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprParent(ClassParser.ExprParentContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ExprUnary}
 	 * labeled alternative in {@link ClassParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExprUnary(ClassParser.ExprUnaryContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ExprFloat}
-	 * labeled alternative in {@link ClassParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprFloat(ClassParser.ExprFloatContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ExprStdIn}
 	 * labeled alternative in {@link ClassParser#expression}.
@@ -112,19 +119,19 @@ public interface ClassVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprId(ClassParser.ExprIdContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprBool}
+	 * labeled alternative in {@link ClassParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprBool(ClassParser.ExprBoolContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link ClassParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExprVariable(ClassParser.ExprVariableContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ExprMultDivMod}
-	 * labeled alternative in {@link ClassParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprMultDivMod(ClassParser.ExprMultDivModContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ClassParser#execute}.
 	 * @param ctx the parse tree

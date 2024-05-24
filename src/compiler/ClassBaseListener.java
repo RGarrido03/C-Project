@@ -76,6 +76,54 @@ public class ClassBaseListener implements ClassListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprString(ClassParser.ExprStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprString(ClassParser.ExprStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprParent(ClassParser.ExprParentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprParent(ClassParser.ExprParentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprFloat(ClassParser.ExprFloatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprFloat(ClassParser.ExprFloatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprMultDivMod(ClassParser.ExprMultDivModContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprMultDivMod(ClassParser.ExprMultDivModContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprAddSub(ClassParser.ExprAddSubContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -100,18 +148,6 @@ public class ClassBaseListener implements ClassListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprString(ClassParser.ExprStringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExprString(ClassParser.ExprStringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterExprCast(ClassParser.ExprCastContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -124,18 +160,6 @@ public class ClassBaseListener implements ClassListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprParent(ClassParser.ExprParentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExprParent(ClassParser.ExprParentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterExprUnary(ClassParser.ExprUnaryContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -143,18 +167,6 @@ public class ClassBaseListener implements ClassListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExprUnary(ClassParser.ExprUnaryContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExprFloat(ClassParser.ExprFloatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExprFloat(ClassParser.ExprFloatContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -196,6 +208,18 @@ public class ClassBaseListener implements ClassListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprBool(ClassParser.ExprBoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprBool(ClassParser.ExprBoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprVariable(ClassParser.ExprVariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -203,18 +227,6 @@ public class ClassBaseListener implements ClassListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExprVariable(ClassParser.ExprVariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExprMultDivMod(ClassParser.ExprMultDivModContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExprMultDivMod(ClassParser.ExprMultDivModContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -17,6 +17,54 @@ public interface ElementsListener extends ParseTreeListener {
 	 */
 	void exitVariable(ElementsParser.VariableContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprString(ElementsParser.ExprStringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprString(ElementsParser.ExprStringContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExprParent}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprParent(ElementsParser.ExprParentContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprParent}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprParent(ElementsParser.ExprParentContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExprFloat}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprFloat(ElementsParser.ExprFloatContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprFloat}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprFloat(ElementsParser.ExprFloatContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExprMultDivMod}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprMultDivMod(ElementsParser.ExprMultDivModContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprMultDivMod}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprMultDivMod(ElementsParser.ExprMultDivModContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprAddSub}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
@@ -41,18 +89,6 @@ public interface ElementsListener extends ParseTreeListener {
 	 */
 	void exitExprPow(ElementsParser.ExprPowContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ExprString}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprString(ElementsParser.ExprStringContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExprString}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprString(ElementsParser.ExprStringContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ExprCast}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
@@ -65,18 +101,6 @@ public interface ElementsListener extends ParseTreeListener {
 	 */
 	void exitExprCast(ElementsParser.ExprCastContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ExprParent}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprParent(ElementsParser.ExprParentContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExprParent}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprParent(ElementsParser.ExprParentContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ExprUnary}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
@@ -88,18 +112,6 @@ public interface ElementsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExprUnary(ElementsParser.ExprUnaryContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ExprFloat}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprFloat(ElementsParser.ExprFloatContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExprFloat}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprFloat(ElementsParser.ExprFloatContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ExprStdIn}
 	 * labeled alternative in {@link ElementsParser#expression}.
@@ -137,6 +149,18 @@ public interface ElementsListener extends ParseTreeListener {
 	 */
 	void exitExprId(ElementsParser.ExprIdContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprBool}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprBool(ElementsParser.ExprBoolContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprBool}
+	 * labeled alternative in {@link ElementsParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprBool(ElementsParser.ExprBoolContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link ElementsParser#expression}.
 	 * @param ctx the parse tree
@@ -148,18 +172,6 @@ public interface ElementsListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExprVariable(ElementsParser.ExprVariableContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ExprMultDivMod}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprMultDivMod(ElementsParser.ExprMultDivModContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExprMultDivMod}
-	 * labeled alternative in {@link ElementsParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprMultDivMod(ElementsParser.ExprMultDivModContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ElementsParser#execute}.
 	 * @param ctx the parse tree

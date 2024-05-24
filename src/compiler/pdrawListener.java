@@ -195,6 +195,54 @@ public interface pdrawListener extends ParseTreeListener {
 	 */
 	void exitVariable(pdrawParser.VariableContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprString(pdrawParser.ExprStringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprString}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprString(pdrawParser.ExprStringContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExprParent}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprParent(pdrawParser.ExprParentContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprParent}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprParent(pdrawParser.ExprParentContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExprFloat}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprFloat(pdrawParser.ExprFloatContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprFloat}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprFloat(pdrawParser.ExprFloatContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExprMultDivMod}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprMultDivMod(pdrawParser.ExprMultDivModContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprMultDivMod}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprAddSub}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
@@ -219,18 +267,6 @@ public interface pdrawListener extends ParseTreeListener {
 	 */
 	void exitExprPow(pdrawParser.ExprPowContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ExprString}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprString(pdrawParser.ExprStringContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExprString}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprString(pdrawParser.ExprStringContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ExprCast}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
@@ -243,18 +279,6 @@ public interface pdrawListener extends ParseTreeListener {
 	 */
 	void exitExprCast(pdrawParser.ExprCastContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ExprParent}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprParent(pdrawParser.ExprParentContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExprParent}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprParent(pdrawParser.ExprParentContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ExprUnary}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
@@ -266,18 +290,6 @@ public interface pdrawListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExprUnary(pdrawParser.ExprUnaryContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ExprFloat}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprFloat(pdrawParser.ExprFloatContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExprFloat}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprFloat(pdrawParser.ExprFloatContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ExprStdIn}
 	 * labeled alternative in {@link pdrawParser#expression}.
@@ -315,6 +327,18 @@ public interface pdrawListener extends ParseTreeListener {
 	 */
 	void exitExprId(pdrawParser.ExprIdContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprBool}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprBool(pdrawParser.ExprBoolContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprBool}
+	 * labeled alternative in {@link pdrawParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprBool(pdrawParser.ExprBoolContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprVariable}
 	 * labeled alternative in {@link pdrawParser#expression}.
 	 * @param ctx the parse tree
@@ -326,18 +350,6 @@ public interface pdrawListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExprVariable(pdrawParser.ExprVariableContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ExprMultDivMod}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprMultDivMod(pdrawParser.ExprMultDivModContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExprMultDivMod}
-	 * labeled alternative in {@link pdrawParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link pdrawParser#stdin}.
 	 * @param ctx the parse tree

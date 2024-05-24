@@ -1,6 +1,7 @@
 grammar Elements;
 variable: Name | Word;
-expression:
+expression
+	returns[types.Symbol symbol]:
 	expression op = ('*' | '/' | '%' | '//') expression	# ExprMultDivMod
 	| expression op = ('+' | '-') expression			# ExprAddSub
 	| op = ('+' | '-') e2 = expression					# ExprUnary
@@ -11,6 +12,7 @@ expression:
 	| INT												# ExprInteger
 	| FLOAT												# ExprFloat // FIXME change this
 	| String											# ExprString
+	| BOOL												# ExprBool
 	| variable											# ExprVariable
 	| '(' expression ')'								# ExprParent;
 
@@ -19,8 +21,8 @@ stdin: 'stdin' String;
 
 tuple: '(' expression ',' expression ')';
 angle:
-	expression ('º' | 'deg')	# Degree
-	| expression ('rad')?		# Radian;
+	expression d = ('º' | 'deg')	# Degree
+	| expression ('rad')?			# Radian;
 
 moveAction:
 	'forward'		# forward
@@ -42,6 +44,7 @@ typeCast: Type '(' expression ')';
 INT: [0-9]+;
 FLOAT: [0-9]+ '.' [0-9]+;
 FRACTION: INT '/' INT;
+BOOL: 'true' | 'false';
 
 // Misc
 
