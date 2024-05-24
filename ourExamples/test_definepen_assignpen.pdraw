@@ -14,3 +14,9 @@ define pen penTypeFina {
 
 
 pen instanciaPenTypeGrossa = new penTypeGrossa;
+
+pen instanciaPenTypeFina = new penTypeFina;
+
+pen instanciaPenTypeGrossa2 = new penTypeGrossa;
+
+pen instanciaPenTypeFina2 = new penTypeFinatrsrs;

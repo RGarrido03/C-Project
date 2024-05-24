@@ -266,26 +266,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitAssignmentPen(pdrawParser.AssignmentPenContext ctx) {
-    String name = ctx.object().getText();
-    Boolean res = symbolTable.containsKey(name);
-
-    if (res) {
-      if (!(symbolTable.get(name).getName().equals("pen"))) {
-        ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s is not a pen", name)
-        );
-      } else {
-        // object: 'pen' variable '=' 'new' variable?;
-        res = visit((ParseTree) ctx.object().variable()); // had to cast, dont know if this is the way
-      }
-    } else {
-      ErrorHandling.printError(
-        ctx,
-        String.format("Variable %s not defined", name)
-      );
-    }
-    return res;
+    return visitObject(ctx.object());
   }
 
   @Override
@@ -426,20 +407,22 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     String var_left = ctx.variable(0).getText();
     String penTAD_right = ctx.variable(1).getText();
 
-    if (!symbolTable.containsKey(var_left)) {
+    if (!symbolTable.containsKey(penTAD_right)) {
       ErrorHandling.printError(
         ctx,
-        String.format("Variable %s not defined", var_left)
+        String.format("Pen type %s not defined", penTAD_right)
       );
-    } else if (!symbolTable.containsKey(penTAD_right)) {
+      return false;
+    } else if (symbolTable.containsKey(var_left)) {
       ErrorHandling.printError(
         ctx,
-        String.format("Variable %s not defined", penTAD_right)
+        String.format("Variable %s is already defined", penTAD_right)
       );
+      return false;
+    } else {
+      symbolTable.put(var_left, symbolTable.get(penTAD_right));
+      return true;
     }
-
-    return false;
-    // return res;
   }
 
   @Override
