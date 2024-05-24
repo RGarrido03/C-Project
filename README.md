@@ -41,26 +41,21 @@ Exemplo de como definir a caneta e as suas variáveis.
 define pen PenType1 {
   color = green;
   position = ( 10 , 10 ) ;
-  orientation = 45º; 
-  thickness = 10 ; 
-  pressure = −1; 
+  orientation = 45º;
+  thickness = 10 ;
+  pressure = −1;
 }
 
 pen p1 = new PenType1;
 ```
 
-
-| Variável | Descricão |
-| --- | --- |
-| __color__ | Cor da caneta que pode ser uma palvra ou um valor hexadecimal |
-| __position__ | Posição inicial representada por um ponto (tuplo) |
-| __orientation__ | Ângulo em graus da orientação da caneta |
-| __thickness__ | Espessura da caneta |
-| __position__ | Pressão com que a caneta está a ser usada (_up_, _down_) |
-
-
-
-
+| Variável        | Descricão                                                     |
+| --------------- | ------------------------------------------------------------- |
+| **color**       | Cor da caneta que pode ser uma palvra ou um valor hexadecimal |
+| **position**    | Posição inicial representada por um ponto (tuplo)             |
+| **orientation** | Ângulo em graus da orientação da caneta                       |
+| **thickness**   | Espessura da caneta                                           |
+| **position**    | Pressão com que a caneta está a ser usada (_up_, _down_)      |
 
 ## Contribuições
 

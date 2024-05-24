@@ -28,8 +28,8 @@ assignment
 cast: Type '(' expression ')' ';';
 pause: 'pause' INT;
 print:
-	(expression | variable | STRING) '->' 'stdout'	# stdout
-	| (expression | STRING) '->' 'stderr'			# stderr;
+	(expression) '->' 'stdout'		# stdout
+	| (expression) '->' 'stderr'	# stderr;
 
 execute: variable '<-' 'execute' STRING;
 stdin: 'stdin' STRING;

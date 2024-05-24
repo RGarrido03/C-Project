@@ -1,7 +1,10 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import types.*;
@@ -9,7 +12,168 @@ import types.*;
 @SuppressWarnings("CheckReturnValue")
 public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
+  private static final Set<String> htmlColorNames = new HashSet<>();
   private final Map<String, Symbol> symbolTable = new HashMap<>();
+  private static final Pattern hexPattern = Pattern.compile("#[a-fA-F0-9]{6}");
+
+  static {
+    // Adicionar todas as cores nomeadas do HTML
+    String[] colors = {
+      "AliceBlue",
+      "AntiqueWhite",
+      "Aqua",
+      "Aquamarine",
+      "Azure",
+      "Beige",
+      "Bisque",
+      "Black",
+      "BlanchedAlmond",
+      "Blue",
+      "BlueViolet",
+      "Brown",
+      "BurlyWood",
+      "CadetBlue",
+      "Chartreuse",
+      "Chocolate",
+      "Coral",
+      "CornflowerBlue",
+      "Cornsilk",
+      "Crimson",
+      "Cyan",
+      "DarkBlue",
+      "DarkCyan",
+      "DarkGoldenRod",
+      "DarkGray",
+      "DarkGreen",
+      "DarkKhaki",
+      "DarkMagenta",
+      "DarkOliveGreen",
+      "DarkOrange",
+      "DarkOrchid",
+      "DarkRed",
+      "DarkSalmon",
+      "DarkSeaGreen",
+      "DarkSlateBlue",
+      "DarkSlateGray",
+      "DarkTurquoise",
+      "DarkViolet",
+      "DeepPink",
+      "DeepSkyBlue",
+      "DimGray",
+      "DodgerBlue",
+      "FireBrick",
+      "FloralWhite",
+      "ForestGreen",
+      "Fuchsia",
+      "Gainsboro",
+      "GhostWhite",
+      "Gold",
+      "GoldenRod",
+      "Gray",
+      "Green",
+      "GreenYellow",
+      "HoneyDew",
+      "HotPink",
+      "IndianRed",
+      "Indigo",
+      "Ivory",
+      "Khaki",
+      "Lavender",
+      "LavenderBlush",
+      "LawnGreen",
+      "LemonChiffon",
+      "LightBlue",
+      "LightCoral",
+      "LightCyan",
+      "LightGoldenRodYellow",
+      "LightGray",
+      "LightGreen",
+      "LightPink",
+      "LightSalmon",
+      "LightSeaGreen",
+      "LightSkyBlue",
+      "LightSlateGray",
+      "LightSteelBlue",
+      "LightYellow",
+      "Lime",
+      "LimeGreen",
+      "Linen",
+      "Magenta",
+      "Maroon",
+      "MediumAquaMarine",
+      "MediumBlue",
+      "MediumOrchid",
+      "MediumPurple",
+      "MediumSeaGreen",
+      "MediumSlateBlue",
+      "MediumSpringGreen",
+      "MediumTurquoise",
+      "MediumVioletRed",
+      "MidnightBlue",
+      "MintCream",
+      "MistyRose",
+      "Moccasin",
+      "NavajoWhite",
+      "Navy",
+      "OldLace",
+      "Olive",
+      "OliveDrab",
+      "Orange",
+      "OrangeRed",
+      "Orchid",
+      "PaleGoldenRod",
+      "PaleGreen",
+      "PaleTurquoise",
+      "PaleVioletRed",
+      "PapayaWhip",
+      "PeachPuff",
+      "Peru",
+      "Pink",
+      "Plum",
+      "PowderBlue",
+      "Purple",
+      "RebeccaPurple",
+      "Red",
+      "RosyBrown",
+      "RoyalBlue",
+      "SaddleBrown",
+      "Salmon",
+      "SandyBrown",
+      "SeaGreen",
+      "SeaShell",
+      "Sienna",
+      "Silver",
+      "SkyBlue",
+      "SlateBlue",
+      "SlateGray",
+      "Snow",
+      "SpringGreen",
+      "SteelBlue",
+      "Tan",
+      "Teal",
+      "Thistle",
+      "Tomato",
+      "Turquoise",
+      "Violet",
+      "Wheat",
+      "White",
+      "WhiteSmoke",
+      "Yellow",
+      "YellowGreen",
+    }; // SEE ME this can't be hard coded :cry:
+
+    for (String color : colors) {
+      htmlColorNames.add(color.toLowerCase());
+    }
+  }
+
+  private boolean isColorWord(String color) {
+    return htmlColorNames.contains(color.toLowerCase());
+  }
+
+  private boolean isHexColor(String color) {
+    return hexPattern.matcher(color).matches();
+  }
 
   @Override
   public Boolean visitMain(pdrawParser.MainContext ctx) {
@@ -80,17 +244,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       );
       return false;
     }
-  }
-
-  // our made not antlr
-  private boolean isTypeMatching(Object value, String type) {
-    return switch (type.toLowerCase()) {
-      case "int" -> value instanceof Integer;
-      case "real" -> value instanceof Double;
-      case "string" -> value instanceof String;
-      case "bool" -> value instanceof Boolean;
-      default -> false;
-    };
   }
 
   // our made not antlr
@@ -205,30 +358,27 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitCreatePen(pdrawParser.CreatePenContext ctx) {
     Boolean res = false;
-    String penTAD = ctx.variable().getText();
+    String penTAD_especifico = ctx.variable().getText();
     List<pdrawParser.ClassPropsContext> props = ctx.classProps();
-    if (!symbolTable.containsKey(penTAD)) {
-      if (/*symbolTable.get(penTAD).getType() instanceof PenTAD*/true) {
-        for (pdrawParser.ClassPropsContext prop : props) {
-          if (!visit(prop)) {
-            return false;
-          }
+    if (!symbolTable.containsKey(penTAD_especifico)) {
+      for (pdrawParser.ClassPropsContext prop : props) {
+        if (!visit(prop)) {
+          ErrorHandling.printError(ctx, "ClassProps is not valid");
+          return false;
         }
-        return true;
-      } else {
-        ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s is not a pen", penTAD)
-        );
       }
+      symbolTable.put(
+        penTAD_especifico,
+        new Symbol(new PenTAD(penTAD_especifico), penTAD_especifico)
+      );
+      return true;
     } else {
       ErrorHandling.printError(
         ctx,
-        String.format("Variable %s not defined", penTAD)
+        String.format("Variable %s is already defined", penTAD_especifico)
       );
+      return false;
     }
-    return visitChildren(ctx);
-    // return res;
   }
 
   @Override
@@ -236,10 +386,18 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     Boolean res = false;
 
     String prop = ctx.getText().split("=")[0].trim();
+    String value = ctx.getText().split("=")[1].replace(";", "");
     switch (prop) {
       case "color":
         // TODO check if it's a color
-        break;
+        Boolean isColorValid = isColorWord(value) || isHexColor(value);
+        if (!isColorValid) {
+          ErrorHandling.printError(
+            ctx,
+            String.format("The value %s is not a color", value)
+          );
+        }
+        return isColorValid;
       case "position":
         // TODO check if it's a position
         return visitTuple(ctx.tuple());
@@ -265,13 +423,20 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitObject(pdrawParser.ObjectContext ctx) {
     Boolean res = false;
-    String[] vars = new String[ctx.getChildCount()];
-    // for( pdrawParser.VariableContext var: ctx.variable()) {
-    // };
-    for (int i = 0; i < ctx.getChildCount(); i++) {
-      vars[i] = ((pdrawParser.VariableContext) ctx.getChild(i)).getText(); // this was harder to get
+    String var_left = ctx.variable(0).getText();
+    String penTAD_right = ctx.variable(1).getText();
+
+    if (!symbolTable.containsKey(var_left)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s not defined", var_left)
+      );
+    } else if (!symbolTable.containsKey(penTAD_right)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s not defined", penTAD_right)
+      );
     }
-    System.out.println(vars);
 
     return false;
     // return res;
@@ -512,8 +677,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitTuple(pdrawParser.TupleContext ctx) {
     Boolean res = false;
-
-    if (visitChildren(ctx)) {
+    Boolean left = visit(ctx.expression(0));
+    Boolean right = visit(ctx.expression(1));
+    if (left && right) {
       return true;
     } else {
       ErrorHandling.printError(ctx, "Tuple has errors");
@@ -525,17 +691,22 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitDegree(pdrawParser.DegreeContext ctx) {
-    Boolean res = false;
-
-    return visitChildren(ctx);
-    // return res;
+    Boolean res = visit(ctx.expression());
+    if (!res) {
+      ErrorHandling.printError(ctx, "Degree has errors");
+      return false;
+    }
+    return res;
   }
 
   @Override
   public Boolean visitRadian(pdrawParser.RadianContext ctx) {
-    Boolean res = false;
-    return visitChildren(ctx);
-    // return res;
+    Boolean res = visit(ctx.expression());
+    if (!res) {
+      ErrorHandling.printError(ctx, "Radian has errors");
+      return false;
+    }
+    return res;
   }
 
   @Override

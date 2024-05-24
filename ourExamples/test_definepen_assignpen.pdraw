@@ -2,7 +2,15 @@ define pen penTypeGrossa {
     color= green;
     position=(0,0);
     thickness= 2;
-
+    orientation= 0º;
 };
+
+define pen penTypeFina {
+    color= YELLOW;
+    position=(0,0);
+    thickness= 5;
+    orientation= 10 rad;
+};
+
 
 pen instanciaPenTypeGrossa = new penTypeGrossa;

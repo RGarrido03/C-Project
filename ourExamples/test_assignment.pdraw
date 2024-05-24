@@ -8,6 +8,8 @@ bool myBoolVar = true;
 myRealVar = 2.0;
 
 string myStringVar2 = stdin "Enter a string: ";
+myStringVar2 = stdin "Enter another string: ";
+myStringVar2 = stdin "Enter another string: ";
 
 % this should not work
 % comment multiple lines and let one uncommented

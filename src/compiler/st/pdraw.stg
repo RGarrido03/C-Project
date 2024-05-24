@@ -1,4 +1,4 @@
-group pdraw;
+wgroup pdraw;
 import "Elements.stg";
 
 main(statements) ::= <<
