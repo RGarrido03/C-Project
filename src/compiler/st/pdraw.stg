@@ -1,3 +1,58 @@
-pause(seconds) ::= <<
-   time.sleep(<seconds>)
+group pdraw;
+import "Elements.stg";
+
+main(statements) ::= <<
+<statements; separator=";\n">;
 >>
+
+statement(instruction, assignment, cast, class, object, execute, print, pause) ::=<<
+// do i need to create those types of statement as the ClassProps?
+>>
+
+instruction(variable, action, angle, penAction) ::= <<
+<if(moveAction)>
+    <variable>.<action>(<angle>)
+<else>
+    <variable>.<action>()
+<endif>
+>>
+
+assignment(assignVar, assignPen, reassignVar, variable, object, expression, type) ::= <<
+<if(assignVar)>
+    <type><variable> = <expression>
+<elseif(assignPen)>
+    <object>
+<elseif(reassignVar)>
+    <variable> = <expression>
+<endif>
+>>
+
+
+// Medium Level
+cast(Type, expression) ::= <<
+    <variable> = <Type>(<expression>)
+>>
+
+pause(INT) ::= <<
+import time
+time.sleep(<INT>)
+>>
+
+print(expression, stdOut, stdErr) ::= <<
+    <if(stdOut)>
+        print(<expression>)
+    <elseif(stdErr)>
+        import sys
+        print(<expression>, file=sys.stderr)
+    <endif>
+>>
+
+execute(variable, String) ::= <<
+    <variable> = eval(<String>)
+>>
+
+
+
+
+
+

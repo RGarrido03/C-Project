@@ -6,7 +6,6 @@ define pen <variable> {
     <props; separator="\n">;
 }
 <elseif(canvasDefinition)>
-
 define canvas <variable>
     <if(canvasType)>
         <canvasType>
@@ -23,5 +22,5 @@ classProps(word, value) ::= <<
 >>
 
 object(variable, penType) ::= <<
-pen <variable> = new <penType>
+    pen <variable> = new <penType>
 >>

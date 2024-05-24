@@ -40,10 +40,6 @@ public class Symbol {
     this.type = type;
   }
 
-  public void setValue(String value) {
-    this.value = value;
-  }
-
   public void setValue(Object value) {
     this.value = value;
   }
