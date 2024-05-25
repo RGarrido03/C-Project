@@ -292,59 +292,23 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitCast(pdrawParser.CastContext ctx) {
     Symbol toBeCast = ctx.expression().symbol;
-    Class<? extends Type> symbolClass = toBeCast.getType().getClass();
 
-    return switch (ctx.Type().getText()) {
-      case "string" -> true;
-
-      case "bool" -> {
-        if (toBeCast.getType().isNumeric()) {
-          int number = (Integer) toBeCast.getValue();
-          if (number == 0 || number == 1) {
-            yield true;
-          }
-          ErrorHandling.printError(ctx, "Number to cast to bool is not 0 or 1");
+    try {
+      switch (ctx.Type().getText()) {
+        case "string" -> toBeCast.castToString();
+        case "bool" -> toBeCast.castToBoolean();
+        case "real" -> toBeCast.castToReal();
+        case "int" -> toBeCast.castToInteger();
+        default -> {
+          ErrorHandling.printError(ctx, "Type " + ctx.Type().getText() + " is not castable");
+          return false;
         }
-        if (symbolClass == StringType.class) {
-          String expression = (String) toBeCast.getValue();
-          if (expression.equals("true") || expression.equals("false")) {
-            yield true;
-          }
-          ErrorHandling.printError(ctx, "String is not 'true' or 'false', to be cast");
-          yield false;
-        }
-        if (symbolClass == BoolType.class) {
-          yield true;
-        }
-        ErrorHandling.printError(ctx, "Expression " + toBeCast.getValue() + "cannot be cast to bool");
-        yield false;
       }
-
-      case "real", "int" -> {
-        if (symbolClass == StringType.class) {
-          String expression = (String) toBeCast.getValue();
-          try {
-            Double.parseDouble(expression);
-            yield true;
-          } catch (NumberFormatException e) {
-            ErrorHandling.printError(ctx, "String is not a number");
-            yield false;
-          }
-        }
-
-        List<Class<?>> validTypes = List.of(BoolType.class, AngleType.class, IntType.class, RealType.class, FractionType.class);
-        if (validTypes.contains(symbolClass)) {
-          yield true;
-        }
-        ErrorHandling.printError(ctx, "Expression " + toBeCast.getValue() + "cannot be cast to number");
-        yield false;
-      }
-
-      default -> {
-        ErrorHandling.printError(ctx, "Type " + ctx.Type().getText() + " is not castable");
-        yield false;
-      }
-    };
+      return true;
+    } catch (IllegalArgumentException e) {
+      ErrorHandling.printError(ctx, e.getMessage());
+      return false;
+    }
   }
 
   @Override
