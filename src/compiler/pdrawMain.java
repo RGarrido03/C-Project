@@ -42,10 +42,7 @@ public class pdrawMain {
         writer.write(result.render());
         writer.close();
       }
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.exit(1);
-    } catch (RecognitionException e) {
+    } catch (IOException | RecognitionException e) {
       e.printStackTrace();
       System.exit(1);
     }
