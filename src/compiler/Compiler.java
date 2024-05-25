@@ -6,10 +6,6 @@ import java.util.Map;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-import types.BoolType;
-import types.IntType;
-import types.RealType;
-import types.StringType;
 
 @SuppressWarnings("CheckReturnValue")
 public class Compiler extends pdrawBaseVisitor<ST> {
@@ -212,30 +208,27 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExprCast(pdrawParser.ExprCastContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    return visit(ctx.typeCast());
   }
 
   @Override
   public ST visitExprParent(pdrawParser.ExprParentContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    return visit(ctx.expression());
   }
 
   @Override
   public ST visitExprUnary(pdrawParser.ExprUnaryContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    String signal = ctx.op.getText().equals("-") ? "-" : "";
+    res.add("text", signal + visit(ctx.e2));
+    return res;
   }
 
   @Override
   public ST visitExprFloat(pdrawParser.ExprFloatContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", ctx.FLOAT().getText());
+    return res;
   }
 
   @Override
@@ -247,9 +240,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExprInteger(pdrawParser.ExprIntegerContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", ctx.INT().getText());
+    return res;
   }
 
   @Override
