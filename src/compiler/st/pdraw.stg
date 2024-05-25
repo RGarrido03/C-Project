@@ -5,6 +5,7 @@ import "Class.stg"
 main(statements, classes) ::= <<
 from abc import ABC, abstractmethod
 import time
+import sys
 
 
 class Pen(ABC):
@@ -60,7 +61,6 @@ cast(Type, expression) ::= <<
 >>
 
 pause(INT) ::= <<
-import time
 time.sleep(<INT>)
 >>
 
@@ -68,7 +68,6 @@ print(expression, stdOut, stdErr) ::= <<
 <if(stdOut)>
 print(<expression>)
 <elseif(stdErr)>
-import sys
 print(<expression>, file=sys.stderr)
 <endif>
 >>
