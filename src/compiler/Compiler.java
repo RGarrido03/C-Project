@@ -104,7 +104,6 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitStdout(pdrawParser.StdoutContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("print");
-    res.add("stdOut", "true");
     res.add("expression", visit(ctx.expression()));
     return res;
   }

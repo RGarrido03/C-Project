@@ -64,12 +64,9 @@ pause(INT) ::= <<
 time.sleep(<INT>)
 >>
 
-print(expression, stdOut, stdErr) ::= <<
-<if(stdOut)>
-print(<expression>)
-<elseif(stdErr)>
-print(<expression>, file=sys.stderr)
-<endif>
+print(expression, stdErr) ::= <<
+print(<expression><if(stdErr)>, file=sys.stderr<endif>)
+
 >>
 
 input(text) ::= "input(<text>)"
