@@ -18,4 +18,11 @@ public abstract class Type {
   public boolean isNumeric() {
     return false;
   }
+
+  public String NO_POSSIBLE_CAST = "cannot be cast to any other type";
+
+  public abstract Boolean toBoolean(Object value);
+  public abstract Integer toInteger(Object value);
+  public abstract Double toReal(Object value);
+  public abstract String toString(Object value);
 }
