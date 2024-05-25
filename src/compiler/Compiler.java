@@ -1,8 +1,5 @@
-import com.sun.tools.javac.Main;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
@@ -71,7 +68,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST assignment = pdrawTemplate.getInstanceOf("assignment");
     assignment.add("assignVar", "true");
     assignment.add("variable", ctx.variable().getText());
-    assignment.add("expression", ctx.expression().getText());
+    assignment.add("expression", visit(ctx.expression()));
     assignment.add("type", (parseType(ctx.Type().getText())));
 
     return assignment;
