@@ -1,0 +1,27 @@
+name: Clean workspace
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup GitHub Actions user
+        uses: fregante/setup-git-user@v2
+
+      - name: Clean workspace
+        run: |
+          chmod +x antlr4-clean_mod.sh
+          cd src/compiler/
+          bash ../../antlr4-clean_mod.sh
+
+      - name: Commit & push changes
+        run: |
+          git commit -am "Clean workspace" || echo "No changes to commit"
+          git push
