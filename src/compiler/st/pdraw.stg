@@ -73,6 +73,8 @@ print(<expression>, file=sys.stderr)
 <endif>
 >>
 
+input(text) ::= "input(<text>)"
+
 execute(variable, String) ::= <<
     <variable> = eval(<String>)
 >>

@@ -16,15 +16,16 @@ class Pen(ABC):
 
 
 def main():
-    i: int = 5
-    s: str = str(i)
-    t: str = "5"
-    t = str(8)
-    r: float = 5.0
-    r = float(1)
-    r = float("1")
-    import sys
-    print(r, file=sys.stderr)
+    myRealVar: float = 1.0
+    myIntVar: int = 1
+    myIntVar2: int = 8
+    myIntVar3: int = myIntVar2
+    myStringVar: str = "Hello"
+    myBoolVar: bool = 
+    myRealVar = 2.0
+    myStringVar2: str = input("Enter a string: ")
+    myStringVar2 = input("Enter another string: ")
+    myStringVar2 = input("Enter another string: ")
 
 
 if __name__ == "__main__":

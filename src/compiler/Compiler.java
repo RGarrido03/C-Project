@@ -232,9 +232,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExprStdIn(pdrawParser.ExprStdInContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    return visit(ctx.stdin());
   }
 
   @Override
@@ -260,9 +258,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitStdin(pdrawParser.StdinContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("input");
+    res.add("text", ctx.STRING().getText());
+    return res;
   }
 
   @Override
