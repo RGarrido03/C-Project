@@ -43,4 +43,24 @@ public class Symbol {
   public void setValue(Object value) {
     this.value = value;
   }
+
+  public void castToBoolean() {
+    this.setValue(type.toBoolean(value));
+    this.setType(new BoolType());
+  }
+
+  public void castToInteger() {
+    this.setValue(type.toInteger(value));
+    this.setType(new IntType());
+  }
+
+  public void castToReal() {
+    this.setValue(type.toReal(value));
+    this.setType(new RealType());
+  }
+
+  public void castToString() {
+    this.setValue(type.toString(value));
+    this.setType(new StringType());
+  }
 }
