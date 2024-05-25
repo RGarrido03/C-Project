@@ -23,7 +23,11 @@ class Pen(ABC):
 <classes; separator="\n\n">
 
 def main():
+    <if(statements)>
     <statements>
+    <else>
+    pass
+    <endif>
 
 if __name__ == "__main__":
     main()

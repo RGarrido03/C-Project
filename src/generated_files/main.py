@@ -15,18 +15,22 @@ class Pen(ABC):
     @abstractmethod
     def another_methods(self): ...
 
+class PenType1(Pen):
+    def __init__(self) -> None:
+        super().__init__()
+        self.color = "green"
+        self.position = (10,10)
+        self.orientation = 0.7853981633974483
+
+class PenType(Pen):
+    def __init__(self) -> None:
+        super().__init__()
+        self.color = "red"
+        self.position = (1,10)
+        self.orientation = 0.7853981633974483
 
 def main():
-    i: int = 5
-    s: str = str(i)
-    t: str = "5"
-    t = str(8)
-    r: float = 5.0
-    r = float(1)
-    r = float("1")
-    print(r)
-    print(r, file=sys.stderr)
-
+    pass
 
 if __name__ == "__main__":
     main()
