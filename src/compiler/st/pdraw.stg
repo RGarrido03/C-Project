@@ -20,7 +20,7 @@ class Pen(ABC):
     @abstractmethod
     def another_methods(self): ...
 
-<classes; separator="\n">
+<classes; separator="\n\n">
 
 def main():
     <statements>
