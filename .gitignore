@@ -39,3 +39,39 @@ gen/
 
 # ANTLR4 VSCode extension
 .antlr/
+
+# Class.g4 garbage
+Class.interp
+Class.tokens
+ClassBaseListener.java
+ClassBaseVisitor.java
+ClassLexer.interp
+ClassLexer.java
+ClassLexer.tokens
+ClassListener.java
+ClassParser.java
+ClassVisitor.java
+
+# Elements.g4 garbage
+Elements.interp
+Elements.tokens
+ElementsBaseListener.java
+ElementsBaseVisitor.java
+ElementsLexer.interp
+ElementsLexer.java
+ElementsLexer.tokens
+ElementsListener.java
+ElementsParser.java
+ElementsVisitor.java
+
+# pdraw.g4 garbage
+pdraw.interp
+pdraw.tokens
+pdrawBaseListener.java
+pdrawBaseVisitor.java
+pdrawLexer.interp
+pdrawLexer.java
+pdrawLexer.tokens
+pdrawListener.java
+pdrawParser.java
+pdrawVisitor.java
