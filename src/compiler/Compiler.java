@@ -100,13 +100,6 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
-  public ST visitCast(pdrawParser.CastContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
-  }
-
-  @Override
   public ST visitPause(pdrawParser.PauseContext ctx) {
     ST pause = pdrawTemplate.getInstanceOf("pause");
     int sec = Integer.parseInt(ctx.INT().getText());

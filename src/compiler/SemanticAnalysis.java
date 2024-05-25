@@ -290,28 +290,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitCast(pdrawParser.CastContext ctx) {
-    Symbol toBeCast = ctx.expression().symbol;
-
-    try {
-      switch (ctx.Type().getText()) {
-        case "string" -> toBeCast.castToString();
-        case "bool" -> toBeCast.castToBoolean();
-        case "real" -> toBeCast.castToReal();
-        case "int" -> toBeCast.castToInteger();
-        default -> {
-          ErrorHandling.printError(ctx, "Type " + ctx.Type().getText() + " is not castable");
-          return false;
-        }
-      }
-      return true;
-    } catch (IllegalArgumentException e) {
-      ErrorHandling.printError(ctx, e.getMessage());
-      return false;
-    }
-  }
-
-  @Override
   public Boolean visitPause(pdrawParser.PauseContext ctx) {
     try {
       Integer.parseInt(ctx.INT().getText());
@@ -753,8 +731,23 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitTypeCast(pdrawParser.TypeCastContext ctx) {
-    Boolean res = false;
-    return visitChildren(ctx);
-    // return res;
+    Symbol toBeCast = ctx.expression().symbol;
+
+    try {
+      switch (ctx.Type().getText()) {
+        case "string" -> toBeCast.castToString();
+        case "bool" -> toBeCast.castToBoolean();
+        case "real" -> toBeCast.castToReal();
+        case "int" -> toBeCast.castToInteger();
+        default -> {
+          ErrorHandling.printError(ctx, "Type " + ctx.Type().getText() + " is not castable");
+          return false;
+        }
+      }
+      return true;
+    } catch (IllegalArgumentException e) {
+      ErrorHandling.printError(ctx, e.getMessage());
+      return false;
+    }
   }
 }
