@@ -23,12 +23,13 @@ class Pen(ABC):
 
 
 def main():
-
-    <statements; separator="\n">
+    <statements>
 
 if __name__ == "__main__":
     main()
 >>
+
+other(text) ::= "<text>"
 
 statement(something) ::=<<
 <something>
@@ -44,7 +45,7 @@ instruction(variable, action, angle, penAction) ::= <<
 
 assignment(assignVar, assignPen, reassignVar, variable, object, expression, type) ::= <<
 <if(assignVar)>
-<variable>:<type> = <expression>
+<variable>: <type> = <expression>
 <elseif(assignPen)>
 <object>
 <elseif(reassignVar)>
@@ -55,7 +56,7 @@ assignment(assignVar, assignPen, reassignVar, variable, object, expression, type
 
 // Medium Level
 cast(Type, expression) ::= <<
-    <variable> = <Type>(<expression>)
+<Type>(<expression>)
 >>
 
 pause(INT) ::= <<
