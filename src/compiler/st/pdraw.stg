@@ -18,9 +18,7 @@ class Pen(ABC):
     @abstractmethod
     def another_methods(self): ...
 
-
 <classes; separator="\n">
-
 
 def main():
     <statements>
