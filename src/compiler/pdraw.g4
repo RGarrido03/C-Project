@@ -6,7 +6,6 @@ main: (statement)* EOF;
 statement: (
 		instruction
 		| assignment
-		| cast
 		| class
 		| object
 		| execute
@@ -25,7 +24,6 @@ assignment
 	| variable '=' expression		# ReAssignmentVar;
 
 // Medium level
-cast: Type '(' expression ')' ';';
 pause: 'pause' INT;
 print:
 	(expression) '->' 'stdout'		# stdout

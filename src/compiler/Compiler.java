@@ -1,15 +1,8 @@
-import com.sun.tools.javac.Main;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-import types.BoolType;
-import types.IntType;
-import types.RealType;
-import types.StringType;
 
 @SuppressWarnings("CheckReturnValue")
 public class Compiler extends pdrawBaseVisitor<ST> {
@@ -75,7 +68,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST assignment = pdrawTemplate.getInstanceOf("assignment");
     assignment.add("assignVar", "true");
     assignment.add("variable", ctx.variable().getText());
-    assignment.add("expression", ctx.expression().getText());
+    assignment.add("expression", visit(ctx.expression()));
     assignment.add("type", (parseType(ctx.Type().getText())));
 
     return assignment;
@@ -97,13 +90,6 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     res.add("expression", ctx.expression().getText());
 
     return res;
-  }
-
-  @Override
-  public ST visitCast(pdrawParser.CastContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
   }
 
   @Override
@@ -219,30 +205,27 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExprCast(pdrawParser.ExprCastContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    return visit(ctx.typeCast());
   }
 
   @Override
   public ST visitExprParent(pdrawParser.ExprParentContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    return visit(ctx.expression());
   }
 
   @Override
   public ST visitExprUnary(pdrawParser.ExprUnaryContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    String signal = ctx.op.getText().equals("-") ? "-" : "";
+    res.add("text", signal + visit(ctx.e2));
+    return res;
   }
 
   @Override
   public ST visitExprFloat(pdrawParser.ExprFloatContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", ctx.FLOAT().getText());
+    return res;
   }
 
   @Override
@@ -254,9 +237,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExprInteger(pdrawParser.ExprIntegerContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", ctx.INT().getText());
+    return res;
   }
 
   @Override
@@ -338,23 +321,19 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitTypeCast(pdrawParser.TypeCastContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST temp = pdrawTemplate.getInstanceOf("cast");
+    temp.add("Type", parseType(ctx.Type().getText()));
+    temp.add("expression", visit(ctx.expression()));
+    return temp;
   }
 
   private String parseType(String type) {
-    switch (type.toLowerCase()) {
-      case "int":
-        return "int";
-      case "real":
-        return "float";
-      case "string":
-        return "str";
-      case "bool":
-        return "bool";
-      default:
-        return "";
-    }
+    return switch (type.toLowerCase()) {
+      case "int" -> "int";
+      case "real" -> "float";
+      case "string" -> "str";
+      case "bool" -> "bool";
+      default -> "";
+    };
   }
 }
