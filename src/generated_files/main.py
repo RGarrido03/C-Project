@@ -23,6 +23,8 @@ def main():
     r: float = 5.0
     r = float(1)
     r = float("1")
+    import sys
+    print(r, file=sys.stderr)
 
 
 if __name__ == "__main__":

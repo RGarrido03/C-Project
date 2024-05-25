@@ -296,16 +296,12 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitStdout(pdrawParser.StdoutContext ctx) {
-    Boolean res = false;
-    return visitChildren(ctx);
-    // return res;
+    return visit(ctx.expression());
   }
 
   @Override
   public Boolean visitStderr(pdrawParser.StderrContext ctx) {
-    Boolean res = false;
-    return visitChildren(ctx);
-    // return res;
+    return visit(ctx.expression());
   }
 
   @Override

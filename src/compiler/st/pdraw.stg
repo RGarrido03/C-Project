@@ -65,12 +65,12 @@ time.sleep(<INT>)
 >>
 
 print(expression, stdOut, stdErr) ::= <<
-    <if(stdOut)>
-        print(<expression>)
-    <elseif(stdErr)>
-        import sys
-        print(<expression>, file=sys.stderr)
-    <endif>
+<if(stdOut)>
+print(<expression>)
+<elseif(stdErr)>
+import sys
+print(<expression>, file=sys.stderr)
+<endif>
 >>
 
 execute(variable, String) ::= <<

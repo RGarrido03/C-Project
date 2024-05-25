@@ -7,3 +7,6 @@ t = string(8);
 real r = 5.0;
 r = real(1);
 r = real("1");
+
+r -> stdout;
+r -> stderr;

@@ -103,16 +103,18 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitStdout(pdrawParser.StdoutContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("print");
+    res.add("stdOut", "true");
+    res.add("expression", visit(ctx.expression()));
+    return res;
   }
 
   @Override
   public ST visitStderr(pdrawParser.StderrContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("print");
+    res.add("stdErr", "true");
+    res.add("expression", visit(ctx.expression()));
+    return res;
   }
 
   @Override
