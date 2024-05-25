@@ -17,9 +17,9 @@ jobs:
 
       - name: Clean workspace
         run: |
-          chmod +x antlr4-clean_mod.sh
+          chmod +x scripts/antlr4-clean_mod.sh
           cd src/compiler/
-          bash ../../antlr4-clean_mod.sh
+          bash ../../scripts/antlr4-clean_mod.sh
 
       - name: Commit & push changes
         run: |

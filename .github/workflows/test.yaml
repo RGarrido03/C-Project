@@ -28,26 +28,26 @@ jobs:
 
       - name: Set execute permissions
         run: |
-          chmod +x antlr4-build_mod.sh
-          chmod +x antlr4-run.sh
+          chmod +x scripts/antlr4-build_mod.sh
+          chmod +x scripts/antlr4-run.sh
 
       - name: Build project
         run: |
           cd src/compiler/
-          bash ../../antlr4-build_mod.sh
+          bash ../../scripts/antlr4-build_mod.sh
 
       - name: Test teacher-made minimal-level pdraw files
         run: |
           for OUTPUT in p1.pdraw p2.pdraw
           do
             echo "\n\n---- Testing $OUTPUT ----"
-            cat ../../examples/$OUTPUT | bash ../../antlr4-run.sh
+            cat ../../examples/$OUTPUT | bash ../../scripts/antlr4-run.sh
           done
 
       - name: Test teacher-made medium-level pdraw file
         if: always()
         run: |
-          cat ../../examples/p3.pdraw | bash ../../antlr4-run.sh
+          cat ../../examples/p3.pdraw | bash ../../scripts/antlr4-run.sh
 
       - name: Compile self-made pdraw files
         if: always()
@@ -55,5 +55,5 @@ jobs:
           for OUTPUT in $(ls ../../ourExamples)
           do
             echo "\n\n---- Building $OUTPUT ----"
-            cat ../../ourExamples/$OUTPUT | bash ../../antlr4-run.sh
+            cat ../../ourExamples/$OUTPUT | bash ../../scripts/antlr4-run.sh
           done
