@@ -246,20 +246,15 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   // our made not antlr
   private Type createType(String type) {
-    switch (type.toLowerCase()) {
-      case "int":
-        return new IntType();
-      case "real":
-        return new RealType();
-      case "string":
-        return new StringType();
-      case "bool":
-        return new BoolType();
-      default:
-        throw new IllegalArgumentException(
-          String.format("Unsupported type: %s", type)
-        );
-    }
+      return switch (type.toLowerCase()) {
+          case "int" -> new IntType();
+          case "real" -> new RealType();
+          case "string" -> new StringType();
+          case "bool" -> new BoolType();
+          default -> throw new IllegalArgumentException(
+                  String.format("Unsupported type: %s", type)
+          );
+      };
   }
 
   @Override

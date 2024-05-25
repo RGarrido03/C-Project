@@ -337,17 +337,12 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   private String parseType(String type) {
-    switch (type.toLowerCase()) {
-      case "int":
-        return "int";
-      case "real":
-        return "float";
-      case "string":
-        return "str";
-      case "bool":
-        return "bool";
-      default:
-        return "";
-    }
+    return switch (type.toLowerCase()) {
+      case "int" -> "int";
+      case "real" -> "float";
+      case "string" -> "str";
+      case "bool" -> "bool";
+      default -> "";
+    };
   }
 }
