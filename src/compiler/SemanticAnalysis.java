@@ -407,14 +407,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     }
   }
 
-  // @Override
-  // public Boolean visitVariable(pdrawParser.VariableContext ctx) {
-  //   Boolean res = false;
-  //   ctx.getText();
-  //   return false;
-  //   // return res;
-  // }
-
   @Override
   public Boolean visitExprAddSub(pdrawParser.ExprAddSubContext ctx) {
     // para verficar se a conta da para fazer ele nao pode aceitar string+string
@@ -498,14 +490,11 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitExprCast(pdrawParser.ExprCastContext ctx) {
-    Boolean res = false;
     String castType = ctx.typeCast().Type().getText();
     String expr = ctx.typeCast().expression().getText();
 
     ctx.symbol = new Symbol(createType(castType), expr);
-
     return true;
-    // return res;
   }
 
   @Override
@@ -513,7 +502,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     Boolean res = visit(ctx.expression());
     ctx.symbol = ctx.expression().symbol;
     return res;
-    // return res;
   }
 
   @Override
@@ -542,7 +530,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitExprInteger(pdrawParser.ExprIntegerContext ctx) {
     Boolean res = true;
     String x = ctx.INT().getText();
-    ctx.symbol = new Symbol(new IntType(), x.toString());
+    ctx.symbol = new Symbol(new IntType(), x);
     return res;
   }
 
