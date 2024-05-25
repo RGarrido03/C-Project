@@ -146,13 +146,13 @@ public class Compiler extends pdrawBaseVisitor<ST> {
       res.add("value", visit(ctx.expression()));
     }
     if (ctx.HexaColor() != null) {
-      res.add("value", visit(ctx.HexaColor()));
+      res.add("value", "\"" + ctx.HexaColor().getText() + "\"");
     }
     if (ctx.angle() != null) {
       res.add("value", visit(ctx.angle()));
     }
     if (ctx.Word() != null) {
-      res.add("value", visit(ctx.Word()));
+      res.add("value", "\"" + ctx.Word().getText() + "\"");
     }
     if (ctx.tuple() != null) {
       res.add("value", visit(ctx.tuple()));
@@ -252,23 +252,24 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitTuple(pdrawParser.TupleContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = elementsTemplate.getInstanceOf("tuple");
+    res.add("e1", ctx.expression(0).getText());
+    res.add("e2", ctx.expression(1).getText());
+    return res;
   }
 
   @Override
   public ST visitDegree(pdrawParser.DegreeContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", Math.toRadians(Double.parseDouble(visit(ctx.expression()).render())));
+    return res;
   }
 
   @Override
   public ST visitRadian(pdrawParser.RadianContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", visit(ctx.expression()));
+    return res;
   }
 
   @Override

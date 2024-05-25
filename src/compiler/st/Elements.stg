@@ -1,2 +1,3 @@
 group Elements;
 
+tuple(e1, e2) ::= "(<e1>,<e2>)"
