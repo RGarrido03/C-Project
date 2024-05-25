@@ -232,6 +232,13 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitExprString(pdrawParser.ExprStringContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", ctx.STRING().getText());
+    return res;
+  }
+
+  @Override
   public ST visitExprInteger(pdrawParser.ExprIntegerContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("other");
     res.add("text", ctx.INT().getText());
