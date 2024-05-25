@@ -1,12 +1,37 @@
-wgroup pdraw;
-import "Elements.stg";
+group pdraw;
+import "Elements.stg"
+import "Class.stg"
 
-main(statements) ::= <<
-<statements; separator=";\n">;
+main(statements, classes) ::= <<
+from abc import ABC, abstractmethod
+import time
+
+class Pen(ABC):
+    @abstractmethod
+    def __init__(self) -> None:
+        # defaults
+        self.color = "blue"
+        self.thickness = 1
+        self.position = (0, 0)
+        self.orientation = 0
+
+    @abstractmethod
+    def another_methods(self): ...
+
+
+<classes; separator="\n">
+
+
+def main():
+
+    <statements; separator="\n">
+
+if __name__ == "__main__":
+    main()
 >>
 
-statement(instruction, assignment, cast, class, object, execute, print, pause) ::=<<
-// do i need to create those types of statement as the ClassProps?
+statement(something) ::=<<
+<something>
 >>
 
 instruction(variable, action, angle, penAction) ::= <<
@@ -19,11 +44,11 @@ instruction(variable, action, angle, penAction) ::= <<
 
 assignment(assignVar, assignPen, reassignVar, variable, object, expression, type) ::= <<
 <if(assignVar)>
-    <type><variable> = <expression>
+<variable>:<type> = <expression>
 <elseif(assignPen)>
-    <object>
+<object>
 <elseif(reassignVar)>
-    <variable> = <expression>
+<variable> = <expression>
 <endif>
 >>
 
@@ -51,8 +76,25 @@ execute(variable, String) ::= <<
     <variable> = eval(<String>)
 >>
 
+// problema, eu nao quero que a classe seja definida dentro da funcao main
 
-
+createPenAndCreateClass(color, thickness, position, orientation, className) ::= <<
+class <className>(Pen):
+    def __init__(self) -> None:
+        super().__init__()
+        <if(color)>
+        self.color = "<color>"
+        <endif>
+        <if(thickness)>
+        self.thickness = <thickness>
+        <endif>
+        <if(position)>
+        self.position = <position>
+        <endif>
+        <if(orientation)>
+        self.orientation = <orientation>
+        <endif>
+>>
 
 
 

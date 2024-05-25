@@ -1,0 +1,3 @@
+real i = 0.0;
+string s = "TESTE";
+s = "re assign";

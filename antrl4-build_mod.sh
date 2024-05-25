@@ -25,6 +25,8 @@ function help() {
 }
 
 function process() {
+   echo "Finding the annoying .antlr folder"
+   find . -name .antlr -type d -exec rm -rf {} \;
    g="$1"
    echo "Processing $g"
    if [ -e ${g}.g4 ]; then

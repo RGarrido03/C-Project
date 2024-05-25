@@ -1,6 +1,15 @@
+import com.sun.tools.javac.Main;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
+import types.BoolType;
+import types.IntType;
+import types.RealType;
+import types.StringType;
 
 @SuppressWarnings("CheckReturnValue")
 public class Compiler extends pdrawBaseVisitor<ST> {
@@ -11,16 +20,34 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitMain(pdrawParser.MainContext ctx) {
-    System.out.println("PIXA");
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST main = pdrawTemplate.getInstanceOf("main");
+    for (pdrawParser.StatementContext stat : ctx.statement()) {
+      ST temp = visit(stat);
+      List<?> myst = (List<?>) temp.getAttribute("something");
+      // ver em cada elemento da lista se contem createPenAndCreateClass
+      for (Object obj : myst) {
+        if (obj != null) {
+          String s = obj.toString();
+          if (s.contains("createPenAndCreateClass")) {
+            main.add("classes", obj);
+          } else {
+            main.add("statements", obj);
+          }
+        }
+      }
+    }
+
+    return main;
   }
 
   @Override
   public ST visitStatement(pdrawParser.StatementContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
+    ST res = pdrawTemplate.getInstanceOf("statement");
+    for (int i = 0; i < ctx.getChildCount(); i++) {
+      res.add("something", visit(ctx.getChild(i)));
+    }
+    // res.add("statement", visit(ctx.getChild(0)));
+    return res;
     //return res;
   }
 
@@ -28,6 +55,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitInstructionMoveAction(
     pdrawParser.InstructionMoveActionContext ctx
   ) {
+    System.out.println("VisitInstructionMoveAction");
     ST res = null;
     return visitChildren(ctx);
     //return res;
@@ -44,23 +72,31 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitAssignmentVar(pdrawParser.AssignmentVarContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST assignment = pdrawTemplate.getInstanceOf("assignment");
+    assignment.add("assignVar", "true");
+    assignment.add("variable", ctx.variable().getText());
+    assignment.add("expression", ctx.expression().getText());
+    assignment.add("type", (parseType(ctx.Type().getText())));
+
+    return assignment;
   }
 
   @Override
   public ST visitAssignmentPen(pdrawParser.AssignmentPenContext ctx) {
     ST res = null;
+
     return visitChildren(ctx);
     //return res;
   }
 
   @Override
   public ST visitReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("assignment");
+    res.add("reassignVar", "true");
+    res.add("variable", ctx.variable().getText());
+    res.add("expression", ctx.expression().getText());
+
+    return res;
   }
 
   @Override
@@ -109,9 +145,37 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitCreatePen(pdrawParser.CreatePenContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("createPenAndCreateClass");
+    ArrayList<String> classProps = new ArrayList<>();
+    for (pdrawParser.ClassPropsContext prop : ctx.classProps()) {
+      classProps.add(prop.getText());
+    }
+    res.add("className", ctx.variable().getText());
+    for (String value : classProps) {
+      String propName = value.split("=")[0];
+      value = value.split("=")[1].replace(";", "");
+      switch (propName) {
+        case "color":
+          res.add("color", value);
+          break;
+        case "thickness":
+          res.add("thickness", value);
+          break;
+        case "position":
+          res.add("position", value);
+          break;
+        case "orientation":
+          // TODO passar de graus para radianos
+
+          res.add("orientation", value);
+          break;
+        default:
+          break;
+      }
+    }
+
+    // return visitChildren(ctx);
+    return res;
   }
 
   @Override
@@ -130,7 +194,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitVariable(pdrawParser.VariableContext ctx) {
-    ST res = null;
+    System.out.println("VisitVariable");
+    ST res = pdrawTemplate.getInstanceOf("assignment");
+    res.add("assgnVar", "true");
+    res.add("variable", ctx.Word().getText());
+    // res.add("type", visit(ctx.expression));
     return visitChildren(ctx);
     //return res;
   }
@@ -273,5 +341,20 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = null;
     return visitChildren(ctx);
     //return res;
+  }
+
+  private String parseType(String type) {
+    switch (type.toLowerCase()) {
+      case "int":
+        return "int";
+      case "real":
+        return "float";
+      case "string":
+        return "str";
+      case "bool":
+        return "bool";
+      default:
+        return "";
+    }
   }
 }
