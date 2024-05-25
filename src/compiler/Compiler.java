@@ -87,7 +87,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("assignment");
     res.add("reassignVar", "true");
     res.add("variable", ctx.variable().getText());
-    res.add("expression", ctx.expression().getText());
+    res.add("expression", visit(ctx.expression()));
 
     return res;
   }
@@ -182,9 +182,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitVariable(pdrawParser.VariableContext ctx) {
     System.out.println("VisitVariable");
     ST res = pdrawTemplate.getInstanceOf("assignment");
-    res.add("assgnVar", "true");
+    res.add("assignVar", "true");
     res.add("variable", ctx.Word().getText());
-    // res.add("type", visit(ctx.expression));
+    // res.add("type", visit(ctx));
     return visitChildren(ctx);
     //return res;
   }
