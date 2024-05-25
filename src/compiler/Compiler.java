@@ -321,9 +321,10 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitTypeCast(pdrawParser.TypeCastContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST temp = pdrawTemplate.getInstanceOf("cast");
+    temp.add("Type", parseType(ctx.Type().getText()));
+    temp.add("expression", visit(ctx.expression()));
+    return temp;
   }
 
   private String parseType(String type) {
