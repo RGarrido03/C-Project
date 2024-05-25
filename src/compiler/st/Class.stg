@@ -2,25 +2,25 @@ group Class;
 
 class(penDefinition, canvaDefinition, variable, canvaType) ::=<<
 <if(penDefinition)>
-define pen <variable> {
-    <props; separator="\n">;
-}
+    class <variable>:
+        def __init__(self) -> None:
+            <classProps; separator="\n">
 <elseif(canvasDefinition)>
-define canvas <variable>
-    <if(canvasType)>
-        <canvasType>
-    <endif>
-
-    <if(tuple)>
-        <tuple>
-    <endif>
+    class <variable>
+        def __init__(self) -> None:
+            <if(canvasType)>
+                self.canvas_type = "<canvasType>"
+            <endif>
+            <if(classProps)>
+                <classProps>
+            <endif>
 <endif>
 >>
 
 classProps(word, value) ::= <<
-    <word> = <value>
+    self.<word> = <value>
 >>
 
 object(variable, penType) ::= <<
-    pen <variable> = new <penType>
+    <variable> = <penType>()
 >>
