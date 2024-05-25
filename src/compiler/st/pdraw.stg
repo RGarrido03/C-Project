@@ -74,26 +74,3 @@ input(text) ::= "input(<text>)"
 execute(variable, String) ::= <<
     <variable> = eval(<String>)
 >>
-
-// problema, eu nao quero que a classe seja definida dentro da funcao main
-
-createPenAndCreateClass(color, thickness, position, orientation, className) ::= <<
-class <className>(Pen):
-    def __init__(self) -> None:
-        super().__init__()
-        <if(color)>
-        self.color = "<color>"
-        <endif>
-        <if(thickness)>
-        self.thickness = <thickness>
-        <endif>
-        <if(position)>
-        self.position = <position>
-        <endif>
-        <if(orientation)>
-        self.orientation = <orientation>
-        <endif>
->>
-
-
-

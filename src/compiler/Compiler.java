@@ -17,11 +17,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     for (pdrawParser.StatementContext stat : ctx.statement()) {
       ST temp = visit(stat);
       List<?> myst = (List<?>) temp.getAttribute("something");
-      // ver em cada elemento da lista se contem createPenAndCreateClass
+      // ver em cada elemento da lista se contem createPenClass
       for (Object obj : myst) {
         if (obj != null) {
           String s = obj.toString();
-          if (s.contains("createPenAndCreateClass")) {
+          if (s.contains("createPenClass")) {
             main.add("classes", obj);
           } else {
             main.add("statements", obj);
@@ -132,44 +132,32 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitCreatePen(pdrawParser.CreatePenContext ctx) {
-    ST res = pdrawTemplate.getInstanceOf("createPenAndCreateClass");
-    ArrayList<String> classProps = new ArrayList<>();
-    for (pdrawParser.ClassPropsContext prop : ctx.classProps()) {
-      classProps.add(prop.getText());
-    }
+    ST res = pdrawTemplate.getInstanceOf("createPenClass");
     res.add("className", ctx.variable().getText());
-    for (String value : classProps) {
-      String propName = value.split("=")[0];
-      value = value.split("=")[1].replace(";", "");
-      switch (propName) {
-        case "color":
-          res.add("color", value);
-          break;
-        case "thickness":
-          res.add("thickness", value);
-          break;
-        case "position":
-          res.add("position", value);
-          break;
-        case "orientation":
-          // TODO passar de graus para radianos
-
-          res.add("orientation", value);
-          break;
-        default:
-          break;
-      }
-    }
-
-    // return visitChildren(ctx);
+    ctx.classProps().forEach(prop -> res.add("classProps", visit(prop)));
     return res;
   }
 
   @Override
   public ST visitClassProps(pdrawParser.ClassPropsContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("classProp");
+    res.add("prop", ctx.getText().split("=")[0]);
+    if (ctx.expression() != null) {
+      res.add("value", visit(ctx.expression()));
+    }
+    if (ctx.HexaColor() != null) {
+      res.add("value", visit(ctx.HexaColor()));
+    }
+    if (ctx.angle() != null) {
+      res.add("value", visit(ctx.angle()));
+    }
+    if (ctx.Word() != null) {
+      res.add("value", visit(ctx.Word()));
+    }
+    if (ctx.tuple() != null) {
+      res.add("value", visit(ctx.tuple()));
+    }
+    return res;
   }
 
   @Override
