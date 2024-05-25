@@ -183,7 +183,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitVariable(pdrawParser.VariableContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("other");
-    res.add("text", ctx.Word().getText());
+    if (ctx.Name() == null) {
+      res.add("text", ctx.Word().getText());
+      return res;
+    }
+    res.add("text", ctx.Name().getText());
     return res;
   }
 
