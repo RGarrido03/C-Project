@@ -6,6 +6,7 @@ main(statements, classes) ::= <<
 from abc import ABC, abstractmethod
 import time
 
+
 class Pen(ABC):
     @abstractmethod
     def __init__(self) -> None:
@@ -25,6 +26,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 >>
 
 other(text) ::= "<text>"

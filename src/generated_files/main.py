@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import time
 
+
 class Pen(ABC):
     @abstractmethod
     def __init__(self) -> None:
@@ -14,29 +15,14 @@ class Pen(ABC):
     def another_methods(self): ...
 
 
-class PenType1(Pen):
-    def __init__(self) -> None:
-        super().__init__()
-        self.color = "green"
-        self.position = (10,10)
-        self.orientation = 45º
-
-class PenType(Pen):
-    def __init__(self) -> None:
-        super().__init__()
-        self.color = "red"
-        self.position = (1,10)
-        self.orientation = 45º
-
-
-
 def main():
-
-    i:float = 0.0
-
-    s:str = "TESTE"
-
-    s = "re assign"
+    i: int = 5
+    s: str = str(i)
+    t: str = "5"
+    t = str(8)
+    r: float = 5.0
+    r = float(1)
+    r = float("1")
 
 
 if __name__ == "__main__":
