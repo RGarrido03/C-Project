@@ -180,13 +180,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitVariable(pdrawParser.VariableContext ctx) {
-    System.out.println("VisitVariable");
-    ST res = pdrawTemplate.getInstanceOf("assignment");
-    res.add("assignVar", "true");
-    res.add("variable", ctx.Word().getText());
-    // res.add("type", visit(ctx));
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", ctx.Word().getText());
+    return res;
   }
 
   @Override
