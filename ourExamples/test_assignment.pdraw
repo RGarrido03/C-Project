@@ -14,7 +14,7 @@ myStringVar2 = stdin "Enter another string: ";
 % this should not work
 % comment multiple lines and let one uncommented
 % to see multiple errors
-int myIntVar = 1.0;
-string myStringVar = 1;
-bool myBoolVar = 1; %??
+>%int myIntVar = 1.0;
+%string myStringVar = 1;
+%bool myBoolVar = 1; %??
 

@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -32,6 +34,13 @@ public class pdrawMain {
 
         ST result = compiler.visit(tree);
         System.out.println(result.render());
+        // write on ./generated_files/main.py
+        // write file
+        File file = new File("../generated_files/main.py");
+        file.createNewFile();
+        FileWriter writer = new FileWriter(file);
+        writer.write(result.render());
+        writer.close();
       }
     } catch (IOException e) {
       e.printStackTrace();

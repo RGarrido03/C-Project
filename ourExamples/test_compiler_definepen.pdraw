@@ -1,0 +1,11 @@
+define pen PenType1 {
+   color = green;
+   position = (10,10);
+   orientation = 45º; % literal orientation in degrees (internally is always stored in radians)
+};
+
+define pen PenType {
+   color = red;
+   position = (1,10);
+   orientation = 45º; % literal orientation in degrees (internally is always stored in radians)
+};
