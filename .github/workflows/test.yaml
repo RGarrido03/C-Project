@@ -55,5 +55,5 @@ jobs:
           for OUTPUT in $(ls ../../ourExamples)
           do
             echo "\n\n---- Building $OUTPUT ----"
-            cat ../../ourExamples/$OUTPUT | bash ../../scripts/antlr4-run.sh
+            cat ../../examples/self_made/$OUTPUT | bash ../../scripts/antlr4-run.sh
           done
