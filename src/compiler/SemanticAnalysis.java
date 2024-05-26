@@ -688,44 +688,32 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitForward(pdrawParser.ForwardContext ctx) {
-    Boolean res = false;
     return visitChildren(ctx);
-    // return res;
   }
 
   @Override
   public Boolean visitBackward(pdrawParser.BackwardContext ctx) {
-    Boolean res = false;
     return visitChildren(ctx);
-    // return res;
   }
 
   @Override
   public Boolean visitLeft(pdrawParser.LeftContext ctx) {
-    Boolean res = false;
     return visitChildren(ctx);
-    // return res;
   }
 
   @Override
   public Boolean visitRight(pdrawParser.RightContext ctx) {
-    Boolean res = false;
     return visitChildren(ctx);
-    // return res;
   }
 
   @Override
   public Boolean visitDown(pdrawParser.DownContext ctx) {
-    Boolean res = false;
     return visitChildren(ctx);
-    // return res;
   }
 
   @Override
   public Boolean visitUp(pdrawParser.UpContext ctx) {
-    Boolean res = false;
     return visitChildren(ctx);
-    // return res;
   }
 
   @Override
