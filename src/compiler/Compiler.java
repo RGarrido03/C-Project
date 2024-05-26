@@ -3,6 +3,8 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
+import types.PenTAD;
+
 @SuppressWarnings("CheckReturnValue")
 public class Compiler extends pdrawBaseVisitor<ST> {
 
@@ -59,9 +61,10 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitInstructionPenAction(
       pdrawParser.InstructionPenActionContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    // return res;
+    ST res = pdrawTemplate.getInstanceOf("instruction");
+    res.add("variable", ctx.variable().getText());
+    res.add("action", ctx.penAction().getText());
+    return res;
   }
 
   @Override
