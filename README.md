@@ -2,7 +2,17 @@
 
 ---
 
-## Constituição dos grupos e participação individual global
+## Index
+1. [Constituição dos grupos e participação individual global](#1-constituição-dos-grupos-e-participação-individual-global)
+2. [Relatório](#2-relatório)
+3. [Caneta](#3-caneta)
+4. [Estrutura](#4-estrutura)
+5. [Gramática](#5-gramática)
+6. [Visitors](#6-visitors)
+7. [StringTemplates](#7-stringtemplates-st)
+
+
+## 1. Constituição dos grupos e participação individual global
 
 |  NMec  | Nome                           | Participação |
 | :----: | :----------------------------- | :----------: |
@@ -22,7 +32,7 @@ cd src
 # cat ../../examples/p1.pdraw  | antlr4-test pdraw main -gui
 ```
 
-## Relatório
+## 2. Relatório
 
 - Cadeira: Compiladores
 - Ano Letivo: 2023/2024
@@ -33,7 +43,7 @@ O [ANTLR4](https://www.antlr.org/download.html) (versão 4) é o que foi usado n
 
 Para além desta poderosa ferramenta foi necessário o envolvimento com **StringTemplates** para a geração de código na linguagem destino (Python).
 
-# Caneta
+# 3. Caneta
 
 Exemplo de como definir a caneta e as suas variáveis.
 
@@ -57,7 +67,7 @@ pen p1 = new PenType1;
 | **thickness**   | Espessura da caneta                                           |
 | **position**    | Pressão com que a caneta está a ser usada (_up_, _down_)      |
 
-# Estrutura
+# 4. Estrutura
 
 Organização do repositório (diretórios):
 
@@ -86,7 +96,7 @@ Organização do repositório (diretórios):
 > A estrutura vai se atualizando à medida do tempo
 
 
-# Gramática
+# 5. Gramática
 
 Em ANTLR4 ao definirmos uma gramática formula-se regras sintáticas(*parser*) e léxicas(*lexer*) gerando uma árvore sintática em que cada nó corresponde a um token. Neste projeto a gramática tem a seguinte estrutura. 
 
@@ -98,13 +108,15 @@ Em ANTLR4 ao definirmos uma gramática formula-se regras sintáticas(*parser*) e
 
 O *pgdraw.g4* importa a *Elements.g4* e *Class.g4* para ter mais simplicidade e organização da gramática.
 
-# Visitors
+# 6. Visitors
 Já mencionado anteriormanete na árvore de análise sintática (*parse tree*) gerada pelo parser pretendemos interagir com cada nó e é aqui que entra o **Visitor**.
 Com esta ferramenta podemos configurar com ações especifícas e personalizadas sobre a estrutura de objetos tornando o código mais modular, reutilizável e fácil manutenção.
 
 **Compiler** e **SemanticAnalysis** são os Visitors que foram implementados neste projeto.
 
-# StringTemplates (ST)
+# 7. StringTemplates (ST)
+
+# 
 
 ## Contribuições
 
