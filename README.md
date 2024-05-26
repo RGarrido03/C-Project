@@ -82,6 +82,9 @@ Organização do repositório (diretórios):
 - **scripts** ficheiros bash do ANTLR4 modificados ``` antlr4-build, antlr4-run, antlr4-clean```
 - **src** código fonte 
 
+> [!NOTE]
+> A estrutura vai se atualizando à medida do tempo
+
 
 # Gramática
 
@@ -94,6 +97,14 @@ Em ANTLR4 ao definirmos uma gramática formula-se regras sintáticas(*parser*) e
 | **pgdraw**      | Gramática Principal                                           |
 
 O *pgdraw.g4* importa a *Elements.g4* e *Class.g4* para ter mais simplicidade e organização da gramática.
+
+# Visitors
+Já mencionado anteriormanete na árvore de análise sintática (*parse tree*) gerada pelo parser pretendemos interagir com cada nó e é aqui que entra o **Visitor**.
+Com esta ferramenta podemos configurar com ações especifícas e personalizadas sobre a estrutura de objetos tornando o código mais modular, reutilizável e fácil manutenção.
+
+**Compiler** e **SemanticAnalysis** são os Visitors que foram implementados neste projeto.
+
+# StringTemplates (ST)
 
 ## Contribuições
 
