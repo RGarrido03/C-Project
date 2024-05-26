@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
@@ -41,26 +40,28 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     }
     // res.add("statement", visit(ctx.getChild(0)));
     return res;
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitInstructionMoveAction(
-    pdrawParser.InstructionMoveActionContext ctx
-  ) {
+      pdrawParser.InstructionMoveActionContext ctx) {
     System.out.println("VisitInstructionMoveAction");
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("instruction");
+    res.add("variable", ctx.variable().getText());
+    res.add("action", ctx.moveAction().getText());
+    if (ctx.angle() != null) {
+      res.add("angle", visit(ctx.angle()));
+    }
+    return res;
   }
 
   @Override
   public ST visitInstructionPenAction(
-    pdrawParser.InstructionPenActionContext ctx
-  ) {
+      pdrawParser.InstructionPenActionContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
@@ -79,7 +80,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = null;
 
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
@@ -120,14 +121,14 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitExecute(pdrawParser.ExecuteContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitCreateCanvas(pdrawParser.CreateCanvasContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
@@ -164,7 +165,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitObject(pdrawParser.ObjectContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
@@ -182,14 +183,14 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitExprAddSub(pdrawParser.ExprAddSubContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitExprPow(pdrawParser.ExprPowContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
@@ -240,7 +241,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
@@ -276,42 +277,42 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitForward(pdrawParser.ForwardContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitBackward(pdrawParser.BackwardContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitLeft(pdrawParser.LeftContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitRight(pdrawParser.RightContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitDown(pdrawParser.DownContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitUp(pdrawParser.UpContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
