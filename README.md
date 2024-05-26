@@ -57,7 +57,33 @@ pen p1 = new PenType1;
 | **thickness**   | Espessura da caneta                                           |
 | **position**    | Pressão com que a caneta está a ser usada (_up_, _down_)      |
 
-## Gramática
+# Estrutura
+
+Organização do repositório (diretórios):
+
+```
+├── doc
+├── examples
+│   └── self_made
+├── gen
+├── scripts
+└── src
+    ├── compiler
+    │   ├── st
+    │   └── types
+    ├── gen
+    ├── generated_files
+    └── grammar
+```
+
+- **doc** documentação extra
+- **examples** exemplos ilustrativos das linguagens geradas
+- **gen** ficheiros gerados pelo ANTLR4
+- **scripts** ficheiros bash do ANTLR4 modificados ``` antlr4-build, antlr4-run, antlr4-clean```
+- **src** código fonte 
+
+
+# Gramática
 
 Em ANTLR4 ao definirmos uma gramática formula-se regras sintáticas(*parser*) e léxicas(*lexer*) gerando uma árvore sintática em que cada nó corresponde a um token. Neste projeto a gramática tem a seguinte estrutura. 
 
