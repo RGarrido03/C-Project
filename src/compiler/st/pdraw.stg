@@ -2,9 +2,11 @@ group pdraw;
 import "Elements.stg"
 import "Class.stg"
 
-main(statements, classes) ::= <<S
+main(statements, classes) ::= <<
 from abc import ABC, abstractmethod
 import time
+import sys
+
 
 class Pen(ABC):
     @abstractmethod
@@ -18,15 +20,18 @@ class Pen(ABC):
     @abstractmethod
     def another_methods(self): ...
 
-
-<classes; separator="\n">
-
+<classes; separator="\n\n">
 
 def main():
+    <if(statements)>
     <statements>
+    <else>
+    pass
+    <endif>
 
 if __name__ == "__main__":
     main()
+
 >>
 
 other(text) ::= "<text>"
@@ -60,36 +65,16 @@ cast(Type, expression) ::= <<
 >>
 
 pause(INT) ::= <<
-import time
 time.sleep(<INT>)
 >>
 
-print(expression, stdOut, stdErr) ::= <<
-    <if(stdOut)>
-        print(<expression>)
-    <elseif(stdErr)>
-        import sys
-        print(<expression>, file=sys.stderr)
-    <endif>
+print(expression, stdErr) ::= <<
+print(<expression><if(stdErr)>, file=sys.stderr<endif>)
+
 >>
+
+input(text) ::= "input(<text>)"
 
 execute(variable, String) ::= <<
     <variable> = eval(<String>)
 >>
-
-// problema, eu nao quero que a classe seja definida dentro da funcao main
-
-createPenAndCreateClass(color, thickness, position, orientation, className) ::= <<
-<class(penDefinition=true, canvaDefinition=false, variable=className):
->    def __init__(self) -> None:
-        super().__init__()
-        <if(color)>self.color = "<color>"<endif>
-        <if(thickness)>self.thickness = <thickness><endif>
-        <if(position)>self.position = <position><endif>
-        <if(orientation)>        self.orientation = <orientation>
-        <endif>
->>
-
-
-
-

@@ -1,2 +1,9 @@
 group Elements;
 
+tuple(e1, e2) ::= "(<e1>,<e2>)"
+
+angle ::= expression ('º' | 'deg') | expression ('rad')?
+
+move ::= moveAction expression;
+
+moveAction ::= 'forward' | 'backward' | 'left' | 'right';

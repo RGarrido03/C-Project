@@ -1,8 +1,9 @@
-import java.util.ArrayList;
 import java.util.List;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
+
+import types.PenTAD;
 
 @SuppressWarnings("CheckReturnValue")
 public class Compiler extends pdrawBaseVisitor<ST> {
@@ -17,11 +18,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     for (pdrawParser.StatementContext stat : ctx.statement()) {
       ST temp = visit(stat);
       List<?> myst = (List<?>) temp.getAttribute("something");
-      // ver em cada elemento da lista se contem createPenAndCreateClass
+      // ver em cada elemento da lista se contem createPenClass
       for (Object obj : myst) {
         if (obj != null) {
           String s = obj.toString();
-          if (s.contains("createPenAndCreateClass")) {
+          if (s.contains("createPenClass")) {
             main.add("classes", obj);
           } else {
             main.add("statements", obj);
@@ -41,26 +42,29 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     }
     // res.add("statement", visit(ctx.getChild(0)));
     return res;
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitInstructionMoveAction(
-    pdrawParser.InstructionMoveActionContext ctx
-  ) {
+      pdrawParser.InstructionMoveActionContext ctx) {
     System.out.println("VisitInstructionMoveAction");
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("instruction");
+    res.add("variable", ctx.variable().getText());
+    res.add("action", ctx.moveAction().getText());
+    if (ctx.angle() != null) {
+      res.add("angle", visit(ctx.angle()));
+    }
+    return res;
   }
 
   @Override
   public ST visitInstructionPenAction(
-    pdrawParser.InstructionPenActionContext ctx
-  ) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+      pdrawParser.InstructionPenActionContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("instruction");
+    res.add("variable", ctx.variable().getText());
+    res.add("action", ctx.penAction().getText());
+    return res;
   }
 
   @Override
@@ -79,7 +83,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = null;
 
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
@@ -87,7 +91,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("assignment");
     res.add("reassignVar", "true");
     res.add("variable", ctx.variable().getText());
-    res.add("expression", ctx.expression().getText());
+    res.add("expression", visit(ctx.expression()));
 
     return res;
   }
@@ -103,104 +107,93 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitStdout(pdrawParser.StdoutContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("print");
+    res.add("expression", visit(ctx.expression()));
+    return res;
   }
 
   @Override
   public ST visitStderr(pdrawParser.StderrContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("print");
+    res.add("stdErr", "true");
+    res.add("expression", visit(ctx.expression()));
+    return res;
   }
 
   @Override
   public ST visitExecute(pdrawParser.ExecuteContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitCreateCanvas(pdrawParser.CreateCanvasContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitCreatePen(pdrawParser.CreatePenContext ctx) {
-    ST res = pdrawTemplate.getInstanceOf("createPenAndCreateClass");
-    ArrayList<String> classProps = new ArrayList<>();
-    for (pdrawParser.ClassPropsContext prop : ctx.classProps()) {
-      classProps.add(prop.getText());
-    }
+    ST res = pdrawTemplate.getInstanceOf("createPenClass");
     res.add("className", ctx.variable().getText());
-    for (String value : classProps) {
-      String propName = value.split("=")[0];
-      value = value.split("=")[1].replace(";", "");
-      switch (propName) {
-        case "color":
-          res.add("color", value);
-          break;
-        case "thickness":
-          res.add("thickness", value);
-          break;
-        case "position":
-          res.add("position", value);
-          break;
-        case "orientation":
-          // TODO passar de graus para radianos
-
-          res.add("orientation", value);
-          break;
-        default:
-          break;
-      }
-    }
-
-    // return visitChildren(ctx);
+    ctx.classProps().forEach(prop -> res.add("classProps", visit(prop)));
     return res;
   }
 
   @Override
   public ST visitClassProps(pdrawParser.ClassPropsContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("classProp");
+    res.add("prop", ctx.getText().split("=")[0]);
+    if (ctx.expression() != null) {
+      res.add("value", visit(ctx.expression()));
+    }
+    if (ctx.HexaColor() != null) {
+      res.add("value", "\"" + ctx.HexaColor().getText() + "\"");
+    }
+    if (ctx.angle() != null) {
+      res.add("value", visit(ctx.angle()));
+    }
+    if (ctx.Word() != null) {
+      res.add("value", "\"" + ctx.Word().getText() + "\"");
+    }
+    if (ctx.tuple() != null) {
+      res.add("value", visit(ctx.tuple()));
+    }
+    return res;
   }
 
   @Override
   public ST visitObject(pdrawParser.ObjectContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitVariable(pdrawParser.VariableContext ctx) {
-    System.out.println("VisitVariable");
-    ST res = pdrawTemplate.getInstanceOf("assignment");
-    res.add("assgnVar", "true");
-    res.add("variable", ctx.Word().getText());
-    // res.add("type", visit(ctx.expression));
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    if (ctx.Name() == null) {
+      res.add("text", ctx.Word().getText());
+      return res;
+    }
+    res.add("text", ctx.Name().getText());
+    return res;
   }
 
   @Override
   public ST visitExprAddSub(pdrawParser.ExprAddSubContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitExprPow(pdrawParser.ExprPowContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
@@ -230,9 +223,14 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExprStdIn(pdrawParser.ExprStdInContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    return visit(ctx.stdin());
+  }
+
+  @Override
+  public ST visitExprString(pdrawParser.ExprStringContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", ctx.STRING().getText());
+    return res;
   }
 
   @Override
@@ -246,77 +244,78 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitStdin(pdrawParser.StdinContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("input");
+    res.add("text", ctx.STRING().getText());
+    return res;
   }
 
   @Override
   public ST visitTuple(pdrawParser.TupleContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = elementsTemplate.getInstanceOf("tuple");
+    res.add("e1", ctx.expression(0).getText());
+    res.add("e2", ctx.expression(1).getText());
+    return res;
   }
 
   @Override
   public ST visitDegree(pdrawParser.DegreeContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", Math.toRadians(Double.parseDouble(visit(ctx.expression()).render())));
+    return res;
   }
 
   @Override
   public ST visitRadian(pdrawParser.RadianContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    //return res;
+    ST res = pdrawTemplate.getInstanceOf("other");
+    res.add("text", visit(ctx.expression()));
+    return res;
   }
 
   @Override
   public ST visitForward(pdrawParser.ForwardContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitBackward(pdrawParser.BackwardContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitLeft(pdrawParser.LeftContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitRight(pdrawParser.RightContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitDown(pdrawParser.DownContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override
   public ST visitUp(pdrawParser.UpContext ctx) {
     ST res = null;
     return visitChildren(ctx);
-    //return res;
+    // return res;
   }
 
   @Override

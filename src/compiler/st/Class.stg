@@ -1,26 +1,12 @@
 group Class;
 
-class(penDefinition, canvaDefinition, variable, canvaType) ::=<<
-<if(penDefinition)>
-    class <variable>:
-        def __init__(self) -> None:
-            <classProps; separator="\n">
-<elseif(canvasDefinition)>
-    class <variable>
-        def __init__(self) -> None:
-            <if(canvasType)>
-                self.canvas_type = "<canvasType>"
-            <endif>
-            <if(classProps)>
-                <classProps>
-            <endif>
-<endif>
+createPenClass(className, classProps) ::= <<
+class <className>(Pen):
+    def __init__(self) -> None:
+        super().__init__()
+        <classProps; separator="\n">
 >>
 
-classProps(word, value) ::= <<
-    self.<word> = <value>
->>
+classProp(prop, value) ::= "self.<prop> = <value>"
 
-object(variable, penType) ::= <<
-    <variable> = <penType>()
->>
+object(variable, penType) ::= "<variable> = <penType>()"
