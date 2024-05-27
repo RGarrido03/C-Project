@@ -1,7 +1,5 @@
-import time
-import sys
 import turtle
-import math
+from abc import ABC
 
 
 class Pen(ABC):
@@ -56,38 +54,3 @@ class Pen(ABC):
         self.turtle.setheading(self.orientation)
         if self.pressure >= 0:
             self.turtle.pendown()
-
-
-class DefaultPen(Pen):
-    def __init__(self) -> None:
-        super().__init__()
-
-
-class PenType2(Pen):
-    def __init__(self) -> None:
-        super().__init__()
-        self.color = "blue"
-        self.position = (int(width) // 2, int(height) // 2)
-
-
-width: float = float(input("width: "))
-
-height: float = float(input("height: "))
-
-turtle.setup(width, height)
-turtle.title("Example p2")
-p2 = PenType2()
-print(p2)
-print("\n")
-p2.down()
-p2.forward(10)
-p2.right(144.0)
-p2.forward(10)
-p2.right(144.0)
-p2.forward(10)
-p2.right(144.0)
-p2.forward(10)
-p2.right(144.0)
-p2.forward(10)
-
-turtle.done()
