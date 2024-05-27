@@ -5,6 +5,7 @@ import turtle
 import math
 
 
+
 class Pen(ABC):
     def __init__(self) -> None:
         self.color = "blue"
@@ -13,6 +14,7 @@ class Pen(ABC):
         self.orientation = 0
         self.pressure = -1  # -1 means up
         self.turtle = turtle.Turtle()
+
 
     def forward(self, distance: float) -> None:
         if self.pressure >= 0:
@@ -58,36 +60,37 @@ class Pen(ABC):
         if self.pressure >= 0:
             self.turtle.pendown()
 
-
 class DefaultPen(Pen):
     def __init__(self) -> None:
         super().__init__()
 
 
-class PenType1(Pen):
+class PenType2(Pen):
     def __init__(self) -> None:
         super().__init__()
-        self.color = "green"
-        self.position = (10, 10)
-        self.orientation = 45.0
-        self.thickness = 10
-        self.pressure = -1
+        self.color = "blue"
+        self.position = (int(width)//2,int(height)//2)
 
 
-def main():
-    p1 = PenType1()
-    p1.down()
-    p1.forward(10)
-    p1.left(90.0)
-    p1.forward(10)
-    p1.left(90.0)
-    p1.forward(10)
-    p1.left(90.0)
-    p1.forward(10)
-    p1.left(90.0)
-    psec = DefaultPen()
-    turtle.done()
+width: float = float(input("width: "))
 
+height: float = float(input("height: "))
 
-if __name__ == "__main__":
-    main()
+turtle.setup(width,height)
+turtle.title("Example p2")
+p2 = PenType2()
+print(p2)
+print("\n")
+time.sleep(10000/1000)
+p2.down()
+p2.forward(10)
+p2.right(144.0)
+p2.forward(10)
+p2.right(144.0)
+p2.forward(10)
+p2.right(144.0)
+p2.forward(10)
+p2.right(144.0)
+p2.forward(10)
+
+turtle.done()

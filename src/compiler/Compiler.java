@@ -107,7 +107,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST pause = pdrawTemplate.getInstanceOf("pause");
     int sec = Integer.parseInt(ctx.INT().getText());
 
-    pause.add("seconds", sec);
+    pause.add("INT", sec);
     return pause;
   }
 

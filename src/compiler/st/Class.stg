@@ -9,10 +9,14 @@ class <className>(Pen):
 
 classProp(prop, value) ::= "self.<prop> = <value>"
 
-object(variable, penType) ::= "<variable> = <if(penType)><penType><else>DefaultPen<endif>()"
+object(variable, penType) ::= <<
+<variable> = <if(penType)><penType><else>DefaultPen<endif>()
+
+>>
 
 
 createCanvasClass(className, tuple) ::= <<
 turtle.setup<tuple>
 turtle.title(<className>)
+
 >>

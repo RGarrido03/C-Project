@@ -72,17 +72,14 @@ class DefaultPen(Pen):
 
 <classes; separator="\n\n">
 
-def main():
-    <if(statements)>
-    <statements>
-    <else>
-    pass
-    <endif>
 
-    turtle.done()
+<if(statements)>
+<statements>
+<else>
+pass
+<endif>
 
-if __name__ == "__main__":
-    main()
+turtle.done()
 
 >>
 
@@ -114,10 +111,12 @@ assignment(assignVar, assignPen, reassignVar, variable, object, expression, type
 // Medium Level
 cast(Type, expression) ::= <<
 <Type>(<expression>)
+
 >>
 
 pause(INT) ::= <<
-time.sleep(<INT>)
+time.sleep(<INT>/1000)
+
 >>
 
 print(expression, stdErr) ::= <<
@@ -129,4 +128,5 @@ input(text) ::= "input(<text>)"
 
 execute(variable, String) ::= <<
     <variable> = eval(<String>)
+    
 >>
