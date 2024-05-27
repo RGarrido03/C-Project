@@ -10,3 +10,9 @@ class <className>(Pen):
 classProp(prop, value) ::= "self.<prop> = <value>"
 
 object(variable, penType) ::= "<variable> = <penType>()"
+
+
+createCanvasClass(className, tuple) ::= <<
+<className> = Canvas(root,<tuple>)
+
+>>

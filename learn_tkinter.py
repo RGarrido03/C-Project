@@ -1,12 +1,8 @@
-group pdraw;
-import "Elements.stg"
-import "Class.stg"
-
-main(statements, classes) ::= <<
 from abc import ABC, abstractmethod
-import time
-import sys
-
+import turtle
+import math
+import tkinter as tk
+from tkinter import simpledialog
 
 
 class Pen(ABC):
@@ -59,62 +55,53 @@ class Pen(ABC):
             self.turtle.pendown()
 
 
+class PenType2(Pen):
+    def __init__(self, width: int, height: int) -> None:
+        super().__init__()
+        self.color = "blue"
+        self.position = (width // 2, height // 2)
+        self.set_state()
 
-<classes; separator="\n\n">
+    def draw(self):
+        print(f"Drawing with PenType2 at {self.position} with color {self.color}")
+
 
 def main():
-    <if(statements)>
-    <statements>
-    <else>
-    pass
-    <endif>
+    # Ask for width and height using tkinter
+
+    # Set up the canvas
+    turtle.setup(1500, 1500)
+    turtle.title("Example p2")
+
+    # Create and configure the pens
+    pen1 = PenType2(int(1000), int(1000))
+    pen2 = PenType2(int(1000), int(1000))
+    pen1.color = "green"
+    pen2.color = "red"
+
+    # Draw with pen1
+    pen1.down()
+    pen2.set_state()
+    pen2.down()
+    for _ in range(5):
+        pen1.forward(100)
+        pen1.right(144)
+        pen2.forward(50)
+        pen2.right(144)
+
+    # Draw with pen2
+
+    # Output pen information
+    print(
+        f"Pen1 information: color={pen1.color}, position={pen1.position}, orientation={pen1.orientation}"
+    )
+    print(
+        f"Pen2 information: color={pen2.color}, position={pen2.position}, orientation={pen2.orientation}"
+    )
+
+    # Keep the window open
+    turtle.done()
+
 
 if __name__ == "__main__":
     main()
-
->>
-
-other(text) ::= "<text>"
-
-statement(something) ::=<<
-<something>
->>
-
-instruction(variable, action, angle, penAction) ::= <<
-<if(moveAction)>
-    <variable>.<action>(<angle>)
-<else>
-    <variable>.<action>()
-<endif>
->>
-
-assignment(assignVar, assignPen, reassignVar, variable, object, expression, type) ::= <<
-<if(assignVar)>
-<variable>: <type> = <expression>
-<elseif(assignPen)>
-<object>
-<elseif(reassignVar)>
-<variable> = <expression>
-<endif>
->>
-
-
-// Medium Level
-cast(Type, expression) ::= <<
-<Type>(<expression>)
->>
-
-pause(INT) ::= <<
-time.sleep(<INT>)
->>
-
-print(expression, stdErr) ::= <<
-print(<expression><if(stdErr)>, file=sys.stderr<endif>)
-
->>
-
-input(text) ::= "input(<text>)"
-
-execute(variable, String) ::= <<
-    <variable> = eval(<String>)
->>
