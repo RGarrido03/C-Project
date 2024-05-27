@@ -1,0 +1,5 @@
+
+real width = real(stdin "width: ");
+real height = real(stdin "height: ");
+
+define canvas Canvas1 "Example p2" (width,height); % default has no name and size (500,500)

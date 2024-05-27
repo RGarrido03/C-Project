@@ -2,7 +2,6 @@ import java.util.List;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-
 import types.PenTAD;
 
 @SuppressWarnings("CheckReturnValue")
@@ -47,7 +46,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitInstructionMoveAction(
-      pdrawParser.InstructionMoveActionContext ctx) {
+    pdrawParser.InstructionMoveActionContext ctx
+  ) {
     System.out.println("VisitInstructionMoveAction");
     ST res = pdrawTemplate.getInstanceOf("instruction");
     res.add("variable", ctx.variable().getText());
@@ -60,7 +60,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitInstructionPenAction(
-      pdrawParser.InstructionPenActionContext ctx) {
+    pdrawParser.InstructionPenActionContext ctx
+  ) {
     ST res = pdrawTemplate.getInstanceOf("instruction");
     res.add("variable", ctx.variable().getText());
     res.add("action", ctx.penAction().getText());
@@ -129,9 +130,10 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitCreateCanvas(pdrawParser.CreateCanvasContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    // return res;
+    ST res = pdrawTemplate.getInstanceOf("createCanvasClass");
+    res.add("className", ctx.STRING().getText());
+    res.add("tuple", visit(ctx.tuple()));
+    return res;
   }
 
   @Override
@@ -166,9 +168,12 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitObject(pdrawParser.ObjectContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    // return res;
+    ST res = pdrawTemplate.getInstanceOf("object");
+    res.add("variable", ctx.variable(0).getText());
+    System.out.println("pipipi " + ctx.variable(3));
+
+    if (ctx.variable(1) != null) res.add("penType", ctx.variable(1).getText());
+    return res;
   }
 
   @Override
@@ -210,7 +215,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitExprUnary(pdrawParser.ExprUnaryContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("other");
     String signal = ctx.op.getText().equals("-") ? "-" : "";
-    res.add("text", signal + visit(ctx.e2));
+    res.add("text", signal + visit(ctx.e2).render());
     return res;
   }
 
@@ -265,7 +270,10 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitDegree(pdrawParser.DegreeContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("other");
-    res.add("text", Math.toRadians(Double.parseDouble(visit(ctx.expression()).render())));
+    res.add(
+      "text",
+      Math.toRadians(Double.parseDouble(visit(ctx.expression()).render()))
+    );
     return res;
   }
 

@@ -1,19 +1,61 @@
 from abc import ABC, abstractmethod
 import time
 import sys
+import turtle
+import math
+
 
 
 class Pen(ABC):
-    @abstractmethod
     def __init__(self) -> None:
-        # defaults
         self.color = "blue"
         self.thickness = 1
         self.position = (0, 0)
         self.orientation = 0
+        self.pressure = -1  # -1 means up
+        self.turtle = turtle.Turtle()
 
     @abstractmethod
-    def another_methods(self): ...
+    def draw(self):
+        pass
+
+    def forward(self, distance: float) -> None:
+        if self.pressure >= 0:
+            self.turtle.pendown()
+        else:
+            self.turtle.penup()
+        self.turtle.forward(distance)
+        self.update_position()
+
+    def left(self, degrees: float) -> None:
+        self.turtle.left(degrees)
+        self.orientation = math.degrees(self.turtle.heading())
+
+    def right(self, degrees: float) -> None:
+        self.turtle.right(degrees)
+        self.orientation = math.degrees(self.turtle.heading())
+
+    def down(self) -> None:
+        self.pressure = 0
+        self.turtle.pendown()
+
+    def up(self) -> None:
+        self.pressure = -1
+        self.turtle.penup()
+
+    def update_position(self) -> None:
+        self.position = self.turtle.position()
+
+    def set_state(self):
+        self.turtle.color(self.color)
+        self.turtle.pensize(self.thickness)
+        self.turtle.penup()
+        self.turtle.setpos(self.position)
+        self.turtle.setheading(self.orientation)
+        if self.pressure >= 0:
+            self.turtle.pendown()
+
+
 
 class PenType1(Pen):
     def __init__(self) -> None:
@@ -21,16 +63,12 @@ class PenType1(Pen):
         self.color = "green"
         self.position = (10,10)
         self.orientation = 0.7853981633974483
-
-class PenType(Pen):
-    def __init__(self) -> None:
-        super().__init__()
-        self.color = "red"
-        self.position = (1,10)
-        self.orientation = 0.7853981633974483
+        self.thickness = 10
+        self.pressure = -1
 
 def main():
-    pass
+    p1 = PenType1()
+    turtle.done()
 
 if __name__ == "__main__":
     main()

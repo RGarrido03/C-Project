@@ -6,6 +6,8 @@ main(statements, classes) ::= <<
 from abc import ABC, abstractmethod
 import time
 import sys
+import turtle
+import math
 
 
 
@@ -69,6 +71,8 @@ def main():
     pass
     <endif>
 
+    turtle.done()
+
 if __name__ == "__main__":
     main()
 
@@ -77,7 +81,9 @@ if __name__ == "__main__":
 other(text) ::= "<text>"
 
 statement(something) ::=<<
+<if(something)>
 <something>
+<endif>
 >>
 
 instruction(variable, action, angle, penAction) ::= <<

@@ -13,6 +13,6 @@ object(variable, penType) ::= "<variable> = <penType>()"
 
 
 createCanvasClass(className, tuple) ::= <<
-<className> = Canvas(root,<tuple>)
-
+turtle.setup<tuple>
+turtle.title(<className>)
 >>

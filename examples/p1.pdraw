@@ -29,6 +29,7 @@ define pen PenType1 {
 };
 
 pen p1 = new PenType1; % variable p1 can refer to any pen (or none if no creation/assignment involved)
+
 p1 down; % pen in canvas with pressure 0
 % draw square
 p1 forward 10; % pen p1 advances 10
