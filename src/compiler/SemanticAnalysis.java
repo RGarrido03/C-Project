@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-
 import types.*;
 
 @SuppressWarnings("CheckReturnValue")
@@ -17,147 +16,147 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   static {
     // Adicionar todas as cores nomeadas do HTML
     String[] colors = {
-        "AliceBlue",
-        "AntiqueWhite",
-        "Aqua",
-        "Aquamarine",
-        "Azure",
-        "Beige",
-        "Bisque",
-        "Black",
-        "BlanchedAlmond",
-        "Blue",
-        "BlueViolet",
-        "Brown",
-        "BurlyWood",
-        "CadetBlue",
-        "Chartreuse",
-        "Chocolate",
-        "Coral",
-        "CornflowerBlue",
-        "Cornsilk",
-        "Crimson",
-        "Cyan",
-        "DarkBlue",
-        "DarkCyan",
-        "DarkGoldenRod",
-        "DarkGray",
-        "DarkGreen",
-        "DarkKhaki",
-        "DarkMagenta",
-        "DarkOliveGreen",
-        "DarkOrange",
-        "DarkOrchid",
-        "DarkRed",
-        "DarkSalmon",
-        "DarkSeaGreen",
-        "DarkSlateBlue",
-        "DarkSlateGray",
-        "DarkTurquoise",
-        "DarkViolet",
-        "DeepPink",
-        "DeepSkyBlue",
-        "DimGray",
-        "DodgerBlue",
-        "FireBrick",
-        "FloralWhite",
-        "ForestGreen",
-        "Fuchsia",
-        "Gainsboro",
-        "GhostWhite",
-        "Gold",
-        "GoldenRod",
-        "Gray",
-        "Green",
-        "GreenYellow",
-        "HoneyDew",
-        "HotPink",
-        "IndianRed",
-        "Indigo",
-        "Ivory",
-        "Khaki",
-        "Lavender",
-        "LavenderBlush",
-        "LawnGreen",
-        "LemonChiffon",
-        "LightBlue",
-        "LightCoral",
-        "LightCyan",
-        "LightGoldenRodYellow",
-        "LightGray",
-        "LightGreen",
-        "LightPink",
-        "LightSalmon",
-        "LightSeaGreen",
-        "LightSkyBlue",
-        "LightSlateGray",
-        "LightSteelBlue",
-        "LightYellow",
-        "Lime",
-        "LimeGreen",
-        "Linen",
-        "Magenta",
-        "Maroon",
-        "MediumAquaMarine",
-        "MediumBlue",
-        "MediumOrchid",
-        "MediumPurple",
-        "MediumSeaGreen",
-        "MediumSlateBlue",
-        "MediumSpringGreen",
-        "MediumTurquoise",
-        "MediumVioletRed",
-        "MidnightBlue",
-        "MintCream",
-        "MistyRose",
-        "Moccasin",
-        "NavajoWhite",
-        "Navy",
-        "OldLace",
-        "Olive",
-        "OliveDrab",
-        "Orange",
-        "OrangeRed",
-        "Orchid",
-        "PaleGoldenRod",
-        "PaleGreen",
-        "PaleTurquoise",
-        "PaleVioletRed",
-        "PapayaWhip",
-        "PeachPuff",
-        "Peru",
-        "Pink",
-        "Plum",
-        "PowderBlue",
-        "Purple",
-        "RebeccaPurple",
-        "Red",
-        "RosyBrown",
-        "RoyalBlue",
-        "SaddleBrown",
-        "Salmon",
-        "SandyBrown",
-        "SeaGreen",
-        "SeaShell",
-        "Sienna",
-        "Silver",
-        "SkyBlue",
-        "SlateBlue",
-        "SlateGray",
-        "Snow",
-        "SpringGreen",
-        "SteelBlue",
-        "Tan",
-        "Teal",
-        "Thistle",
-        "Tomato",
-        "Turquoise",
-        "Violet",
-        "Wheat",
-        "White",
-        "WhiteSmoke",
-        "Yellow",
-        "YellowGreen",
+      "AliceBlue",
+      "AntiqueWhite",
+      "Aqua",
+      "Aquamarine",
+      "Azure",
+      "Beige",
+      "Bisque",
+      "Black",
+      "BlanchedAlmond",
+      "Blue",
+      "BlueViolet",
+      "Brown",
+      "BurlyWood",
+      "CadetBlue",
+      "Chartreuse",
+      "Chocolate",
+      "Coral",
+      "CornflowerBlue",
+      "Cornsilk",
+      "Crimson",
+      "Cyan",
+      "DarkBlue",
+      "DarkCyan",
+      "DarkGoldenRod",
+      "DarkGray",
+      "DarkGreen",
+      "DarkKhaki",
+      "DarkMagenta",
+      "DarkOliveGreen",
+      "DarkOrange",
+      "DarkOrchid",
+      "DarkRed",
+      "DarkSalmon",
+      "DarkSeaGreen",
+      "DarkSlateBlue",
+      "DarkSlateGray",
+      "DarkTurquoise",
+      "DarkViolet",
+      "DeepPink",
+      "DeepSkyBlue",
+      "DimGray",
+      "DodgerBlue",
+      "FireBrick",
+      "FloralWhite",
+      "ForestGreen",
+      "Fuchsia",
+      "Gainsboro",
+      "GhostWhite",
+      "Gold",
+      "GoldenRod",
+      "Gray",
+      "Green",
+      "GreenYellow",
+      "HoneyDew",
+      "HotPink",
+      "IndianRed",
+      "Indigo",
+      "Ivory",
+      "Khaki",
+      "Lavender",
+      "LavenderBlush",
+      "LawnGreen",
+      "LemonChiffon",
+      "LightBlue",
+      "LightCoral",
+      "LightCyan",
+      "LightGoldenRodYellow",
+      "LightGray",
+      "LightGreen",
+      "LightPink",
+      "LightSalmon",
+      "LightSeaGreen",
+      "LightSkyBlue",
+      "LightSlateGray",
+      "LightSteelBlue",
+      "LightYellow",
+      "Lime",
+      "LimeGreen",
+      "Linen",
+      "Magenta",
+      "Maroon",
+      "MediumAquaMarine",
+      "MediumBlue",
+      "MediumOrchid",
+      "MediumPurple",
+      "MediumSeaGreen",
+      "MediumSlateBlue",
+      "MediumSpringGreen",
+      "MediumTurquoise",
+      "MediumVioletRed",
+      "MidnightBlue",
+      "MintCream",
+      "MistyRose",
+      "Moccasin",
+      "NavajoWhite",
+      "Navy",
+      "OldLace",
+      "Olive",
+      "OliveDrab",
+      "Orange",
+      "OrangeRed",
+      "Orchid",
+      "PaleGoldenRod",
+      "PaleGreen",
+      "PaleTurquoise",
+      "PaleVioletRed",
+      "PapayaWhip",
+      "PeachPuff",
+      "Peru",
+      "Pink",
+      "Plum",
+      "PowderBlue",
+      "Purple",
+      "RebeccaPurple",
+      "Red",
+      "RosyBrown",
+      "RoyalBlue",
+      "SaddleBrown",
+      "Salmon",
+      "SandyBrown",
+      "SeaGreen",
+      "SeaShell",
+      "Sienna",
+      "Silver",
+      "SkyBlue",
+      "SlateBlue",
+      "SlateGray",
+      "Snow",
+      "SpringGreen",
+      "SteelBlue",
+      "Tan",
+      "Teal",
+      "Thistle",
+      "Tomato",
+      "Turquoise",
+      "Violet",
+      "Wheat",
+      "White",
+      "WhiteSmoke",
+      "Yellow",
+      "YellowGreen",
     }; // SEE ME this can't be hard coded :cry:
 
     for (String color : colors) {
@@ -191,20 +190,26 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitInstructionMoveAction(
-      pdrawParser.InstructionMoveActionContext ctx) {
+    pdrawParser.InstructionMoveActionContext ctx
+  ) {
     String variable = ctx.variable().getText();
 
     if (!symbolTable.containsKey(variable)) {
       ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s not defined", variable));
+        ctx,
+        String.format("Variable %s not defined", variable)
+      );
       return false;
     } else {
       Type type = symbolTable.get(variable).getType();
 
       if (type instanceof PenTAD) {
         Boolean angle = visit(ctx.angle());
-        Boolean moveAction = visit(ctx.moveAction());
+        Boolean moveAction =
+          ctx.moveAction().getText().equals("forward") ||
+          ctx.moveAction().getText().equals("backward") ||
+          ctx.moveAction().getText().equals("left") ||
+          ctx.moveAction().getText().equals("right");
         if (angle && moveAction) {
           return true;
         } else {
@@ -213,8 +218,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         }
       } else {
         ErrorHandling.printError(
-            ctx,
-            String.format("Variable %s is not a pen", variable));
+          ctx,
+          String.format("Variable %s is not a pen", variable)
+        );
         return false;
       }
     }
@@ -222,19 +228,21 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitInstructionPenAction(
-      pdrawParser.InstructionPenActionContext ctx) {
+    pdrawParser.InstructionPenActionContext ctx
+  ) {
     String variable = ctx.variable().getText();
-
     if (!symbolTable.containsKey(variable)) {
       ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s not defined", variable));
+        ctx,
+        String.format("Variable %s not defined", variable)
+      );
       return false;
     } else {
       Type type = symbolTable.get(variable).getType();
-
       if (type instanceof PenTAD) {
-        Boolean penAction = visit(ctx.penAction());
+        Boolean penAction =
+          ctx.penAction().getText().equals("down") ||
+          ctx.penAction().getText().equals("up");
         if (penAction) {
           return true;
         } else {
@@ -243,8 +251,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         }
       } else {
         ErrorHandling.printError(
-            ctx,
-            String.format("Variable %s is not a pen", variable));
+          ctx,
+          String.format("Variable %s is not a pen", variable)
+        );
         return false;
       }
     }
@@ -265,11 +274,13 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     }
     if (!symbolTable.containsKey(name)) {
       System.out.println(
-          expressionCtx.symbol.getType().toString() + " " + type);
+        expressionCtx.symbol.getType().toString() + " " + type
+      );
       if (!expressionCtx.symbol.getType().toString().equals(type)) {
         ErrorHandling.printError(
-            ctx,
-            String.format("Variable %s is not of type %s. ", name, type));
+          ctx,
+          String.format("Variable %s is not of type %s. ", name, type)
+        );
         return false;
       } else {
         System.out.println(createType(type).toString());
@@ -278,8 +289,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       }
     } else {
       ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s already defined", name));
+        ctx,
+        String.format("Variable %s already defined", name)
+      );
       return false;
     }
   }
@@ -292,7 +304,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       case "string" -> new StringType();
       case "bool" -> new BoolType();
       default -> throw new IllegalArgumentException(
-          String.format("Unsupported type: %s", type));
+        String.format("Unsupported type: %s", type)
+      );
     };
   }
 
@@ -308,8 +321,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
     if (!symbolTable.containsKey(name)) {
       ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s not defined", name));
+        ctx,
+        String.format("Variable %s not defined", name)
+      );
       return false;
     } else {
       pdrawParser.ExpressionContext expressionCtx = ctx.expression();
@@ -369,13 +383,15 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         }
       }
       symbolTable.put(
-          penTAD_especifico,
-          new Symbol(new PenTAD(penTAD_especifico), penTAD_especifico));
+        penTAD_especifico,
+        new Symbol(new PenTAD(penTAD_especifico), penTAD_especifico)
+      );
       return true;
     } else {
       ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s is already defined", penTAD_especifico));
+        ctx,
+        String.format("Variable %s is already defined", penTAD_especifico)
+      );
       return false;
     }
   }
@@ -392,8 +408,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         Boolean isColorValid = isColorWord(value) || isHexColor(value);
         if (!isColorValid) {
           ErrorHandling.printError(
-              ctx,
-              String.format("The value %s is not a color", value));
+            ctx,
+            String.format("The value %s is not a color", value)
+          );
         }
         return isColorValid;
       case "position":
@@ -422,22 +439,25 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitObject(pdrawParser.ObjectContext ctx) {
     Boolean res = false;
     String var_left = ctx.variable(0).getText();
-    String penTAD_right = ctx.variable(1).getText();
-
-    if (!symbolTable.containsKey(penTAD_right)) {
-      ErrorHandling.printError(
+    if (ctx.variable(1) != null) {
+      String penTAD_right = ctx.variable(1).getText();
+      if (!symbolTable.containsKey(penTAD_right)) {
+        ErrorHandling.printError(
           ctx,
-          String.format("Pen type %s not defined", penTAD_right));
-      return false;
-    } else if (symbolTable.containsKey(var_left)) {
-      ErrorHandling.printError(
+          String.format("Pen type %s not defined", penTAD_right)
+        );
+        return false;
+      } else if (symbolTable.containsKey(var_left)) {
+        ErrorHandling.printError(
           ctx,
-          String.format("Variable %s is already defined", penTAD_right));
-      return false;
-    } else {
-      symbolTable.put(var_left, symbolTable.get(penTAD_right));
-      return true;
-    }
+          String.format("Variable %s is already defined", penTAD_right)
+        );
+        return false;
+      } else {
+        symbolTable.put(var_left, symbolTable.get(penTAD_right));
+        return true;
+      }
+    } else return true;
   }
 
   @Override
@@ -450,11 +470,13 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
     if (!leftResult || !rightResult) {
       ErrorHandling.printError(
-          ctx,
-          String.format(
-              "Expression %s or %s are not valid",
-              ctx.expression(0).getText(),
-              ctx.expression(1).getText())); // TODO improve this
+        ctx,
+        String.format(
+          "Expression %s or %s are not valid",
+          ctx.expression(0).getText(),
+          ctx.expression(1).getText()
+        )
+      ); // TODO improve this
       return false;
     }
     pdrawParser.ExpressionContext left_ctx = ctx.expression(0);
@@ -468,8 +490,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       Type leftType = symbolTable.get(left).getType();
       if (!leftType.isNumeric()) {
         ErrorHandling.printError(
-            ctx,
-            String.format("Variable %s is not a number", left));
+          ctx,
+          String.format("Variable %s is not a number", left)
+        );
         return false;
       }
     }
@@ -478,25 +501,30 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       Type rightType = symbolTable.get(right).getType();
       if (!rightType.isNumeric()) {
         ErrorHandling.printError(
-            ctx,
-            String.format("Variable %s is not a number", right));
+          ctx,
+          String.format("Variable %s is not a number", right)
+        );
         return false;
       }
     }
     // ja verifico as variaveis agora significa que passaram pelo if e se nao for
     // variavel?
     // tenho de ver o seu tipo
-    if (left_ctx.symbol.getType().isNumeric() &&
-        right_ctx.symbol.getType().isNumeric()) {
+    if (
+      left_ctx.symbol.getType().isNumeric() &&
+      right_ctx.symbol.getType().isNumeric()
+    ) {
       ctx.symbol = new Symbol(left_ctx.symbol.getType(), left); // o da esquerda define o tipo final
       return true;
     } else {
       ErrorHandling.printError(
-          ctx,
-          String.format(
-              "Expression %s or %s are not valid",
-              ctx.expression(0).getText(),
-              ctx.expression(1).getText())); // TODO improve this
+        ctx,
+        String.format(
+          "Expression %s or %s are not valid",
+          ctx.expression(0).getText(),
+          ctx.expression(1).getText()
+        )
+      ); // TODO improve this
       return false;
     }
   }
@@ -592,11 +620,13 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
     if (!leftResult || !rightResult) {
       ErrorHandling.printError(
-          ctx,
-          String.format(
-              "Expression %s or %s are not valid",
-              ctx.expression(0).getText(),
-              ctx.expression(1).getText())); // TODO improve this
+        ctx,
+        String.format(
+          "Expression %s or %s are not valid",
+          ctx.expression(0).getText(),
+          ctx.expression(1).getText()
+        )
+      ); // TODO improve this
       return false;
     }
     pdrawParser.ExpressionContext left_ctx = ctx.expression(0);
@@ -610,8 +640,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       Type leftType = symbolTable.get(left).getType();
       if (!leftType.isNumeric()) {
         ErrorHandling.printError(
-            ctx,
-            String.format("Variable %s is not a number", left));
+          ctx,
+          String.format("Variable %s is not a number", left)
+        );
         return false;
       }
     }
@@ -620,28 +651,32 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       Type rightType = symbolTable.get(right).getType();
       if (!rightType.isNumeric()) {
         ErrorHandling.printError(
-            ctx,
-            String.format("Variable %s is not a number", right));
+          ctx,
+          String.format("Variable %s is not a number", right)
+        );
         return false;
       }
     }
     // ja verifico as variaveis agora significa que passaram pelo if e se nao for
     // variavel?
     // tenho de ver o seu tipo
-    if (left_ctx.symbol.getType().isNumeric() &&
-        right_ctx.symbol.getType().isNumeric()) {
+    if (
+      left_ctx.symbol.getType().isNumeric() &&
+      right_ctx.symbol.getType().isNumeric()
+    ) {
       if (ctx.op.getText() == "/") {
         ctx.symbol = new Symbol(new RealType(), left); // o da esquerda define o tipo final
-      } else
-        ctx.symbol = new Symbol(left_ctx.symbol.getType(), left); // o da esquerda define o tipo final
+      } else ctx.symbol = new Symbol(left_ctx.symbol.getType(), left); // o da esquerda define o tipo final
       return true;
     } else {
       ErrorHandling.printError(
-          ctx,
-          String.format(
-              "Expression %s or %s are not valid",
-              ctx.expression(0).getText(),
-              ctx.expression(1).getText())); // TODO improve this
+        ctx,
+        String.format(
+          "Expression %s or %s are not valid",
+          ctx.expression(0).getText(),
+          ctx.expression(1).getText()
+        )
+      ); // TODO improve this
       return false;
     }
   }
@@ -727,7 +762,10 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         case "real" -> toBeCast.castToReal();
         case "int" -> toBeCast.castToInteger();
         default -> {
-          ErrorHandling.printError(ctx, "Type " + ctx.Type().getText() + " is not castable");
+          ErrorHandling.printError(
+            ctx,
+            "Type " + ctx.Type().getText() + " is not castable"
+          );
           return false;
         }
       }

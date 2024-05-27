@@ -32,6 +32,14 @@ class Pen(ABC):
         self.turtle.forward(distance)
         self.update_position()
 
+    def backward(self, distance: float) -> None:
+        if self.pressure >= 0:
+            self.turtle.pendown()
+        else:
+            self.turtle.penup()
+        self.turtle.forward(-distance)
+        self.update_position()
+
     def left(self, degrees: float) -> None:
         self.turtle.left(degrees)
         self.orientation = math.degrees(self.turtle.heading())
@@ -87,7 +95,7 @@ statement(something) ::=<<
 >>
 
 instruction(variable, action, angle, penAction) ::= <<
-<if(moveAction)>
+<if(penAction)>
     <variable>.<action>(<angle>)
 <else>
     <variable>.<action>()

@@ -27,6 +27,14 @@ class Pen(ABC):
         self.turtle.forward(distance)
         self.update_position()
 
+    def backward(self, distance: float) -> None:
+        if self.pressure >= 0:
+            self.turtle.pendown()
+        else:
+            self.turtle.penup()
+        self.turtle.forward(-distance)
+        self.update_position()
+
     def left(self, degrees: float) -> None:
         self.turtle.left(degrees)
         self.orientation = math.degrees(self.turtle.heading())
@@ -68,6 +76,16 @@ class PenType1(Pen):
 
 def main():
     p1 = PenType1()
+        p1.down()
+        p1.forward()
+        p1.left()
+        p1.forward()
+        p1.left()
+        p1.forward()
+        p1.left()
+        p1.forward()
+        p1.left()
+    psec = ()
     turtle.done()
 
 if __name__ == "__main__":
