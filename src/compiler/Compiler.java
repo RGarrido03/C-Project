@@ -270,17 +270,17 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitDegree(pdrawParser.DegreeContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("other");
-    res.add(
-      "text",
-      Math.toRadians(Double.parseDouble(visit(ctx.expression()).render()))
-    );
+    res.add("text", (Double.parseDouble(visit(ctx.expression()).render())));
     return res;
   }
 
   @Override
   public ST visitRadian(pdrawParser.RadianContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("other");
-    res.add("text", visit(ctx.expression()));
+    res.add(
+      "text",
+      Math.toDegrees(Double.parseDouble(visit(ctx.expression()).render()))
+    );
     return res;
   }
 
