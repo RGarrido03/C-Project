@@ -53,7 +53,12 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     res.add("variable", ctx.variable().getText());
     res.add("action", ctx.moveAction().getText());
     if (ctx.angle() != null) {
-      res.add("value", visit(ctx.angle()).render());
+      if (
+        ctx.moveAction().getText().equals("forward") ||
+        ctx.moveAction().getText().equals("backward")
+      ) {
+        res.add("value", ctx.angle().getText());
+      } else res.add("value", visit(ctx.angle()).render());
     }
     return res;
   }

@@ -69,7 +69,7 @@ class PenType1(Pen):
         super().__init__()
         self.color = "green"
         self.position = (10, 10)
-        self.orientation = 0.7853981633974483
+        self.orientation = 45.0
         self.thickness = 10
         self.pressure = -1
 
@@ -78,13 +78,13 @@ def main():
     p1 = PenType1()
     p1.down()
     p1.forward(10)
-    p1.left(1.5707963267948966)
+    p1.left(90.0)
     p1.forward(10)
-    p1.left(1.5707963267948966)
+    p1.left(90.0)
     p1.forward(10)
-    p1.left(1.5707963267948966)
+    p1.left(90.0)
     p1.forward(10)
-    p1.left(1.5707963267948966)
+    p1.left(90.0)
     psec = DefaultPen()
     turtle.done()
 
