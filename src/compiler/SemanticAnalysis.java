@@ -359,7 +359,27 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitExecute(pdrawParser.ExecuteContext ctx) {
     Boolean res = false;
-    return visitChildren(ctx);
+
+    String var = ctx.variable().getText();
+    System.out.println(symbolTable.toString());
+    if (!symbolTable.containsKey(var)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s not defined", var)
+      );
+      return false;
+    } else {
+      Type type = symbolTable.get(var).getType();
+      if (type instanceof PenTAD) {
+        return true;
+      } else {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s is not a string", var)
+        );
+        return false;
+      }
+    }
     // return res;
   }
 
@@ -457,7 +477,12 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         symbolTable.put(var_left, symbolTable.get(penTAD_right));
         return true;
       }
-    } else return true;
+    } else {
+      // TODO duvidoso
+      symbolTable.put(var_left, new Symbol(new PenTAD(var_left), var_left));
+
+      return true;
+    }
   }
 
   @Override

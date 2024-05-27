@@ -9,7 +9,7 @@ class <className>(Pen):
 
 classProp(prop, value) ::= "self.<prop> = <value>"
 
-object(variable, penType) ::= "<variable> = <penType>()"
+object(variable, penType) ::= "<variable> = <if(penType)><penType><else>DefaultPen<endif>()"
 
 
 createCanvasClass(className, tuple) ::= <<

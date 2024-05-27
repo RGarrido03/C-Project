@@ -5,7 +5,6 @@ import turtle
 import math
 
 
-
 class Pen(ABC):
     def __init__(self) -> None:
         self.color = "blue"
@@ -14,10 +13,6 @@ class Pen(ABC):
         self.orientation = 0
         self.pressure = -1  # -1 means up
         self.turtle = turtle.Turtle()
-
-    @abstractmethod
-    def draw(self):
-        pass
 
     def forward(self, distance: float) -> None:
         if self.pressure >= 0:
@@ -64,29 +59,35 @@ class Pen(ABC):
             self.turtle.pendown()
 
 
+class DefaultPen(Pen):
+    def __init__(self) -> None:
+        super().__init__()
+
 
 class PenType1(Pen):
     def __init__(self) -> None:
         super().__init__()
         self.color = "green"
-        self.position = (10,10)
+        self.position = (10, 10)
         self.orientation = 0.7853981633974483
         self.thickness = 10
         self.pressure = -1
 
+
 def main():
     p1 = PenType1()
-        p1.down()
-        p1.forward()
-        p1.left()
-        p1.forward()
-        p1.left()
-        p1.forward()
-        p1.left()
-        p1.forward()
-        p1.left()
-    psec = ()
+    p1.down()
+    p1.forward()
+    p1.left()
+    p1.forward()
+    p1.left()
+    p1.forward()
+    p1.left()
+    p1.forward()
+    p1.left()
+    psec = DefaultPen()
     turtle.done()
+
 
 if __name__ == "__main__":
     main()
