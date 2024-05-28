@@ -15,18 +15,16 @@ expression
 	| variable											# ExprVariable
 	| '(' expression ')'								# ExprParent;
 
-stdin: 'stdin' STRING;
+stdin: 'stdin' expression;
 
 tuple: '(' expression ',' expression ')';
 angle:
 	expression d = ('º' | 'deg')	# Degree
 	| expression ('rad')?			# Radian;
 
-moveAction:
-	'forward'		# forward
-	| 'backward'	# backward
-	| 'left'		# left
-	| 'right'		# right;
+rotateAction: 'left' # left | 'right' # right;
+
+moveAction: 'forward' # forward | 'backward' # backward;
 
 penAction: 'down' # down | 'up' # up;
 

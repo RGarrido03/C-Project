@@ -204,13 +204,51 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       Type type = symbolTable.get(variable).getType();
 
       if (type instanceof PenTAD) {
-        Boolean angle = visit(ctx.angle());
+        Boolean angle = visit(ctx.expression());
         Boolean moveAction =
           ctx.moveAction().getText().equals("forward") ||
           ctx.moveAction().getText().equals("backward") ||
           ctx.moveAction().getText().equals("left") ||
           ctx.moveAction().getText().equals("right");
         if (angle && moveAction) {
+          return true;
+        } else {
+          ErrorHandling.printError(ctx, "Instructions are not valid");
+          return false;
+        }
+      } else {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s is not a pen", variable)
+        );
+        return false;
+      }
+    }
+  }
+
+  @Override
+  public Boolean visitInstructionRotateAction(
+    pdrawParser.InstructionRotateActionContext ctx
+  ) {
+    String variable = ctx.variable().getText();
+
+    if (!symbolTable.containsKey(variable)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s not defined", variable)
+      );
+      return false;
+    } else {
+      Type type = symbolTable.get(variable).getType();
+
+      if (type instanceof PenTAD) {
+        Boolean angle = visit(ctx.angle());
+        Boolean rotateAction =
+          ctx.rotateAction().getText().equals("forward") ||
+          ctx.rotateAction().getText().equals("backward") ||
+          ctx.rotateAction().getText().equals("left") ||
+          ctx.rotateAction().getText().equals("right");
+        if (angle && rotateAction) {
           return true;
         } else {
           ErrorHandling.printError(ctx, "Instructions are not valid");

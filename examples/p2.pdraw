@@ -19,10 +19,14 @@ p2 -> stdout; % write pen information (color, position, orientation, ...) to sta
 "\n" -> stdout; % write text "\n"
 
 pause 10000; % sleeps 10000 microseconds
+string pass = "passei";
 
 % draw pentagram:
 
+
+
 p2 down;
+p2 backward real(stdin "size: ");
 p2 forward 10;
 p2 right 144º;
 p2 forward 10;
