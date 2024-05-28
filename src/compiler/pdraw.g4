@@ -6,6 +6,7 @@ main: (statement)* EOF;
 statement: (
 		instruction
 		| assignment
+		| if
 		| class
 		| object
 		| execute
@@ -13,6 +14,13 @@ statement: (
 		| stdin
 		| pause
 	) ';';
+
+if: 'if' '(' condition ')' '{' statement* '}';
+
+condition:
+    expression '==' expression      # ConditionEquals
+    | expression '!=' expression    # ConditionNotEquals
+    ;
 
 instruction:
 	variable moveAction expression	# InstructionMoveAction

@@ -838,4 +838,71 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return false;
     }
   }
+
+  @Override
+  public Boolean visitIf(pdrawParser.IfContext ctx) {
+    if (!visit(ctx.condition())) {
+      ErrorHandling.printError(ctx, "Condition is not valid");
+      return false;
+    }
+    return ctx.statement().stream().allMatch(this::visit);
+  }
+
+  @Override
+  public Boolean visitConditionEquals(pdrawParser.ConditionEqualsContext ctx) {
+    if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
+      return false;
+    }
+
+    List<Type> types = ctx.expression().stream().map(exp -> exp.symbol.getType()).toList();
+
+    if (checkConditionTypes(types)) {
+      return true;
+    }
+
+    String sb = "Symbols " + ctx.expression(0).getText() + " and " + ctx.expression(1).getText()
+            + " are of different types (" + ctx.expression(0).symbol.getType().toString() + ", "
+            + ctx.expression(1).symbol.getType().toString() + ")";
+    ErrorHandling.printError(ctx, sb);
+    return false;
+  }
+
+  @Override
+  public Boolean visitConditionNotEquals(pdrawParser.ConditionNotEqualsContext ctx) {
+    if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
+      return false;
+    }
+
+    List<Type> types = ctx.expression().stream().map(exp -> exp.symbol.getType()).toList();
+
+    if (checkConditionTypes(types)) {
+      return true;
+    }
+
+    String sb = "Symbols " + ctx.expression(0).getText() + " and " + ctx.expression(1).getText()
+            + " are of different types (" + ctx.expression(0).symbol.getType().toString() + ", "
+            + ctx.expression(1).symbol.getType().toString() + ")";
+    ErrorHandling.printError(ctx, sb);
+    return false;
+  }
+
+  private Boolean checkConditionTypes(List<Type> types) {
+    // All numbers
+    if (types.stream().allMatch(Type::isNumeric)) {
+      return true;
+    }
+
+    // All bool
+    if (types.stream().allMatch(BoolType.class::isInstance)) {
+      return true;
+    }
+
+    // All string
+    if (types.stream().allMatch(StringType.class::isInstance)) {
+      return true;
+    }
+
+    // A bool and a number
+    return types.stream().anyMatch(Type::isNumeric) && types.stream().anyMatch(BoolType.class::isInstance);
+  }
 }

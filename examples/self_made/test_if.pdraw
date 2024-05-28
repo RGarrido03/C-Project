@@ -1,0 +1,16 @@
+real myRealVar = 1.0;
+int myIntVar = 1;
+string myStringVar = "Hello";
+bool myBoolVar = true;
+
+if (myRealVar == myBoolVar) {
+    "1.0 is true" -> stdout;
+};
+
+if (myIntVar != 1.0) {
+    "This shouldn't be printed" -> stdout;
+};
+
+if (myStringVar == "Hello") {
+    "Hi bestie" -> stdout;
+};

@@ -75,3 +75,10 @@ execute(variable, String) ::= <<
     <variable> = eval(<String>)
     
 >>
+
+if(condition, statements) ::= <<
+if <condition>:
+    <statements; separator="\n">
+>>
+
+condition(e1, e2, equals) ::= "<e1> <if(equals)>==<else>!=<endif> <e2>"

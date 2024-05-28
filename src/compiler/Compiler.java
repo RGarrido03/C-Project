@@ -257,6 +257,14 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitExprBool(pdrawParser.ExprBoolContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("other");
+    String str = ctx.BOOL().getText();
+    res.add("text", str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase());
+    return res;
+  }
+
+  @Override
   public ST visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) {
     ST res = null;
     return visitChildren(ctx);
@@ -346,6 +354,31 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     temp.add("Type", parseType(ctx.Type().getText()));
     temp.add("expression", visit(ctx.expression()));
     return temp;
+  }
+
+  @Override
+  public ST visitIf(pdrawParser.IfContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("if");
+    res.add("condition", visit(ctx.condition()));
+    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+    return res;
+  }
+
+  @Override
+  public ST visitConditionEquals(pdrawParser.ConditionEqualsContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("condition");
+    res.add("e1", visit(ctx.expression(0)));
+    res.add("e2", visit(ctx.expression(1)));
+    res.add("equals", "true");
+    return res;
+  }
+
+  @Override
+  public ST visitConditionNotEquals(pdrawParser.ConditionNotEqualsContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("condition");
+    res.add("e1", visit(ctx.expression(0)));
+    res.add("e2", visit(ctx.expression(1)));
+    return res;
   }
 
   private String parseType(String type) {
