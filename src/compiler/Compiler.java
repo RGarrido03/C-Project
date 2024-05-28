@@ -251,6 +251,14 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitExprBool(pdrawParser.ExprBoolContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("other");
+    String str = ctx.BOOL().getText();
+    res.add("text", str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase());
+    return res;
+  }
+
+  @Override
   public ST visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) {
     ST res = null;
     return visitChildren(ctx);
