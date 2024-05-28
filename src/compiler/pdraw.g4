@@ -6,12 +6,20 @@ main: (statement)* EOF;
 statement: (
 		instruction
 		| assignment
+		| if
 		| class
 		| object
 		| execute
 		| print
 		| pause
 	) ';';
+
+if: 'if' '(' condition ')' '{' statement* '}';
+
+condition:
+    expression '==' expression      # ConditionEquals
+    | expression '!=' expression    # ConditionNotEquals
+    ;
 
 instruction:
 	variable moveAction angle	# InstructionMoveAction

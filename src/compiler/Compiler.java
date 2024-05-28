@@ -339,6 +339,31 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     return temp;
   }
 
+  @Override
+  public ST visitIf(pdrawParser.IfContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("if");
+    res.add("condition", visit(ctx.condition()));
+    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+    return res;
+  }
+
+  @Override
+  public ST visitConditionEquals(pdrawParser.ConditionEqualsContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("condition");
+    res.add("e1", visit(ctx.expression(0)));
+    res.add("e2", visit(ctx.expression(1)));
+    res.add("equals", "true");
+    return res;
+  }
+
+  @Override
+  public ST visitConditionNotEquals(pdrawParser.ConditionNotEqualsContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("condition");
+    res.add("e1", visit(ctx.expression(0)));
+    res.add("e2", visit(ctx.expression(1)));
+    return res;
+  }
+
   private String parseType(String type) {
     return switch (type.toLowerCase()) {
       case "int" -> "int";
