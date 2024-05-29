@@ -1,0 +1,24 @@
+define canvas Canvas1 "Example 1" (100,100); % default has no name and size (500,500)
+
+define pen PenType1 {
+   color = green;
+   position = (10,10);
+   orientation = 45º; % literal orientation in degrees (internally is always stored in radians)
+   % orientation = 0; % literal orientation in radians
+   % real PI constant predefined
+   thickness = 10; % default thickness is 1
+   pressure = -1; % up (pressure=-1); down (pressure>=0 and pressure <=1)
+   % pressure = 0; % down
+   % pressure = 1/3; % 1/3 of thickness
+};
+
+pen p1 = new PenType1;
+
+p1 down; % pen in canvas with pressure 0
+p1 forward 10; % pen p1 advances 10
+p1 <- color red; % set pen color
+p1 left 10; % pen p1 rotated counterclockwise 10 degrees
+p1 backward 10; % pen p1 retreats 10
+p1 <- color  blue;
+p1 right 20; % pen p1 rotated clockwise 10 degrees
+p1 forward 10; % pen p1 retreats 10
