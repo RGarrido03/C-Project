@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import .antlr.pdrawParser;
 import types.*;
 
 @SuppressWarnings("CheckReturnValue")
@@ -453,6 +455,35 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     // return visitChildren(ctx); //TODO see if we should visit variable
     // we can visit tuple, expression, or angle
     // return res;
+  }
+
+  @Override
+  public Boolean visitArrowProps(pdrawParser.ArrowPropsContext ctx) {
+    Boolean res = false;
+
+    String prop = ctx.getText().split(" ")[0].trim();
+    String value = ctx.getText().split(" ")[1].replace(";", "");
+    switch (prop) {
+      case "color":
+        Boolean isColorValid = isColorWord(value) || isHexColor(value);
+        if (!isColorValid) {
+          ErrorHandling.printError(
+              ctx,
+              String.format("The value %s is not a color", value));
+        }
+        return isColorValid;
+      case "position":
+        return visitTuple(ctx.tuple());
+      case "orientation":
+        return visit(ctx.angle());
+      case "thickness":
+        return visit(ctx.expression());
+      case "pressure":
+        return visit(ctx.expression());
+      default:
+        break;
+    }
+    return res;
   }
 
   @Override
