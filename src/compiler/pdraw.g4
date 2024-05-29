@@ -23,7 +23,8 @@ condition:
 
 instruction:
 	variable moveAction angle	# InstructionMoveAction
-	| variable penAction		# InstructionPenAction;
+	| variable penAction		# InstructionPenAction
+	| variable '<-' arrowProps  # InstructionArrowProps;
 
 assignment
 	returns[types.Symbol symbol]:
