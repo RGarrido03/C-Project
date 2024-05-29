@@ -262,6 +262,29 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
+    public Boolean visitInstructionArrowProps(pdrawParser.InstructionArrowPropsContext ctx) {
+      Boolean res = false;
+      String variable = ctx.variable().getText();
+      if (!symbolTable.containsKey(variable)) {
+        ErrorHandling.printError(
+            ctx,
+            String.format("Variable %s not defined", variable));
+        return false;
+      } else {
+        Type type = symbolTable.get(variable).getType();
+        if (type instanceof PenTAD) {
+  
+          return true;
+        } else {
+          ErrorHandling.printError(
+              ctx,
+              String.format("Variable %s is not a pen", variable));
+          return false;
+        }
+      }
+    }
+
+  @Override
   public Boolean visitAssignmentVar(pdrawParser.AssignmentVarContext ctx) {
     Boolean res = false;
     String type = ctx.Type().getText();
