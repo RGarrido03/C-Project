@@ -9,6 +9,10 @@ class <className>(Pen):
 
 classProp(prop, value) ::= "self.<prop> = <value>"
 
+arrowProps(variable, value1, value2) ::= <<<variable>.<value1> = "<value2>"
+
+>>
+
 object(variable, penType) ::= <<
 <variable> = <if(penType)><penType><else>DefaultPen<endif>()
 
