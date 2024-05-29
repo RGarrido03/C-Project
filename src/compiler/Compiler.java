@@ -2,6 +2,8 @@ import java.util.List;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
+
+import .antlr.pdrawParser;
 import types.PenTAD;
 
 @SuppressWarnings("CheckReturnValue")
@@ -72,6 +74,17 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     res.add("action", ctx.penAction().getText());
     return res;
   }
+
+  @Override
+  public ST visitInstructionArrowProps(
+      pdrawParser.InstructionArrowPropsContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("arrowProps");
+    res.add("variable", ctx.variable().getText());
+    res.add("value1", "color");
+    res.add("value2", ctx.getText().split("color")[1]);
+    return res;
+  }
+
 
   @Override
   public ST visitAssignmentVar(pdrawParser.AssignmentVarContext ctx) {
