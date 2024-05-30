@@ -13,4 +13,11 @@ classProps:
 	| 'pressure' '=' expression;
 // TODO: Adapt to any keyword TODO: General expressions instead of hardcoded ones
 
+arrowProps:
+	'color' (Word | HexaColor)
+	| 'position' tuple
+	| 'orientation' angle
+	| 'thickness' expression
+	| 'pressure' expression;
+
 object: 'pen' variable '=' 'new' variable?;
