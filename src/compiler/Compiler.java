@@ -275,6 +275,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("expression");
+
+    if (ctx.op.getText().equals("/") && visit(ctx.expression(1)).render().equals("0")) {
+        throw new ArithmeticException("Division by zero is not allowed");
+    }
+
     res.add("left", visit(ctx.expression(0)).render());
     res.add("op", ctx.op.getText());
     res.add("right", visit(ctx.expression(1)).render());

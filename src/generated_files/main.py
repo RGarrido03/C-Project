@@ -11,5 +11,8 @@ class DefaultPen(Pen):
 
 
 add: int = 2+4
+sub: int = 7-6
+div: int = 9/1
+mult: int = 1*8
 
 turtle.done()
