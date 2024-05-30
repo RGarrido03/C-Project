@@ -23,15 +23,10 @@ condition:
     ;
 
 instruction:
-<<<<<<< HEAD
 	variable moveAction expression	# InstructionMoveAction
 	| variable rotateAction angle	# InstructionRotateAction
-	| variable penAction			# InstructionPenAction;
-=======
-	variable moveAction angle	# InstructionMoveAction
-	| variable penAction		# InstructionPenAction
+	| variable penAction			# InstructionPenAction
 	| variable '<-' arrowProps  # InstructionArrowProps;
->>>>>>> 8996b2af695e81232903068a559931ab91bd5a16
 
 assignment
 	returns[types.Symbol symbol]:
