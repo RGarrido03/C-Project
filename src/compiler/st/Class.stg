@@ -7,7 +7,7 @@ class <className>(Pen):
         <classProps; separator="\n">
 >>
 
-classProp(prop, value) ::= "self.<prop> = <value>"
+classProps(prop, expression) ::= "self.<prop> = <expression>"
 
 arrowProps(variable, value1, value2) ::= <<<variable>.<value1> = "<value2>"
 
@@ -17,7 +17,6 @@ object(variable, penType) ::= <<
 <variable> = <if(penType)><penType><else>DefaultPen<endif>()
 
 >>
-
 
 createCanvasClass(className, tuple) ::= <<
 turtle.setup<tuple>

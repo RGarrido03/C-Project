@@ -264,20 +264,20 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
-  public ST visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) {
+  public ST visitExprAddSub(pdrawParser.ExprAddSubContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("expression");
-    res.add("expression", visit(ctx.expression(0)));
+    res.add("left", visit(ctx.expression(0)).render());
     res.add("op", ctx.op.getText());
-    res.add("expression", visit(ctx.expression(1)));
+    res.add("right", visit(ctx.expression(1)).render());
     return res;
   }
 
   @Override
-  public ST visitExprAddSub(pdrawParser.ExprAddSubContext ctx) {
-    ST res = pdrawTemplate.getInstanceOf("instruction");
-    res.add("expression", visit(ctx.expression(0)));
+  public ST visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("expression");
+    res.add("left", visit(ctx.expression(0)).render());
     res.add("op", ctx.op.getText());
-    res.add("expression", visit(ctx.expression(1)));
+    res.add("right", visit(ctx.expression(1)).render());
     return res;
   }
 

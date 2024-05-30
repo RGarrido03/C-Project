@@ -14,9 +14,7 @@ class DefaultPen(Pen):
     def __init__(self) -> None:
         super().__init__()
 
-
 <classes; separator="\n\n">
-
 
 <if(statements)>
 <statements>
@@ -28,8 +26,8 @@ turtle.done()
 
 >>
 
-expression(expression, op) ::=<<
-<expression><op><expression>
+expression(left, op, right) ::=<<
+<left><op><right>
 >>
 
 other(text) ::= "<text>"
