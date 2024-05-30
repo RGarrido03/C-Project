@@ -26,8 +26,8 @@ turtle.done()
 
 >>
 
-expression(left, op, right) ::=<<
-<left><op><right>
+expression(e1, op, e2) ::=<<
+<e1><op><e2>
 >>
 
 other(text) ::= "<text>"
