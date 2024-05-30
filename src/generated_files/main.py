@@ -10,26 +10,17 @@ class DefaultPen(Pen):
         super().__init__()
 
 
-class PenType1(Pen):
+class penTypeGrossa(Pen):
     def __init__(self) -> None:
         super().__init__()
         self.color = "green"
-        self.position = (10,10)
-        self.orientation = 45.0
-        self.thickness = 10
-        self.pressure = -1
+        self.position = (0,0)
+        self.thickness = 5
+        self.thickness = 7
+        self.pressure = 6
+        self.pressure = 10
 
 
-turtle.setup(100,100)
-turtle.title("Example 1")
-p1 = PenType1()
-p1.down()
-p1.forward(10)
-p1.color = "red"
-p1.left(572.9577951308232)
-p1.backward(10)
-p1.color = "blue"
-p1.right(1145.9155902616465)
-p1.forward(10)
+pass
 
 turtle.done()

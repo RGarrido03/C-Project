@@ -28,6 +28,10 @@ turtle.done()
 
 >>
 
+expression(expression, op) ::=<<
+<expression><op><expression>
+>>
+
 other(text) ::= "<text>"
 
 statement(something) ::=<<
