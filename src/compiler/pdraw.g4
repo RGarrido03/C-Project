@@ -11,6 +11,7 @@ statement: (
 		| execute
 		| print
 		| pause
+		
 	) ';';
 
 instruction:
