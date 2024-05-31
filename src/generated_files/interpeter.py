@@ -1,32 +1,73 @@
 import math
+from numbers import Number
 from antlr4 import *
 from ipdrawParser import ipdrawParser
 from ipdrawVisitor import ipdrawVisitor
 import sys
 import time
 from lib import *
+from ErrorHandler import ErrorHandling
+
 # TODO FAZER VERIFICADOR SEMANTICO
+
+
+def parseType(type_):
+    if type_ == 'int':
+        return int
+    elif type_ == 'real':
+        return float
+    elif type_ == 'bool':
+        return bool
+    elif type_ == 'string':
+        return str
+
+
+def handleCondition(exp1, exp2):
+   if not (isinstance(exp1, Number) and isinstance(exp2, Number)) or (
+         isinstance(exp1, type(exp2))):
+
+      ErrorHandling.print_error(f"Values '{exp1}' and '{
+                                 exp2}' are not of the same type")
+      sys.exit(1)
+   return True
 
 
 class SymbolTable:
     def __init__(self):
         self.variables = {}
 
-    def add_variable(self, name, value):
+    def add_variable(self, name, value, type_):
 
-        self.variables[name] = value
+        if name in self.variables:
+            ErrorHandling.print_error(f"Variable '{name}' already exists")
+            sys.exit(1)
+
+        elif isinstance(value, parseType(type_)):
+            self.variables[name] = value
+
+        else:
+            ErrorHandling.print_error(f"Variable '{name}' and value '{
+                                      value}' are not of the same type")
+            sys.exit(1)
 
     def get_variable(self, name):
         try:
             return self.variables[name]
         except:
-            print("Variable '" + name + "' not found")
+            ErrorHandling.print_error(f"Variable '{name}' not found")
+            sys.exit(1)
 
     def update_variable(self, name, value):
-        try:
-            self.variables[name] = value
-        except:
-            print("Variable '" + name + "' not found")
+        if name in self.variables:
+            if isinstance(self.variables[name], type(value)):
+                self.variables[name] = value
+            else:
+                ErrorHandling.print_error(f"Variable '{name}' and value '{
+                                          value}' are not of the same type")
+                sys.exit(1)
+        else:
+            ErrorHandling.print_error(f"Variable '{name}' not found")
+            sys.exit(1)
 
     def __str__(self):
         return str(self.variables)
@@ -69,17 +110,17 @@ class Interpreter(ipdrawVisitor):
         return None  # TODO
 
     def visitWhileLoop(self, ctx: ipdrawParser.WhileLoopContext):
-      cicle = ctx.cicle.text == 'while'
-      
-      """
+        cicle = ctx.cicle.text == 'while'
+
+        """
          se for um while, ele vai executar enquanto a condição for verdadeira
          se for um until, ele vai executar enquanto a condição for falsa
       """
-      while self.visit(ctx.condition()) == cicle:
-         for statement in ctx.statement():
-               self.visit(statement)
+        while self.visit(ctx.condition()) == cicle:
+            for statement in ctx.statement():
+                self.visit(statement)
 
-      return None  # TODO
+        return None  # TODO
 
     def visitForLoop(self, ctx: ipdrawParser.ForLoopContext):
         self.visit(ctx.assignment(0))
@@ -100,21 +141,23 @@ class Interpreter(ipdrawVisitor):
     def visitConditionNot(self, ctx: ipdrawParser.ConditionNotContext):
         return not self.visit(ctx.condition())
 
-    def visitConditionEquals(self, ctx: ipdrawParser.ConditionEqualsContext):
-        exp1 = self.visit(ctx.expression(0))
+   def visitConditionEquals(self, ctx: ipdrawParser.ConditionEqualsContext):
+      exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        return exp1 == exp2
+        if handleCondition(exp1, exp2):
+            return exp1 == exp2
 
-    def visitConditionNotEquals(self, ctx: ipdrawParser.ConditionNotEqualsContext):
-        exp1 = self.visit(ctx.expression(0))
-        exp2 = self.visit(ctx.expression(1))
-        return exp1 != exp2
+   def visitConditionNotEquals(self, ctx: ipdrawParser.ConditionNotEqualsContext):
+         exp1 = self.visit(ctx.expression(0))
+         exp2 = self.visit(ctx.expression(1))
+         if handleCondition(exp1, exp2):
+         return exp1 != exp2
 
-    def visitConditionLessThan(self, ctx: ipdrawParser.ConditionLessThanContext):
-        exp1 = self.visit(ctx.expression(0))
-        exp2 = self.visit(ctx.expression(1))
-        
-        return exp1 < exp2
+   def visitConditionLessThan(self, ctx: ipdrawParser.ConditionLessThanContext):
+      exp1 = self.visit(ctx.expression(0))
+      exp2 = self.visit(ctx.expression(1))
+      if handleCondition(exp1, exp2):
+         return exp1 < exp2
 
     def visitConditionGreaterThan(self, ctx: ipdrawParser.ConditionGreaterThanContext):
         exp1 = self.visit(ctx.expression(0))
@@ -179,7 +222,7 @@ class Interpreter(ipdrawVisitor):
     def visitAssignmentVar(self, ctx: ipdrawParser.AssignmentVarContext):
         var_name = ctx.variable().getText()
         value = self.visit(ctx.expression())
-        self.symbols.add_variable(var_name, value)
+        self.symbols.add_variable(var_name, value, ctx.Type().getText())
         return value
 
     def visitReAssignmentVar(self, ctx: ipdrawParser.ReAssignmentVarContext):
@@ -216,7 +259,7 @@ class Interpreter(ipdrawVisitor):
     def visitExprAddSub(self, ctx: ipdrawParser.ExprAddSubContext):
         left = self.visit(ctx.expression(0))
         right = self.visit(ctx.expression(1))
-      
+
         if ctx.op.text == '+':
             return left + right
         elif ctx.op.text == '-':

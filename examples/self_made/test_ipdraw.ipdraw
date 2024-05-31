@@ -38,5 +38,15 @@ while (i lt 5) {
     i = i + 1;
 };
 
+position (0,0);
+color violet;
+thickness 5;
+for(int oi =0;oi < 100;oi=oi+1){
+    forward 20;
+    
+    right 3.6 * (oi/15) deg;
+};
+
 up;
 "Acabei" -> stdout;
+
