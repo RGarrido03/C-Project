@@ -10,7 +10,6 @@ class DefaultPen(Pen):
         super().__init__()
 
 
-<<<<<<< HEAD
 class PenType2__(Pen):
     def __init__(self) -> None:
         super().__init__()
@@ -41,11 +40,5 @@ p2__.right(144.0)
 p2__.forward(10)
 p2__.right(144.0)
 p2__.forward(10)
-=======
-add: int = 2+4
-sub: int = 7-6
-div: int = 9/1
-mult: int = 1*8
->>>>>>> 8996b2af695e81232903068a559931ab91bd5a16
 
 turtle.done()

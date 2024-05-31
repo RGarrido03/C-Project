@@ -3,14 +3,20 @@
 ---
 
 ## Index
-1. [Constituição dos grupos e participação individual global](#1-constituição-dos-grupos-e-participação-individual-global)
-2. [Relatório](#2-relatório)
-3. [Caneta](#3-caneta)
-4. [Estrutura](#4-estrutura)
-5. [Gramática](#5-gramática)
-6. [Visitors](#6-visitors)
-7. [StringTemplates](#7-stringtemplates-st)
 
+- [Tema **PDraw**, grupo **pdraw-t02**](#tema-pdraw-grupo-pdraw-t02)
+  - [Index](#index)
+  - [1. Constituição dos grupos e participação individual global](#1-constituição-dos-grupos-e-participação-individual-global)
+  - [**run like this**](#run-like-this)
+  - [2. Relatório](#2-relatório)
+- [3. Caneta](#3-caneta)
+- [4. Estrutura](#4-estrutura)
+- [5. Gramática](#5-gramática)
+- [6. Visitors](#6-visitors)
+- [7. StringTemplates (ST)](#7-stringtemplates-st)
+- [](#)
+  - [Contribuições](#contribuições)
+  - [Duvidas](#duvidas)
 
 ## 1. Constituição dos grupos e participação individual global
 
@@ -89,34 +95,34 @@ Organização do repositório (diretórios):
 - **doc** documentação extra
 - **examples** exemplos ilustrativos das linguagens geradas
 - **gen** ficheiros gerados pelo ANTLR4
-- **scripts** ficheiros bash do ANTLR4 modificados ``` antlr4-build, antlr4-run, antlr4-clean```
-- **src** código fonte 
+- **scripts** ficheiros bash do ANTLR4 modificados ` antlr4-build, antlr4-run, antlr4-clean`
+- **src** código fonte
 
 > [!NOTE]
 > A estrutura vai se atualizando à medida do tempo
 
-
 # 5. Gramática
 
-Em ANTLR4 ao definirmos uma gramática formula-se regras sintáticas(*parser*) e léxicas(*lexer*) gerando uma árvore sintática em que cada nó corresponde a um token. Neste projeto a gramática tem a seguinte estrutura. 
+Em ANTLR4 ao definirmos uma gramática formula-se regras sintáticas(_parser_) e léxicas(_lexer_) gerando uma árvore sintática em que cada nó corresponde a um token. Neste projeto a gramática tem a seguinte estrutura.
 
-| Ficheiros       | Descricão                                                     |
-| --------------- | ------------------------------------------------------------- |
-| **Elements.g4** | Definição de expressões aritmétricas e comandos da caneta     |
-| **Class.g4**    | Criação e configuração de objetos de classes                  |
-| **pgdraw**      | Gramática Principal                                           |
+| Ficheiros       | Descricão                                                 |
+| --------------- | --------------------------------------------------------- |
+| **Elements.g4** | Definição de expressões aritmétricas e comandos da caneta |
+| **Class.g4**    | Criação e configuração de objetos de classes              |
+| **pgdraw**      | Gramática Principal                                       |
 
-O *pgdraw.g4* importa a *Elements.g4* e *Class.g4* para ter mais simplicidade e organização da gramática.
+O _pgdraw.g4_ importa a _Elements.g4_ e _Class.g4_ para ter mais simplicidade e organização da gramática.
 
 # 6. Visitors
-Já mencionado anteriormanete na árvore de análise sintática (*parse tree*) gerada pelo parser pretendemos interagir com cada nó e é aqui que entra o **Visitor**.
+
+Já mencionado anteriormanete na árvore de análise sintática (_parse tree_) gerada pelo parser pretendemos interagir com cada nó e é aqui que entra o **Visitor**.
 Com esta ferramenta podemos configurar com ações especifícas e personalizadas sobre a estrutura de objetos tornando o código mais modular, reutilizável e fácil manutenção.
 
 **Compiler** e **SemanticAnalysis** são os Visitors que foram implementados neste projeto.
 
 # 7. StringTemplates (ST)
 
-# 
+#
 
 ## Contribuições
 
@@ -125,22 +131,26 @@ Com esta ferramenta podemos configurar com ações especifícas e personalizadas
 
 ## Duvidas
 
-O classProps deve aceitar variaveis globais?
-dEVE SER POSSIVEL redifinir as pens
+```bash
 
-```pdraw
-define pen penTypeGrossa {
+# on root directory (pdraw-t02)
+cd src/generated_files
 
-    color= "black";
-    thickness= 10000;
-}
+python -m venv env
+#or
+python3 -m venv env
 
-ou seja redifinir?
+source env/bin/activate
+pip install antlr4-python3-runtime
 
-define pen penTypeGrossa {
+# nao precisa de ser o `mod`
+antlr4-build -python
+# DO NOT USE ANTLR4-RUN BECAUSE IS USES THE GLOBAL INTERPRETER
+# antlr4-run -python pdrawMain.py <-- THIS NEVER
+# USE ALWAYS VIRTUAL ENVIRONMENT
+python pdrawMain.py
 
-    color= "black";
-    thickness= 10000;
-    position=(0,0);
-}
+
+
+
 ```

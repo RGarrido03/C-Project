@@ -84,3 +84,16 @@ if <condition>:
 >>
 
 condition(e1, e2, equals) ::= "<e1> <if(equals)>==<else>!=<endif> <e2>"
+
+
+
+execute(variable, String) ::= <<
+def execute(filename):
+   ## TODO tem de ser um filestream !!!!
+   input_stream = FileStream(filename, encoding='utf-8')
+   lexer = ipdrawLexer(input_stream)
+   stream = CommonTokenStream(lexer)
+   parser = ipdrawParser(stream)
+   tree = parser.execute()
+
+>>
