@@ -2,7 +2,7 @@ import sys
 from antlr4 import *
 from ipdrawLexer import ipdrawLexer
 from ipdrawParser import ipdrawParser
-from ipdraw import Interpreter 
+from generated_files.interpeter import Interpreter 
 
 def main(filename):
    ## TODO tem de ser um filestream !!!!
@@ -16,5 +16,5 @@ def main(filename):
    visitor.visit(tree)
 
 if __name__ == '__main__':
-   file="/home/andre/Desktop/UA/2023_24/2_SEMESTRE/C/P/projeto/pdraw-t02/examples/p1.ipdraw"
+   file="../../examples/p1.ipdraw"
    main(file)

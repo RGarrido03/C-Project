@@ -80,12 +80,14 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     res.add("action", ctx.penAction().getText());
     return res;
   }
-
+  
+  // TODO  \
+  // FIXME V
   @Override
   public ST visitInstructionArrowProps(
-      pdrawParser.InstructionArrowPropsContext ctx) {
+    pdrawParser.InstructionArrowPropsContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("arrowProps");
-    res.add("variable", ctx.variable().getText());
+    res.add("variable", visit(ctx.variable()));
     res.add("value1", "color");
     res.add("value2", ctx.getText().split("color")[1]);
     return res;

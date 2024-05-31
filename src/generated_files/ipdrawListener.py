@@ -35,6 +35,15 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ipdrawParser#elseBlock.
+    def enterElseBlock(self, ctx:ipdrawParser.ElseBlockContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#elseBlock.
+    def exitElseBlock(self, ctx:ipdrawParser.ElseBlockContext):
+        pass
+
+
     # Enter a parse tree produced by ipdrawParser#whileLoop.
     def enterWhileLoop(self, ctx:ipdrawParser.WhileLoopContext):
         pass
@@ -50,6 +59,15 @@ class ipdrawListener(ParseTreeListener):
 
     # Exit a parse tree produced by ipdrawParser#forLoop.
     def exitForLoop(self, ctx:ipdrawParser.ForLoopContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#finallyBlock.
+    def enterFinallyBlock(self, ctx:ipdrawParser.FinallyBlockContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#finallyBlock.
+    def exitFinallyBlock(self, ctx:ipdrawParser.FinallyBlockContext):
         pass
 
 
@@ -377,57 +395,30 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ipdrawParser#left.
-    def enterLeft(self, ctx:ipdrawParser.LeftContext):
+    # Enter a parse tree produced by ipdrawParser#rotateAction.
+    def enterRotateAction(self, ctx:ipdrawParser.RotateActionContext):
         pass
 
-    # Exit a parse tree produced by ipdrawParser#left.
-    def exitLeft(self, ctx:ipdrawParser.LeftContext):
-        pass
-
-
-    # Enter a parse tree produced by ipdrawParser#right.
-    def enterRight(self, ctx:ipdrawParser.RightContext):
-        pass
-
-    # Exit a parse tree produced by ipdrawParser#right.
-    def exitRight(self, ctx:ipdrawParser.RightContext):
+    # Exit a parse tree produced by ipdrawParser#rotateAction.
+    def exitRotateAction(self, ctx:ipdrawParser.RotateActionContext):
         pass
 
 
-    # Enter a parse tree produced by ipdrawParser#forward.
-    def enterForward(self, ctx:ipdrawParser.ForwardContext):
+    # Enter a parse tree produced by ipdrawParser#moveAction.
+    def enterMoveAction(self, ctx:ipdrawParser.MoveActionContext):
         pass
 
-    # Exit a parse tree produced by ipdrawParser#forward.
-    def exitForward(self, ctx:ipdrawParser.ForwardContext):
-        pass
-
-
-    # Enter a parse tree produced by ipdrawParser#backward.
-    def enterBackward(self, ctx:ipdrawParser.BackwardContext):
-        pass
-
-    # Exit a parse tree produced by ipdrawParser#backward.
-    def exitBackward(self, ctx:ipdrawParser.BackwardContext):
+    # Exit a parse tree produced by ipdrawParser#moveAction.
+    def exitMoveAction(self, ctx:ipdrawParser.MoveActionContext):
         pass
 
 
-    # Enter a parse tree produced by ipdrawParser#down.
-    def enterDown(self, ctx:ipdrawParser.DownContext):
+    # Enter a parse tree produced by ipdrawParser#penAction.
+    def enterPenAction(self, ctx:ipdrawParser.PenActionContext):
         pass
 
-    # Exit a parse tree produced by ipdrawParser#down.
-    def exitDown(self, ctx:ipdrawParser.DownContext):
-        pass
-
-
-    # Enter a parse tree produced by ipdrawParser#up.
-    def enterUp(self, ctx:ipdrawParser.UpContext):
-        pass
-
-    # Exit a parse tree produced by ipdrawParser#up.
-    def exitUp(self, ctx:ipdrawParser.UpContext):
+    # Exit a parse tree produced by ipdrawParser#penAction.
+    def exitPenAction(self, ctx:ipdrawParser.PenActionContext):
         pass
 
 

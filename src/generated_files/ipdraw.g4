@@ -1,11 +1,9 @@
-// ipdraw linguagem apenas para uma caneta ja recebe o objeto caneta e portanto não precisa de criar
-// um objeto caneta
 grammar ipdraw;
-///{0..9} riqueza da linguagem consts para desenhos pi , euler, tau, phi, desenhar arcos, circulos,
-// retas, poligonos, elipses, ... funcoes variaveis para guardar valores de desenhos labda functions
-// ...... VERY ADVANCED
+
+// Define the main structure of the program
 main: (statement)* EOF;
 
+// Define the types of statements available
 statement: (
 		instruction
 		| assignment
@@ -18,18 +16,23 @@ statement: (
 		| pause
 	) ';';
 
+// Define an if statement with optional else clause
 ifStatement:
-	'if' '(' condition ')' '{' statement* '}' (
-		'else' '{' statement* '}'
-	)?;
+	'if' '(' condition ')' '{' statement* '}' elseBlock?;
 
+elseBlock: 'else' '{' statement* '}';
+
+// Define a while loop with 'while' or 'until' keywords
 whileLoop:
 	cicle = ('while' | 'until') '(' condition ')' '{' statement* '}';
-forLoop:
-	'for' '(' assignment ';' condition ';' assignment ')' '{' statement* '}' (
-		'finaly' '{' statement* '}'
-	)?;
 
+// Define a for loop with optional finally block
+forLoop:
+	'for' '(' assignment ';' condition ';' assignment ')' '{' statement* '}' finallyBlock?;
+
+finallyBlock: 'finally' '{' statement* '}';
+
+// Define conditions for if and loop statements
 condition:
 	('¬' | '!' | 'not') condition			# ConditionNot
 	| expression ('==' | 'eq') expression	# ConditionEquals
@@ -41,35 +44,39 @@ condition:
 	| expression ('&&' | 'and') expression	# ConditionAnd
 	| expression ('||' | 'or') expression	# ConditionOr
 	| '(' condition ')'						# ConditionParentheses;
-// TODO bitwise?
 
+// Define instructions for the drawing actions
 instruction:
 	moveAction expression	# InstructionMoveAction
 	| rotateAction angle	# InstructionRotateAction
 	| penAction				# InstructionPenAction
 	| arrowProps			# InstructionArrowProps;
 
+// Define assignments and reassignments
 assignment:
 	Type variable '=' expression	# AssignmentVar
 	| variable '=' expression		# ReAssignmentVar;
 
+// Define standard input
 stdin: 'stdin' expression;
 
-// Medium level
-pause: 'pause' INT;
+// Define pause statement
+pause: 'pause' expression;
+
+// Define print statements to stdout or stderr
 print:
-	(expression) '->' 'stdout'		# stdout
-	| (expression) '->' 'stderr'	# stderr;
+	expression '->' 'stdout'	# stdout
+	| expression '->' 'stderr'	# stderr;
 
-// execute: variable '<-' 'execute' STRING; FIX ME um interpretador pode chamar outro interpretador
-
+// Define variables
 variable: Name | Word;
 
+// Define expressions for mathematical and logical operations
 expression:
 	expression op = ('/' | '//' | '*' | '%') expression	# ExprMultDivMod
 	| expression op = ('+' | '-') expression			# ExprAddSub
-	| op = ('+' | '-') e2 = expression					# ExprUnary
-	| <assoc = right> expression '^' expression			# ExprPow
+	| op = ('+' | '-') expression						# ExprUnary
+	| < assoc = right> expression '^' expression		# ExprPow
 	| typeCast											# ExprCast
 	| stdin												# ExprStdIn
 	| INT												# ExprInteger
@@ -78,42 +85,58 @@ expression:
 	| BOOL												# ExprBool
 	| variable											# ExprVariable
 	| '(' expression ')'								# ExprParent;
+// TODO bitwise?
 
+// Define tuple for coordinates or positions
 tuple: '(' expression ',' expression ')';
+
+// Define angle in degrees or radians
 angle:
-	expression d = ('º' | 'deg')	# Degree
-	| expression ('rad')?			# Radian;
+	expression ('º'|'deg')		# Degree
+	| expression 'rad'?	# Radian;
 
-rotateAction: 'left' # left | 'right' # right;
+// Define rotation actions
+rotateAction: 'left' | 'right';
 
-moveAction: 'forward' # forward | 'backward' # backward;
+// Define movement actions
+moveAction: 'forward' | 'backward';
 
-penAction: 'down' # down | 'up' # up;
+// Define pen actions
+penAction: 'down' | 'up';
 
+// Define properties for arrows
 arrowProps:
-	'color' (Word | HexaColor)
-	| 'position' tuple
-	| 'orientation' angle
-	| 'thickness' expression
-	| 'pressure' expression;
+	'color' (Word | HexaColor)	# ArrowColor
+	| 'position' tuple			# ArrowPosition
+	| 'orientation' angle		# ArrowOrientation
+	| 'thickness' expression	# ArrowThickness
+	| 'pressure' expression		# ArrowPressure;
 
+// Define types for variable declaration
 Type: 'real' | 'canvas' | 'int' | 'string' | 'bool';
+
+// Define type casting
 typeCast: Type '(' expression ')';
 
-// Numerical
+// Define numerical literals
 INT: [0-9]+;
 FLOAT: [0-9]+ '.' [0-9]+;
-FRACTION: INT '/' INT;
 BOOL: 'true' | 'false';
 
-// Misc
-
+// Define miscellaneous tokens
 Word: [a-zA-Z]+;
 Name: Word [a-zA-Z0-9_]*;
 HexaColor: '#' [0-9a-fA-F]+;
 ESC: '\\' .;
-STRING: '"' (. | ESC)*? '"' | '\'' (. | ESC)*? '\'';
+STRING: '"' (ESC | .)*? '"' | '\'' (ESC | .)*? '\'';
 
-// .gitignore
+// Define comments and whitespace
 Comment: '%' ~[\r\n]* -> skip;
 WS: [ \r\t\n]+ -> skip;
+
+// ipdraw linguagem apenas para uma caneta ja recebe o objeto caneta e portanto não precisa de criar
+// um objeto caneta /{0..9} riqueza da linguagem consts para desenhos pi , euler, tau, phi, desenhar
+// arcos, circulos, retas, poligonos, elipses, ... funcoes variaveis para guardar valores de
+// desenhos labda functions ...... VERY ADVANCED
+
+// execute: variable '<-' 'execute' STRING; FIX ME um interpretador pode chamar outro interpretador

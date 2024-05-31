@@ -1,7 +1,5 @@
 import turtle
 from abc import ABC
-import math
-
 
 class Pen(ABC):
     def __init__(self) -> None:
@@ -12,7 +10,7 @@ class Pen(ABC):
         self.pressure = -1  # -1 means up
         self.isUp:bool=0
         self.turtle = turtle.Turtle()
-        self.set_state()
+        self.initTurtle()
 
     def forward(self, distance: float) -> None:
         if self.pressure >= 0:
@@ -32,29 +30,64 @@ class Pen(ABC):
 
     def left(self, degrees: float) -> None:
         self.turtle.left(degrees)
-        #TODO heading gives me deg so i dont need to parse it
-        self.orientation = math.degrees(self.turtle.heading())
+        self.orientation = self.turtle.heading()
 
     def right(self, degrees: float) -> None:
         self.turtle.right(degrees)
-        self.orientation = math.degrees(self.turtle.heading())
+        self.orientation = self.turtle.heading()
 
     def down(self) -> None:
-        self.isUp = False
+        if self.pressure<0:
+            self.pressure=1
+            self.turtle.pensize(self.thickness * self.pressure)
+
         self.turtle.pendown()
 
     def up(self) -> None:
-        self.isUp  =True
         self.turtle.penup()
 
     def update_position(self) -> None:
         self.position = self.turtle.position()
 
-    def set_state(self):
+    def initTurtle(self):
         self.turtle.color(self.color)
         self.turtle.penup()
         self.turtle.setpos(self.position)
         self.turtle.setheading(self.orientation)
-        if self.pressure >= 0 and not self.isUp:
+
+        if self.pressure >= 0:
             self.turtle.pensize(self.thickness * self.pressure)
             self.turtle.pendown()
+
+
+    def set_color(self, color: str) -> None:
+        self.color = color
+        self.turtle.color(color)
+    
+    def set_thickness(self, thickness: float) -> None:
+        self.thickness = thickness
+        self.turtle.pensize(thickness * self.pressure)
+    
+    def set_position(self, x: float, y: float) -> None:
+        self.position = (x, y)
+        self.turtle.setpos(x, y)
+    
+    def set_orientation(self, degrees: float) -> None:
+        self.orientation = degrees
+        self.turtle.setheading(degrees)
+    
+    def set_pressure(self, pressure: float) -> None:
+        self.pressure = pressure
+        if self.pressure > 1:
+            self.pressure = 1
+
+        if self.pressure >= 0:
+            self.turtle.pensize(self.thickness * pressure)
+        else:
+            self.up()
+    
+    def __repr__(self) -> str:
+        return f"Pen(color={self.color}, thickness={self.thickness}, position={self.position}, orientation={self.orientation}, pressure={self.pressure})"
+    
+    def __str__(self) -> str:
+        return f"Pen(color={self.color}, thickness={self.thickness}, position={self.position}, orientation={self.orientation}, pressure={self.pressure})"

@@ -24,6 +24,11 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ipdrawParser#elseBlock.
+    def visitElseBlock(self, ctx:ipdrawParser.ElseBlockContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ipdrawParser#whileLoop.
     def visitWhileLoop(self, ctx:ipdrawParser.WhileLoopContext):
         return self.visitChildren(ctx)
@@ -31,6 +36,11 @@ class ipdrawVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by ipdrawParser#forLoop.
     def visitForLoop(self, ctx:ipdrawParser.ForLoopContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#finallyBlock.
+    def visitFinallyBlock(self, ctx:ipdrawParser.FinallyBlockContext):
         return self.visitChildren(ctx)
 
 
@@ -214,33 +224,18 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ipdrawParser#left.
-    def visitLeft(self, ctx:ipdrawParser.LeftContext):
+    # Visit a parse tree produced by ipdrawParser#rotateAction.
+    def visitRotateAction(self, ctx:ipdrawParser.RotateActionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ipdrawParser#right.
-    def visitRight(self, ctx:ipdrawParser.RightContext):
+    # Visit a parse tree produced by ipdrawParser#moveAction.
+    def visitMoveAction(self, ctx:ipdrawParser.MoveActionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ipdrawParser#forward.
-    def visitForward(self, ctx:ipdrawParser.ForwardContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ipdrawParser#backward.
-    def visitBackward(self, ctx:ipdrawParser.BackwardContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ipdrawParser#down.
-    def visitDown(self, ctx:ipdrawParser.DownContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ipdrawParser#up.
-    def visitUp(self, ctx:ipdrawParser.UpContext):
+    # Visit a parse tree produced by ipdrawParser#penAction.
+    def visitPenAction(self, ctx:ipdrawParser.PenActionContext):
         return self.visitChildren(ctx)
 
 
