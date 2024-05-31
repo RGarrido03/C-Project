@@ -75,3 +75,16 @@ pdrawLexer.tokens
 pdrawListener.java
 pdrawParser.java
 pdrawVisitor.java
+
+# python garbage
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+venv/
+env/
+dist/
+build/
+*.egg-info/
+*.egg/
+*.egg-info

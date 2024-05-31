@@ -23,13 +23,13 @@ def parseType(type_):
 
 
 def handleCondition(exp1, exp2):
-   if not (isinstance(exp1, Number) and isinstance(exp2, Number)) or (
-         isinstance(exp1, type(exp2))):
+    if not (isinstance(exp1, Number) and isinstance(exp2, Number)) or (
+        isinstance(exp1, type(exp2))):
 
-      ErrorHandling.print_error(f"Values '{exp1}' and '{
-                                 exp2}' are not of the same type")
-      sys.exit(1)
-   return True
+        ErrorHandling.print_error(f"Values '{exp1}' and '{\
+                                exp2}' are not of the same type")
+        sys.exit(1)
+    return True
 
 
 class SymbolTable:
@@ -46,8 +46,8 @@ class SymbolTable:
             self.variables[name] = value
 
         else:
-            ErrorHandling.print_error(f"Variable '{name}' and value '{
-                                      value}' are not of the same type")
+            ErrorHandling.print_error(f"Variable '{name}' and value '{\
+                                    value}' are not of the same type")
             sys.exit(1)
 
     def get_variable(self, name):
@@ -62,8 +62,8 @@ class SymbolTable:
             if isinstance(self.variables[name], type(value)):
                 self.variables[name] = value
             else:
-                ErrorHandling.print_error(f"Variable '{name}' and value '{
-                                          value}' are not of the same type")
+                ErrorHandling.print_error(f"Variable '{name}' and value '{\
+                                        value}' are not of the same type")
                 sys.exit(1)
         else:
             ErrorHandling.print_error(f"Variable '{name}' not found")
@@ -113,9 +113,9 @@ class Interpreter(ipdrawVisitor):
         cicle = ctx.cicle.text == 'while'
 
         """
-         se for um while, ele vai executar enquanto a condição for verdadeira
-         se for um until, ele vai executar enquanto a condição for falsa
-      """
+        se for um while, ele vai executar enquanto a condição for verdadeira
+        se for um until, ele vai executar enquanto a condição for falsa
+        """
         while self.visit(ctx.condition()) == cicle:
             for statement in ctx.statement():
                 self.visit(statement)
@@ -141,38 +141,41 @@ class Interpreter(ipdrawVisitor):
     def visitConditionNot(self, ctx: ipdrawParser.ConditionNotContext):
         return not self.visit(ctx.condition())
 
-   def visitConditionEquals(self, ctx: ipdrawParser.ConditionEqualsContext):
-      exp1 = self.visit(ctx.expression(0))
+    def visitConditionEquals(self, ctx: ipdrawParser.ConditionEqualsContext):
+        exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
         if handleCondition(exp1, exp2):
             return exp1 == exp2
 
-   def visitConditionNotEquals(self, ctx: ipdrawParser.ConditionNotEqualsContext):
-         exp1 = self.visit(ctx.expression(0))
-         exp2 = self.visit(ctx.expression(1))
-         if handleCondition(exp1, exp2):
-         return exp1 != exp2
+    def visitConditionNotEquals(self, ctx: ipdrawParser.ConditionNotEqualsContext):
+        exp1 = self.visit(ctx.expression(0))
+        exp2 = self.visit(ctx.expression(1))
+        if handleCondition(exp1, exp2):
+            return exp1 != exp2
 
-   def visitConditionLessThan(self, ctx: ipdrawParser.ConditionLessThanContext):
-      exp1 = self.visit(ctx.expression(0))
-      exp2 = self.visit(ctx.expression(1))
-      if handleCondition(exp1, exp2):
-         return exp1 < exp2
+    def visitConditionLessThan(self, ctx: ipdrawParser.ConditionLessThanContext):
+        exp1 = self.visit(ctx.expression(0))
+        exp2 = self.visit(ctx.expression(1))
+        if handleCondition(exp1, exp2):
+            return exp1 < exp2
 
     def visitConditionGreaterThan(self, ctx: ipdrawParser.ConditionGreaterThanContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        return exp1 > exp2
+        if handleCondition(exp1, exp2):
+            return exp1 > exp2
 
     def visitConditionLessEqual(self, ctx: ipdrawParser.ConditionLessEqualContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        return exp1 <= exp2
+        if handleCondition(exp1, exp2):
+            return exp1 <= exp2
 
     def visitConditionGreaterEqual(self, ctx: ipdrawParser.ConditionGreaterEqualContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        return exp1 >= exp2
+        if handleCondition(exp1, exp2):
+            return exp1 >= exp2
 
     def visitConditionAnd(self, ctx: ipdrawParser.ConditionAndContext):
         exp1 = self.visit(ctx.expression(0))
