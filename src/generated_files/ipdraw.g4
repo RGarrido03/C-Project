@@ -131,7 +131,7 @@ ESC: '\\' .;
 STRING: '"' (ESC | .)*? '"' | '\'' (ESC | .)*? '\'';
 
 // Define comments and whitespace
-Comment: '%' ~[\r\n]* -> skip;
+Comment: (('%' .*?'\n')|('%*' .*? '*%') ) -> skip;
 WS: [ \r\t\n]+ -> skip;
 
 // ipdraw linguagem apenas para uma caneta ja recebe o objeto caneta e portanto não precisa de criar

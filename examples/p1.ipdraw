@@ -4,9 +4,3 @@ forward 10;
 left 45º;
 backward 5;
 
-
-if( 1 == 1 ){
-    forward 10;
-}else{
-    backward 10;
-};

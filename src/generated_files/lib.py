@@ -68,9 +68,9 @@ class Pen(ABC):
         self.thickness = thickness
         self.turtle.pensize(thickness * self.pressure)
     
-    def set_position(self, x: float, y: float) -> None:
-        self.position = (x, y)
-        self.turtle.setpos(x, y)
+    def set_position(self, t:tuple) -> None:
+        self.position = t
+        self.turtle.setpos(t)
     
     def set_orientation(self, degrees: float) -> None:
         self.orientation = degrees

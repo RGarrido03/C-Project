@@ -42,12 +42,11 @@ class Scope:
 
 class Interpreter(ipdrawVisitor):
 
-    def __init__(self,pen:Pen):
+    def __init__(self, pen: Pen):
         self.symbols: SymbolTable = SymbolTable()
-        self.pen=pen
+        self.pen = pen
 
     def visitMain(self, ctx: ipdrawParser.MainContext):
-        print("visitMain")
         return self.visitChildren(ctx)
 
     def visitStatement(self, ctx: ipdrawParser.StatementContext):
@@ -70,17 +69,17 @@ class Interpreter(ipdrawVisitor):
         return None  # TODO
 
     def visitWhileLoop(self, ctx: ipdrawParser.WhileLoopContext):
-        cicle = ctx.cicle == 'while'
-        """
+      cicle = ctx.cicle.text == 'while'
+      
+      """
          se for um while, ele vai executar enquanto a condição for verdadeira
          se for um until, ele vai executar enquanto a condição for falsa
       """
+      while self.visit(ctx.condition()) == cicle:
+         for statement in ctx.statement():
+               self.visit(statement)
 
-        while self.visit(ctx.condition()) == cicle:
-            for statement in ctx.statement():
-                self.visit(statement)
-
-        return None  # TODO
+      return None  # TODO
 
     def visitForLoop(self, ctx: ipdrawParser.ForLoopContext):
         self.visit(ctx.assignment(0))
@@ -114,6 +113,7 @@ class Interpreter(ipdrawVisitor):
     def visitConditionLessThan(self, ctx: ipdrawParser.ConditionLessThanContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
+        
         return exp1 < exp2
 
     def visitConditionGreaterThan(self, ctx: ipdrawParser.ConditionGreaterThanContext):
@@ -145,45 +145,41 @@ class Interpreter(ipdrawVisitor):
         return self.visit(ctx.condition())
 
     def visitInstructionMoveAction(self, ctx: ipdrawParser.InstructionMoveActionContext):
-      move = ctx.moveAction().getText()
-      if move == 'forward':
-         self.pen.forward(self.visit(ctx.expression()))
-      elif move == 'backward':
-         self.pen.backward(self.visit(ctx.expression()))
-        
-      return None
+        move = ctx.moveAction().getText()
+        if move == 'forward':
+            self.pen.forward(self.visit(ctx.expression()))
+        elif move == 'backward':
+            self.pen.backward(self.visit(ctx.expression()))
+
+        return None
 
     def visitInstructionRotateAction(self, ctx: ipdrawParser.InstructionRotateActionContext):
-      rotate = ctx.rotateAction().getText()
+        rotate = ctx.rotateAction().getText()
 
-      if rotate == 'left':
-         self.pen.left(self.visit(ctx.angle()))
-      elif rotate == 'right':
-         self.pen.right(self.visit(ctx.angle()))
-      
-      return None
-   
+        if rotate == 'left':
+            self.pen.left(self.visit(ctx.angle()))
+        elif rotate == 'right':
+            self.pen.right(self.visit(ctx.angle()))
+
+        return None
 
     def visitInstructionPenAction(self, ctx: ipdrawParser.InstructionPenActionContext):
-      action = ctx.penAction().getText()
-      if action == 'down':
-         self.pen.down()
-      elif action == 'up':
-         self.pen.up()
-      
-      return None
+        action = ctx.penAction().getText()
+        if action == 'down':
+            self.pen.down()
+        elif action == 'up':
+            self.pen.up()
+
+        return None
 
     def visitInstructionArrowProps(self, ctx: ipdrawParser.InstructionArrowPropsContext):
-         
-         return visit(ctx.arrowProps())
-    
 
+        return self.visit(ctx.arrowProps())
 
     def visitAssignmentVar(self, ctx: ipdrawParser.AssignmentVarContext):
         var_name = ctx.variable().getText()
         value = self.visit(ctx.expression())
         self.symbols.add_variable(var_name, value)
-
         return value
 
     def visitReAssignmentVar(self, ctx: ipdrawParser.ReAssignmentVarContext):
@@ -218,13 +214,13 @@ class Interpreter(ipdrawVisitor):
         return self.symbols.get_variable(ctx.getText())
 
     def visitExprAddSub(self, ctx: ipdrawParser.ExprAddSubContext):
-         left = self.visit(ctx.expression(0))
-         right = self.visit(ctx.expression(1))
-
-         if ctx.op=='+':
-               return left + right
-         elif ctx.op=='-':
-               return left - right
+        left = self.visit(ctx.expression(0))
+        right = self.visit(ctx.expression(1))
+      
+        if ctx.op.text == '+':
+            return left + right
+        elif ctx.op.text == '-':
+            return left - right
 
     def visitExprPow(self, ctx: ipdrawParser.ExprPowContext):
         left = self.visit(ctx.expression(0))
@@ -233,50 +229,49 @@ class Interpreter(ipdrawVisitor):
         return left ** right
 
     def visitExprString(self, ctx: ipdrawParser.ExprStringContext):
-        return ctx.STRING().getText()
+        return ctx.STRING().getText()[1:-1]
 
     def visitExprCast(self, ctx: ipdrawParser.ExprCastContext):
-         return self.visit(ctx.typeCast())
+        return self.visit(ctx.typeCast())
 
     def visitExprParent(self, ctx: ipdrawParser.ExprParentContext):
-        
+
         return self.visit(ctx.expression())
 
     def visitExprUnary(self, ctx: ipdrawParser.ExprUnaryContext):
-        
-        return - self.visit(ctx.expression()) if ctx.op=='-' else self.visit(ctx.expression())
+
+        return - self.visit(ctx.expression()) if ctx.op.text == '-' else self.visit(ctx.expression())
 
     def visitExprFloat(self, ctx: ipdrawParser.ExprFloatContext):
-        
+
         return float(ctx.FLOAT().getText())
 
     def visitExprStdIn(self, ctx: ipdrawParser.ExprStdInContext):
-        
+
         return self.visit(ctx.stdin())
 
     def visitExprInteger(self, ctx: ipdrawParser.ExprIntegerContext):
-        
-        return int(ctx.INTEGER().getText())
+        return int(ctx.INT().getText())
 
     def visitExprBool(self, ctx: ipdrawParser.ExprBoolContext):
-        
+
         return ctx.BOOL().getText() == 'true'
 
     def visitExprVariable(self, ctx: ipdrawParser.ExprVariableContext):
-        
+
         return self.visit(ctx.variable())
 
     def visitExprMultDivMod(self, ctx: ipdrawParser.ExprMultDivModContext):
         left = self.visit(ctx.expression(0))
         right = self.visit(ctx.expression(1))
 
-        if ctx.op== '*':
+        if ctx.op.text == '*':
             return left * right
-        elif ctx.op == '/':
+        elif ctx.op.text == '/':
             return left / right
-        elif ctx.op== '%':
+        elif ctx.op.text == '%':
             return left % right
-        elif ctx.op== '//':
+        elif ctx.op.text == '//':
             return left // right
 
     def visitTuple(self, ctx: ipdrawParser.TupleContext):
@@ -286,51 +281,47 @@ class Interpreter(ipdrawVisitor):
         return (expr1, expr2)
 
     def visitDegree(self, ctx: ipdrawParser.DegreeContext):
-        
+
         return self.visit(ctx.expression())
 
     def visitRadian(self, ctx: ipdrawParser.RadianContext):
-        
+
         return math.degrees(self.visit(ctx.expression()))
 
-    def visitLeft(self, ctx: ipdrawParser.LeftContext):
-        
-        return self.visitChildren(ctx)
+    def visitArrowColor(self, ctx: ipdrawParser.ArrowColorContext):
+        self.pen.set_color(ctx.getText().replace('color', ''))
 
-    def visitRight(self, ctx: ipdrawParser.RightContext):
-        return self.visitChildren(ctx)
+        return None
 
-    def visitForward(self, ctx: ipdrawParser.ForwardContext):
-        return self.visitChildren(ctx)
+    def visitArrowPosition(self, ctx: ipdrawParser.ArrowPositionContext):
+        self.pen.set_position(self.visit(ctx.tuple_()))
 
-    def visitBackward(self, ctx: ipdrawParser.BackwardContext):
-        return self.visitChildren(ctx)
+        return None
 
-    def visitDown(self, ctx: ipdrawParser.DownContext):
-        return self.visitChildren(ctx)
+    def visitArrowOrientation(self, ctx: ipdrawParser.ArrowOrientationContext):
+        self.pen.set_orientation(self.visit(ctx.angle()))
 
-    def visitUp(self, ctx: ipdrawParser.UpContext):
-        return self.visitChildren(ctx)
+        return None
 
-    def visitArrowProps(self, ctx: ipdrawParser.ArrowPropsContext):
-        return self.visitChildren(ctx)
-    
+    def visitArrowPressure(self, ctx: ipdrawParser.ArrowPressureContext):
+        self.pen.set_pressure(self.visit(ctx.expression()))
 
-      def visitArrowColor(self, ctx: ipdrawParser.ArrowColorContext):
+        return None
 
-         return None
-   
+    def visitArrowThickness(self, ctx: ipdrawParser.ArrowThicknessContext):
+        self.pen.set_thickness(self.visit(ctx.expression()))
 
+        return None
 
     def visitTypeCast(self, ctx: ipdrawParser.TypeCastContext):
-         
-      tipo = ctx.Type().getText()
 
-      if tipo == 'int':
+        tipo = ctx.Type().getText()
+
+        if tipo == 'int':
             return int(self.visit(ctx.expression()))
-      elif tipo == 'real':
+        elif tipo == 'real':
             return float(self.visit(ctx.expression()))
-      elif tipo == 'bool':
+        elif tipo == 'bool':
             return bool(self.visit(ctx.expression()))
-      else:
+        else:
             return str(self.visit(ctx.expression()))

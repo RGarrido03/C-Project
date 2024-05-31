@@ -10,7 +10,7 @@ else:
 
 def serializedATN():
     return [
-        4,1,69,281,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,69,279,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
         7,20,2,21,7,21,1,0,5,0,46,8,0,10,0,12,0,49,9,0,1,0,1,0,1,1,1,1,1,
@@ -28,21 +28,21 @@ def serializedATN():
         1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,
         1,14,3,14,225,8,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,
         5,14,236,8,14,10,14,12,14,239,9,14,1,15,1,15,1,15,1,15,1,15,1,15,
-        1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,3,16,256,8,16,1,17,
-        1,17,1,18,1,18,1,19,1,19,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,
-        1,20,1,20,3,20,274,8,20,1,21,1,21,1,21,1,21,1,21,1,21,0,1,28,22,
-        0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,0,17,
-        1,0,8,9,1,0,12,14,1,0,15,16,1,0,17,18,1,0,19,20,1,0,21,22,1,0,23,
-        24,1,0,25,26,1,0,27,28,1,0,29,30,1,0,63,64,1,0,41,42,1,0,37,40,1,
-        0,48,49,1,0,50,51,1,0,52,53,2,0,63,63,65,65,304,0,47,1,0,0,0,2,60,
-        1,0,0,0,4,64,1,0,0,0,6,79,1,0,0,0,8,89,1,0,0,0,10,102,1,0,0,0,12,
-        121,1,0,0,0,14,169,1,0,0,0,16,179,1,0,0,0,18,190,1,0,0,0,20,192,
-        1,0,0,0,22,195,1,0,0,0,24,206,1,0,0,0,26,208,1,0,0,0,28,224,1,0,
-        0,0,30,240,1,0,0,0,32,255,1,0,0,0,34,257,1,0,0,0,36,259,1,0,0,0,
-        38,261,1,0,0,0,40,273,1,0,0,0,42,275,1,0,0,0,44,46,3,2,1,0,45,44,
-        1,0,0,0,46,49,1,0,0,0,47,45,1,0,0,0,47,48,1,0,0,0,48,50,1,0,0,0,
-        49,47,1,0,0,0,50,51,5,0,0,1,51,1,1,0,0,0,52,61,3,16,8,0,53,61,3,
-        18,9,0,54,61,3,4,2,0,55,61,3,8,4,0,56,61,3,10,5,0,57,61,3,24,12,
+        1,16,1,16,1,16,1,16,1,16,3,16,252,8,16,3,16,254,8,16,1,17,1,17,1,
+        18,1,18,1,19,1,19,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,
+        20,3,20,272,8,20,1,21,1,21,1,21,1,21,1,21,1,21,0,1,28,22,0,2,4,6,
+        8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,0,18,1,0,8,
+        9,1,0,12,14,1,0,15,16,1,0,17,18,1,0,19,20,1,0,21,22,1,0,23,24,1,
+        0,25,26,1,0,27,28,1,0,29,30,1,0,63,64,1,0,41,42,1,0,37,40,1,0,45,
+        46,1,0,48,49,1,0,50,51,1,0,52,53,2,0,63,63,65,65,302,0,47,1,0,0,
+        0,2,60,1,0,0,0,4,64,1,0,0,0,6,79,1,0,0,0,8,89,1,0,0,0,10,102,1,0,
+        0,0,12,121,1,0,0,0,14,169,1,0,0,0,16,179,1,0,0,0,18,190,1,0,0,0,
+        20,192,1,0,0,0,22,195,1,0,0,0,24,206,1,0,0,0,26,208,1,0,0,0,28,224,
+        1,0,0,0,30,240,1,0,0,0,32,253,1,0,0,0,34,255,1,0,0,0,36,257,1,0,
+        0,0,38,259,1,0,0,0,40,271,1,0,0,0,42,273,1,0,0,0,44,46,3,2,1,0,45,
+        44,1,0,0,0,46,49,1,0,0,0,47,45,1,0,0,0,47,48,1,0,0,0,48,50,1,0,0,
+        0,49,47,1,0,0,0,50,51,5,0,0,1,51,1,1,0,0,0,52,61,3,16,8,0,53,61,
+        3,18,9,0,54,61,3,4,2,0,55,61,3,8,4,0,56,61,3,10,5,0,57,61,3,24,12,
         0,58,61,3,20,10,0,59,61,3,22,11,0,60,52,1,0,0,0,60,53,1,0,0,0,60,
         54,1,0,0,0,60,55,1,0,0,0,60,56,1,0,0,0,60,57,1,0,0,0,60,58,1,0,0,
         0,60,59,1,0,0,0,61,62,1,0,0,0,62,63,5,1,0,0,63,3,1,0,0,0,64,65,5,
@@ -95,22 +95,21 @@ def serializedATN():
         224,218,1,0,0,0,224,219,1,0,0,0,224,220,1,0,0,0,225,237,1,0,0,0,
         226,227,10,12,0,0,227,228,7,12,0,0,228,236,3,28,14,13,229,230,10,
         11,0,0,230,231,7,11,0,0,231,236,3,28,14,12,232,233,10,9,0,0,233,
-        234,5,43,0,0,234,236,3,28,14,10,235,226,1,0,0,0,235,229,1,0,0,0,
-        235,232,1,0,0,0,236,239,1,0,0,0,237,235,1,0,0,0,237,238,1,0,0,0,
-        238,29,1,0,0,0,239,237,1,0,0,0,240,241,5,3,0,0,241,242,3,28,14,0,
-        242,243,5,44,0,0,243,244,3,28,14,0,244,245,5,4,0,0,245,31,1,0,0,
-        0,246,247,3,28,14,0,247,248,5,45,0,0,248,256,1,0,0,0,249,250,3,28,
-        14,0,250,251,5,46,0,0,251,256,1,0,0,0,252,253,3,28,14,0,253,254,
-        5,47,0,0,254,256,1,0,0,0,255,246,1,0,0,0,255,249,1,0,0,0,255,252,
-        1,0,0,0,256,33,1,0,0,0,257,258,7,13,0,0,258,35,1,0,0,0,259,260,7,
-        14,0,0,260,37,1,0,0,0,261,262,7,15,0,0,262,39,1,0,0,0,263,264,5,
-        54,0,0,264,274,7,16,0,0,265,266,5,55,0,0,266,274,3,30,15,0,267,268,
-        5,56,0,0,268,274,3,32,16,0,269,270,5,57,0,0,270,274,3,28,14,0,271,
-        272,5,58,0,0,272,274,3,28,14,0,273,263,1,0,0,0,273,265,1,0,0,0,273,
-        267,1,0,0,0,273,269,1,0,0,0,273,271,1,0,0,0,274,41,1,0,0,0,275,276,
-        5,59,0,0,276,277,5,3,0,0,277,278,3,28,14,0,278,279,5,4,0,0,279,43,
-        1,0,0,0,18,47,60,72,77,84,97,114,119,126,169,179,190,206,224,235,
-        237,255,273
+        234,5,43,0,0,234,236,3,28,14,9,235,226,1,0,0,0,235,229,1,0,0,0,235,
+        232,1,0,0,0,236,239,1,0,0,0,237,235,1,0,0,0,237,238,1,0,0,0,238,
+        29,1,0,0,0,239,237,1,0,0,0,240,241,5,3,0,0,241,242,3,28,14,0,242,
+        243,5,44,0,0,243,244,3,28,14,0,244,245,5,4,0,0,245,31,1,0,0,0,246,
+        247,3,28,14,0,247,248,7,13,0,0,248,254,1,0,0,0,249,251,3,28,14,0,
+        250,252,5,47,0,0,251,250,1,0,0,0,251,252,1,0,0,0,252,254,1,0,0,0,
+        253,246,1,0,0,0,253,249,1,0,0,0,254,33,1,0,0,0,255,256,7,14,0,0,
+        256,35,1,0,0,0,257,258,7,15,0,0,258,37,1,0,0,0,259,260,7,16,0,0,
+        260,39,1,0,0,0,261,262,5,54,0,0,262,272,7,17,0,0,263,264,5,55,0,
+        0,264,272,3,30,15,0,265,266,5,56,0,0,266,272,3,32,16,0,267,268,5,
+        57,0,0,268,272,3,28,14,0,269,270,5,58,0,0,270,272,3,28,14,0,271,
+        261,1,0,0,0,271,263,1,0,0,0,271,265,1,0,0,0,271,267,1,0,0,0,271,
+        269,1,0,0,0,272,41,1,0,0,0,273,274,5,59,0,0,274,275,5,3,0,0,275,
+        276,3,28,14,0,276,277,5,4,0,0,277,43,1,0,0,0,19,47,60,72,77,84,97,
+        114,119,126,169,179,190,206,224,235,237,251,253,271
     ]
 
 class ipdrawParser ( Parser ):
@@ -2347,7 +2346,7 @@ class ipdrawParser ( Parser ):
                         self.state = 233
                         self.match(ipdrawParser.T__42)
                         self.state = 234
-                        self.expression(10)
+                        self.expression(9)
                         pass
 
              
@@ -2495,35 +2494,38 @@ class ipdrawParser ( Parser ):
 
         localctx = ipdrawParser.AngleContext(self, self._ctx, self.state)
         self.enterRule(localctx, 32, self.RULE_angle)
+        self._la = 0 # Token type
         try:
-            self.state = 255
+            self.state = 253
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
             if la_ == 1:
                 localctx = ipdrawParser.DegreeContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 246
                 self.expression(0)
                 self.state = 247
-                self.match(ipdrawParser.T__44)
+                _la = self._input.LA(1)
+                if not(_la==45 or _la==46):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
                 pass
 
             elif la_ == 2:
-                localctx = ipdrawParser.DegreeContext(self, localctx)
+                localctx = ipdrawParser.RadianContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 249
                 self.expression(0)
-                self.state = 250
-                self.match(ipdrawParser.T__45)
-                pass
+                self.state = 251
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==47:
+                    self.state = 250
+                    self.match(ipdrawParser.T__46)
 
-            elif la_ == 3:
-                localctx = ipdrawParser.RadianContext(self, localctx)
-                self.enterOuterAlt(localctx, 3)
-                self.state = 252
-                self.expression(0)
-                self.state = 253
-                self.match(ipdrawParser.T__46)
+
                 pass
 
 
@@ -2571,7 +2573,7 @@ class ipdrawParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 257
+            self.state = 255
             _la = self._input.LA(1)
             if not(_la==48 or _la==49):
                 self._errHandler.recoverInline(self)
@@ -2622,7 +2624,7 @@ class ipdrawParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 259
+            self.state = 257
             _la = self._input.LA(1)
             if not(_la==50 or _la==51):
                 self._errHandler.recoverInline(self)
@@ -2673,7 +2675,7 @@ class ipdrawParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 261
+            self.state = 259
             _la = self._input.LA(1)
             if not(_la==52 or _la==53):
                 self._errHandler.recoverInline(self)
@@ -2696,41 +2698,140 @@ class ipdrawParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def Word(self):
-            return self.getToken(ipdrawParser.Word, 0)
 
-        def HexaColor(self):
-            return self.getToken(ipdrawParser.HexaColor, 0)
+        def getRuleIndex(self):
+            return ipdrawParser.RULE_arrowProps
 
-        def tuple_(self):
-            return self.getTypedRuleContext(ipdrawParser.TupleContext,0)
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
 
+
+
+    class ArrowOrientationContext(ArrowPropsContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ipdrawParser.ArrowPropsContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def angle(self):
             return self.getTypedRuleContext(ipdrawParser.AngleContext,0)
 
 
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterArrowOrientation" ):
+                listener.enterArrowOrientation(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitArrowOrientation" ):
+                listener.exitArrowOrientation(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrowOrientation" ):
+                return visitor.visitArrowOrientation(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ArrowPressureContext(ArrowPropsContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ipdrawParser.ArrowPropsContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
         def expression(self):
             return self.getTypedRuleContext(ipdrawParser.ExpressionContext,0)
 
 
-        def getRuleIndex(self):
-            return ipdrawParser.RULE_arrowProps
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterArrowProps" ):
-                listener.enterArrowProps(self)
+            if hasattr( listener, "enterArrowPressure" ):
+                listener.enterArrowPressure(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitArrowProps" ):
-                listener.exitArrowProps(self)
+            if hasattr( listener, "exitArrowPressure" ):
+                listener.exitArrowPressure(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitArrowProps" ):
-                return visitor.visitArrowProps(self)
+            if hasattr( visitor, "visitArrowPressure" ):
+                return visitor.visitArrowPressure(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class ArrowColorContext(ArrowPropsContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ipdrawParser.ArrowPropsContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def Word(self):
+            return self.getToken(ipdrawParser.Word, 0)
+        def HexaColor(self):
+            return self.getToken(ipdrawParser.HexaColor, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterArrowColor" ):
+                listener.enterArrowColor(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitArrowColor" ):
+                listener.exitArrowColor(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrowColor" ):
+                return visitor.visitArrowColor(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ArrowPositionContext(ArrowPropsContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ipdrawParser.ArrowPropsContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def tuple_(self):
+            return self.getTypedRuleContext(ipdrawParser.TupleContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterArrowPosition" ):
+                listener.enterArrowPosition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitArrowPosition" ):
+                listener.exitArrowPosition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrowPosition" ):
+                return visitor.visitArrowPosition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ArrowThicknessContext(ArrowPropsContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ipdrawParser.ArrowPropsContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def expression(self):
+            return self.getTypedRuleContext(ipdrawParser.ExpressionContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterArrowThickness" ):
+                listener.enterArrowThickness(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitArrowThickness" ):
+                listener.exitArrowThickness(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArrowThickness" ):
+                return visitor.visitArrowThickness(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2740,14 +2841,15 @@ class ipdrawParser ( Parser ):
         self.enterRule(localctx, 40, self.RULE_arrowProps)
         self._la = 0 # Token type
         try:
-            self.state = 273
+            self.state = 271
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [54]:
+                localctx = ipdrawParser.ArrowColorContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 263
+                self.state = 261
                 self.match(ipdrawParser.T__53)
-                self.state = 264
+                self.state = 262
                 _la = self._input.LA(1)
                 if not(_la==63 or _la==65):
                     self._errHandler.recoverInline(self)
@@ -2756,31 +2858,35 @@ class ipdrawParser ( Parser ):
                     self.consume()
                 pass
             elif token in [55]:
+                localctx = ipdrawParser.ArrowPositionContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 265
+                self.state = 263
                 self.match(ipdrawParser.T__54)
-                self.state = 266
+                self.state = 264
                 self.tuple_()
                 pass
             elif token in [56]:
+                localctx = ipdrawParser.ArrowOrientationContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 267
+                self.state = 265
                 self.match(ipdrawParser.T__55)
-                self.state = 268
+                self.state = 266
                 self.angle()
                 pass
             elif token in [57]:
+                localctx = ipdrawParser.ArrowThicknessContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 269
+                self.state = 267
                 self.match(ipdrawParser.T__56)
-                self.state = 270
+                self.state = 268
                 self.expression(0)
                 pass
             elif token in [58]:
+                localctx = ipdrawParser.ArrowPressureContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
-                self.state = 271
+                self.state = 269
                 self.match(ipdrawParser.T__57)
-                self.state = 272
+                self.state = 270
                 self.expression(0)
                 pass
             else:
@@ -2835,13 +2941,13 @@ class ipdrawParser ( Parser ):
         self.enterRule(localctx, 42, self.RULE_typeCast)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 275
+            self.state = 273
             self.match(ipdrawParser.Type)
-            self.state = 276
+            self.state = 274
             self.match(ipdrawParser.T__2)
-            self.state = 277
+            self.state = 275
             self.expression(0)
-            self.state = 278
+            self.state = 276
             self.match(ipdrawParser.T__3)
         except RecognitionException as re:
             localctx.exception = re

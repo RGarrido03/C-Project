@@ -27,7 +27,7 @@ forward 100;
 up;
 
 % usar a abordagem com while
-position (400,400);
+position (0,0);
 thickness 2;
 color green;
 int i = 0;

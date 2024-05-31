@@ -239,8 +239,28 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ipdrawParser#arrowProps.
-    def visitArrowProps(self, ctx:ipdrawParser.ArrowPropsContext):
+    # Visit a parse tree produced by ipdrawParser#ArrowColor.
+    def visitArrowColor(self, ctx:ipdrawParser.ArrowColorContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#ArrowPosition.
+    def visitArrowPosition(self, ctx:ipdrawParser.ArrowPositionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#ArrowOrientation.
+    def visitArrowOrientation(self, ctx:ipdrawParser.ArrowOrientationContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#ArrowThickness.
+    def visitArrowThickness(self, ctx:ipdrawParser.ArrowThicknessContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#ArrowPressure.
+    def visitArrowPressure(self, ctx:ipdrawParser.ArrowPressureContext):
         return self.visitChildren(ctx)
 
 

@@ -422,12 +422,48 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ipdrawParser#arrowProps.
-    def enterArrowProps(self, ctx:ipdrawParser.ArrowPropsContext):
+    # Enter a parse tree produced by ipdrawParser#ArrowColor.
+    def enterArrowColor(self, ctx:ipdrawParser.ArrowColorContext):
         pass
 
-    # Exit a parse tree produced by ipdrawParser#arrowProps.
-    def exitArrowProps(self, ctx:ipdrawParser.ArrowPropsContext):
+    # Exit a parse tree produced by ipdrawParser#ArrowColor.
+    def exitArrowColor(self, ctx:ipdrawParser.ArrowColorContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#ArrowPosition.
+    def enterArrowPosition(self, ctx:ipdrawParser.ArrowPositionContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ArrowPosition.
+    def exitArrowPosition(self, ctx:ipdrawParser.ArrowPositionContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#ArrowOrientation.
+    def enterArrowOrientation(self, ctx:ipdrawParser.ArrowOrientationContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ArrowOrientation.
+    def exitArrowOrientation(self, ctx:ipdrawParser.ArrowOrientationContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#ArrowThickness.
+    def enterArrowThickness(self, ctx:ipdrawParser.ArrowThicknessContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ArrowThickness.
+    def exitArrowThickness(self, ctx:ipdrawParser.ArrowThicknessContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#ArrowPressure.
+    def enterArrowPressure(self, ctx:ipdrawParser.ArrowPressureContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ArrowPressure.
+    def exitArrowPressure(self, ctx:ipdrawParser.ArrowPressureContext):
         pass
 
 
