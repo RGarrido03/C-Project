@@ -274,9 +274,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitExprAddSub(pdrawParser.ExprAddSubContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("expression");
-    res.add("e1", visit(ctx.expression(0)).render());
+    res.add("e1", "(" + visit(ctx.expression(0)).render() + ")");
     res.add("op", ctx.op.getText());
-    res.add("e2", visit(ctx.expression(1)).render());
+    res.add("e2", "(" + visit(ctx.expression(1)).render() + ")");
     return res;
   }
 
@@ -289,9 +289,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
         throw new ArithmeticException("Division by zero is not allowed");
     }
 
-    res.add("e1", visit(ctx.expression(0)).render());
+    res.add("e1", "(" + visit(ctx.expression(0)).render() + ")");
     res.add("op", ctx.op.getText());
-    res.add("e2", visit(ctx.expression(1)).render());
+    res.add("e2", "(" + visit(ctx.expression(1)).render() + ")");
     return res;
   }
 

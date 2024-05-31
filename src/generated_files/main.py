@@ -40,5 +40,8 @@ p2__.right(144.0)
 p2__.forward(10)
 p2__.right(144.0)
 p2__.forward(10)
+a__: int = 2+4-6*4
+s__: int = 7-a__
+d__: int = 9/1
 
 turtle.done()
