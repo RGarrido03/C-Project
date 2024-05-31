@@ -14,9 +14,7 @@ class DefaultPen(Pen):
     def __init__(self) -> None:
         super().__init__()
 
-
 <classes; separator="\n\n">
-
 
 <if(statements)>
 <statements>
@@ -26,6 +24,10 @@ pass
 
 turtle.done()
 
+>>
+
+expression(e1, op, e2) ::=<<
+<e1><op><e2>
 >>
 
 other(text) ::= "<text>"
@@ -74,4 +76,24 @@ input(text) ::= "input(<text>)"
 execute(variable, String) ::= <<
     <variable> = eval(<String>)
     
+>>
+
+if(condition, statements) ::= <<
+if <condition>:
+    <statements; separator="\n">
+>>
+
+condition(e1, e2, equals) ::= "<e1> <if(equals)>==<else>!=<endif> <e2>"
+
+
+
+execute(variable, String) ::= <<
+def execute(filename):
+   ## TODO tem de ser um filestream !!!!
+   input_stream = FileStream(filename, encoding='utf-8')
+   lexer = ipdrawLexer(input_stream)
+   stream = CommonTokenStream(lexer)
+   parser = ipdrawParser(stream)
+   tree = parser.execute()
+
 >>

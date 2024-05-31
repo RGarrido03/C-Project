@@ -1,0 +1,42 @@
+position (100,100);
+down;
+pressure 1;
+thickness 5;
+color red;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+up;
+
+
+position (200,200);
+thickness 10;
+color blue;
+down;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+up;
+
+% usar a abordagem com while
+position (400,400);
+thickness 2;
+color green;
+int i = 0;
+down;
+while (i lt 5) {
+    forward 100;
+    right 90º;
+    i = i + 1;
+};
+
+up;
+"Acabei" -> stdout;

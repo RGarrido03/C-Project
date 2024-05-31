@@ -1,5 +1,6 @@
 import turtle
 from abc import ABC
+import math
 
 
 class Pen(ABC):
@@ -9,7 +10,9 @@ class Pen(ABC):
         self.position = (0, 0)
         self.orientation = 0
         self.pressure = -1  # -1 means up
+        self.isUp:bool=0
         self.turtle = turtle.Turtle()
+        self.set_state()
 
     def forward(self, distance: float) -> None:
         if self.pressure >= 0:
@@ -29,6 +32,7 @@ class Pen(ABC):
 
     def left(self, degrees: float) -> None:
         self.turtle.left(degrees)
+        #TODO heading gives me deg so i dont need to parse it
         self.orientation = math.degrees(self.turtle.heading())
 
     def right(self, degrees: float) -> None:
@@ -36,11 +40,11 @@ class Pen(ABC):
         self.orientation = math.degrees(self.turtle.heading())
 
     def down(self) -> None:
-        self.pressure = 0
+        self.isUp = False
         self.turtle.pendown()
 
     def up(self) -> None:
-        self.pressure = -1
+        self.isUp  =True
         self.turtle.penup()
 
     def update_position(self) -> None:
@@ -48,9 +52,9 @@ class Pen(ABC):
 
     def set_state(self):
         self.turtle.color(self.color)
-        self.turtle.pensize(self.thickness)
         self.turtle.penup()
         self.turtle.setpos(self.position)
         self.turtle.setheading(self.orientation)
-        if self.pressure >= 0:
+        if self.pressure >= 0 and not self.isUp:
+            self.turtle.pensize(self.thickness * self.pressure)
             self.turtle.pendown()

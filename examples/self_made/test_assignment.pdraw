@@ -7,14 +7,18 @@ string myStringVar = "Hello";
 bool myBoolVar = true;
 myRealVar = 2.0;
 
+
+
+
 string myStringVar2 = stdin "Enter a string: ";
 myStringVar2 = stdin "Enter another string: ";
 myStringVar2 = stdin "Enter another string: ";
+string StdinLouco = stdin stdin "teste"; 
 
 % this should not work
 % comment multiple lines and let one uncommented
 % to see multiple errors
->%int myIntVar = 1.0;
+%%int myIntVar = 1.0;
 %string myStringVar = 1;
 %bool myBoolVar = 1; %??
 

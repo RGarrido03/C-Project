@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+
 import types.*;
 
 @SuppressWarnings("CheckReturnValue")
@@ -204,13 +205,51 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       Type type = symbolTable.get(variable).getType();
 
       if (type instanceof PenTAD) {
-        Boolean angle = visit(ctx.angle());
+        Boolean angle = visit(ctx.expression());
         Boolean moveAction =
           ctx.moveAction().getText().equals("forward") ||
           ctx.moveAction().getText().equals("backward") ||
           ctx.moveAction().getText().equals("left") ||
           ctx.moveAction().getText().equals("right");
         if (angle && moveAction) {
+          return true;
+        } else {
+          ErrorHandling.printError(ctx, "Instructions are not valid");
+          return false;
+        }
+      } else {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s is not a pen", variable)
+        );
+        return false;
+      }
+    }
+  }
+
+  @Override
+  public Boolean visitInstructionRotateAction(
+    pdrawParser.InstructionRotateActionContext ctx
+  ) {
+    String variable = ctx.variable().getText();
+
+    if (!symbolTable.containsKey(variable)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s not defined", variable)
+      );
+      return false;
+    } else {
+      Type type = symbolTable.get(variable).getType();
+
+      if (type instanceof PenTAD) {
+        Boolean angle = visit(ctx.angle());
+        Boolean rotateAction =
+          ctx.rotateAction().getText().equals("forward") ||
+          ctx.rotateAction().getText().equals("backward") ||
+          ctx.rotateAction().getText().equals("left") ||
+          ctx.rotateAction().getText().equals("right");
+        if (angle && rotateAction) {
           return true;
         } else {
           ErrorHandling.printError(ctx, "Instructions are not valid");
@@ -258,6 +297,29 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       }
     }
   }
+
+  @Override
+    public Boolean visitInstructionArrowProps(pdrawParser.InstructionArrowPropsContext ctx) {
+      Boolean res = false;
+      String variable = ctx.variable().getText();
+      if (!symbolTable.containsKey(variable)) {
+        ErrorHandling.printError(
+            ctx,
+            String.format("Variable %s not defined", variable));
+        return false;
+      } else {
+        Type type = symbolTable.get(variable).getType();
+        if (type instanceof PenTAD) {
+  
+          return true;
+        } else {
+          ErrorHandling.printError(
+              ctx,
+              String.format("Variable %s is not a pen", variable));
+          return false;
+        }
+      }
+    }
 
   @Override
   public Boolean visitAssignmentVar(pdrawParser.AssignmentVarContext ctx) {
@@ -453,6 +515,35 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     // return visitChildren(ctx); //TODO see if we should visit variable
     // we can visit tuple, expression, or angle
     // return res;
+  }
+
+  @Override
+  public Boolean visitArrowProps(pdrawParser.ArrowPropsContext ctx) {
+    Boolean res = false;
+
+    String prop = ctx.getText().split(" ")[0].trim();
+    String value = ctx.getText().split(" ")[1].replace(";", "");
+    switch (prop) {
+      case "color":
+        Boolean isColorValid = isColorWord(value) || isHexColor(value);
+        if (!isColorValid) {
+          ErrorHandling.printError(
+              ctx,
+              String.format("The value %s is not a color", value));
+        }
+        return isColorValid;
+      case "position":
+        return visitTuple(ctx.tuple());
+      case "orientation":
+        return visit(ctx.angle());
+      case "thickness":
+        return visit(ctx.expression());
+      case "pressure":
+        return visit(ctx.expression());
+      default:
+        break;
+    }
+    return res;
   }
 
   @Override
@@ -799,5 +890,72 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       ErrorHandling.printError(ctx, e.getMessage());
       return false;
     }
+  }
+
+  @Override
+  public Boolean visitIf(pdrawParser.IfContext ctx) {
+    if (!visit(ctx.condition())) {
+      ErrorHandling.printError(ctx, "Condition is not valid");
+      return false;
+    }
+    return ctx.statement().stream().allMatch(this::visit);
+  }
+
+  @Override
+  public Boolean visitConditionEquals(pdrawParser.ConditionEqualsContext ctx) {
+    if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
+      return false;
+    }
+
+    List<Type> types = ctx.expression().stream().map(exp -> exp.symbol.getType()).toList();
+
+    if (checkConditionTypes(types)) {
+      return true;
+    }
+
+    String sb = "Symbols " + ctx.expression(0).getText() + " and " + ctx.expression(1).getText()
+            + " are of different types (" + ctx.expression(0).symbol.getType().toString() + ", "
+            + ctx.expression(1).symbol.getType().toString() + ")";
+    ErrorHandling.printError(ctx, sb);
+    return false;
+  }
+
+  @Override
+  public Boolean visitConditionNotEquals(pdrawParser.ConditionNotEqualsContext ctx) {
+    if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
+      return false;
+    }
+
+    List<Type> types = ctx.expression().stream().map(exp -> exp.symbol.getType()).toList();
+
+    if (checkConditionTypes(types)) {
+      return true;
+    }
+
+    String sb = "Symbols " + ctx.expression(0).getText() + " and " + ctx.expression(1).getText()
+            + " are of different types (" + ctx.expression(0).symbol.getType().toString() + ", "
+            + ctx.expression(1).symbol.getType().toString() + ")";
+    ErrorHandling.printError(ctx, sb);
+    return false;
+  }
+
+  private Boolean checkConditionTypes(List<Type> types) {
+    // All numbers
+    if (types.stream().allMatch(Type::isNumeric)) {
+      return true;
+    }
+
+    // All bool
+    if (types.stream().allMatch(BoolType.class::isInstance)) {
+      return true;
+    }
+
+    // All string
+    if (types.stream().allMatch(StringType.class::isInstance)) {
+      return true;
+    }
+
+    // A bool and a number
+    return types.stream().anyMatch(Type::isNumeric) && types.stream().anyMatch(BoolType.class::isInstance);
   }
 }
