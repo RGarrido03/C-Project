@@ -38,6 +38,9 @@ statement(something) ::= <%
 %>
 
 instruction(variable, action, value) ::= "<variable>.<action>(<value>)"
+instructionPipeline(statements) ::= <<
+<statements; separator="\n">
+>>
 
 assignment(assignVar, assignPen, reassignVar, variable, object, expression, type) ::= <%
 <if(assignVar)>

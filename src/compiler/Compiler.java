@@ -48,7 +48,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitInstructionMoveRotateAction(
     pdrawParser.InstructionMoveRotateActionContext ctx
   ) {
-    ST main = pdrawTemplate.getInstanceOf("other");
+    ST main = pdrawTemplate.getInstanceOf("instructionPipeline");
 
     if (ctx.move() != null) {
       ctx.move().forEach(moveContext -> {
@@ -56,7 +56,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
         res.add("variable", visit(ctx.variable()));
         res.add("action", moveContext.moveAction().getText());
         res.add("value", visit(moveContext.expression()));
-        main.add("text", res);
+        main.add("statements", res);
       });
     }
 
@@ -69,7 +69,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
         if (rotateContext.angle() != null) {
           res.add("value", visit(rotateContext.angle()));
         }
-        main.add("text", res);
+        main.add("statements", res);
       });
     }
 
