@@ -2,7 +2,6 @@ import java.util.List;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-
 import types.PenTAD;
 
 @SuppressWarnings("CheckReturnValue")
@@ -80,19 +79,19 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     res.add("action", ctx.penAction().getText());
     return res;
   }
-  
-  // TODO  \
+
+  // TODO  |
   // FIXME V
   @Override
   public ST visitInstructionArrowProps(
-    pdrawParser.InstructionArrowPropsContext ctx) {
+    pdrawParser.InstructionArrowPropsContext ctx
+  ) {
     ST res = pdrawTemplate.getInstanceOf("arrowProps");
     res.add("variable", visit(ctx.variable()));
     res.add("value1", "color");
     res.add("value2", ctx.getText().split("color")[1]);
     return res;
   }
-
 
   @Override
   public ST visitAssignmentVar(pdrawParser.AssignmentVarContext ctx) {
@@ -157,8 +156,21 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitCreateCanvas(pdrawParser.CreateCanvasContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("createCanvasClass");
-    res.add("className", ctx.STRING().getText());
+    res.add("canvasName", visit(ctx.variable()));
+    //TODO STring title can dar asneira
+    res.add("title", ctx.STRING().getText());
     res.add("tuple", visit(ctx.tuple()));
+    return res;
+  }
+
+  @Override
+  public ST visitBackgroundCanvas(pdrawParser.BackgroundCanvasContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("instructionCanvas");
+    res.add("canvasName", visit(ctx.variable()));
+    if (ctx.HexaColor() != null) {
+      res.add("color", ctx.HexaColor().getText());
+    } else res.add("color", ctx.Word().getText());
+
     return res;
   }
 
@@ -269,7 +281,10 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitExprBool(pdrawParser.ExprBoolContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("other");
     String str = ctx.BOOL().getText();
-    res.add("text", str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase());
+    res.add(
+      "text",
+      str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase()
+    );
     return res;
   }
 
@@ -287,8 +302,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("expression");
 
     // 0 as denominator
-    if (ctx.op.getText().equals("/") && visit(ctx.expression(1)).render().equals("0")) {
-        throw new ArithmeticException("Division by zero is not allowed");
+    if (
+      ctx.op.getText().equals("/") &&
+      visit(ctx.expression(1)).render().equals("0")
+    ) {
+      throw new ArithmeticException("Division by zero is not allowed");
     }
 
     res.add("e1", visit(ctx.expression(0)).render());
@@ -386,7 +404,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitIf(pdrawParser.IfContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("if");
     res.add("condition", visit(ctx.condition()));
-    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+    ctx
+      .statement()
+      .forEach(statement -> res.add("statements", visit(statement)));
     return res;
   }
 
