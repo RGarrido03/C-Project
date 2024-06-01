@@ -87,6 +87,9 @@ while <condition>:
 
 condition(e1, e2, equals) ::= "<e1> <if(equals)>==<else>!=<endif> <e2>"
 
+conditionAnd(e1, e2) ::= "<e1> and <e2>"
+conditionOr(e1, e2) ::= "<e1> or <e2>"
+
 execute(variable, String) ::= <<
 def execute(filename):
    ## TODO tem de ser um filestream !!!!

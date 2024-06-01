@@ -463,6 +463,22 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitExprConditionAnd(pdrawParser.ExprConditionAndContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("conditionAnd");
+    res.add("e1", visit(ctx.expression(0)));
+    res.add("e2", visit(ctx.expression(1)));
+    return res;
+  }
+
+  @Override
+  public ST visitExprConditionOr(pdrawParser.ExprConditionOrContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("conditionOr");
+    res.add("e1", visit(ctx.expression(0)));
+    res.add("e2", visit(ctx.expression(1)));
+    return res;
+  }
+
+  @Override
   public ST visitExprConditionEquals(pdrawParser.ExprConditionEqualsContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("condition");
     res.add("e1", visit(ctx.expression(0)));

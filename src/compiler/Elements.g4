@@ -8,6 +8,8 @@ expression
 	| <assoc = right> expression '^' expression			# ExprPow
 	| expression '==' expression		                # ExprConditionEquals
 	| expression '!=' expression		                # ExprConditionNotEquals
+	| expression 'and' expression                       # ExprConditionAnd
+	| expression 'or' expression                        # ExprConditionOr
 	| typeCast											# ExprCast
 	| stdin												# ExprStdIn
 	| INT												# ExprInteger

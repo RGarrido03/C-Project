@@ -20,3 +20,19 @@ if (myStringVar == "Hello") {
 } else {
     "Bye bestie" -> stdout;
 };
+
+if (myStringVar == "Hello") {
+    "Hello bestie" -> stdout;
+} else if (myStringVar == "Hi") {
+    "Hi bestie" -> stdout;
+} else {
+    "Bye bestie" -> stdout;
+};
+
+if (myStringVar == "Hello" and myIntVar == 1) {
+    "Yay! Anddddd" -> stdout;
+};
+
+if (myStringVar == "Hi" or myIntVar == 1) {
+    "Yay! Orrrrr" -> stdout;
+};
