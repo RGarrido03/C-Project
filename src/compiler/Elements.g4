@@ -4,8 +4,7 @@ expression
 	returns[types.Symbol symbol]:
 	expression op = ('+' | '-' | '/' | '//' | '*' | '^') expression # ExprAddSubMultDivModPow
 	| op = ('+' | '-') e2 = expression					            # ExprUnary
-	| expression '==' expression		                            # ExprConditionEquals
-	| expression '!=' expression		                            # ExprConditionNotEquals
+	| expression op = ('==' | '!=') expression		                # ExprConditionEquals
 	| expression op = ('<' | '<=' | '>' | '>=') expression	        # ExprConditionOrderRelation
 	| expression op = ('and' | 'or') expression                     # ExprConditionAndOr
 	| typeCast											            # ExprCast

@@ -957,39 +957,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     return false;
   }
 
-  @Override
-  public Boolean visitExprConditionNotEquals(
-    pdrawParser.ExprConditionNotEqualsContext ctx
-  ) {
-    if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
-      return false;
-    }
-
-    List<Type> types = ctx
-      .expression()
-      .stream()
-      .map(exp -> exp.symbol.getType())
-      .toList();
-
-    if (checkConditionTypes(types)) {
-      ctx.symbol = new Symbol(new BoolType(), ctx.getText());
-      return true;
-    }
-
-    String sb =
-      "Symbols " +
-      ctx.expression(0).getText() +
-      " and " +
-      ctx.expression(1).getText() +
-      " are of different types (" +
-      ctx.expression(0).symbol.getType().toString() +
-      ", " +
-      ctx.expression(1).symbol.getType().toString() +
-      ")";
-    ErrorHandling.printError(ctx, sb);
-    return false;
-  }
-
   private Boolean checkConditionTypes(List<Type> types) {
     // All numbers
     if (types.stream().allMatch(Type::isNumeric)) {
