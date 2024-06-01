@@ -80,16 +80,20 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     return res;
   }
 
-  // TODO  |
-  // FIXME V
   @Override
   public ST visitInstructionArrowProps(
-    pdrawParser.InstructionArrowPropsContext ctx
-  ) {
+      pdrawParser.InstructionArrowPropsContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("arrowProps");
+    System.out.println("Variable, value1, value2: " + ctx.getText());
+    
     res.add("variable", visit(ctx.variable()));
-    res.add("value1", "color");
-    res.add("value2", ctx.getText().split("color")[1]);
+    if (ctx.getText().contains("color")) {
+      res.add("value1", "color");
+      res.add("value2", '"' + ctx.getText().split("color")[1] + '"');
+    } else {
+      res.add("value1", ctx.getText().split("<-")[1].split(" ")[0]);
+      res.add("value2", ctx.getText().split("<-")[1].split(" ")[2]);
+    }
     return res;
   }
 
@@ -202,6 +206,20 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     }
     if (ctx.tuple() != null) {
       res.add("expression", visit(ctx.tuple()));
+    }
+    return res;
+  }
+
+  @Override
+  public ST visitArrowProps(pdrawParser.ArrowPropsContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("arrowProps");
+    res.add("variable", ctx.getText().split("<-")[0]);
+    if (ctx.HexaColor() != null) {
+      res.add("value1", ctx.getText().split("<-")[1].split(" ")[0]);
+      res.add("value2", ctx.HexaColor().getText());
+    } else {
+      res.add("value1", ctx.getText().split("<-")[1].split(" ")[0]);
+      res.add("value2", ctx.getText().split("<-")[1].split(" ")[2]);
     }
     return res;
   }
