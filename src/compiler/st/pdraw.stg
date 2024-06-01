@@ -57,11 +57,23 @@ print(expression, stdErr) ::= "print(<expression><if(stdErr)>, file=sys.stderr<e
 
 input(text) ::= "input(<text>)"
 
-if(condition, statements) ::= <<
+if(condition, statements, elif, elseStat) ::= <<
 
 if <condition>:
     <statements; separator="\n">
+<if(elif)><elif; separator="\n"><endif>
+<if(elseStat)><elseStat><endif>
 
+>>
+
+elif(condition, statements) ::= <<
+elif <condition>:
+    <statements; separator="\n">
+>>
+
+else(statements) ::= <<
+else:
+    <statements; separator="\n">
 >>
 
 while(condition, statements) ::= <<

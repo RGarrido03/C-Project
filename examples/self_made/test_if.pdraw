@@ -9,8 +9,14 @@ if (myRealVar == myBoolVar) {
 
 if (myIntVar != 1.0) {
     "This shouldn't be printed" -> stdout;
+} else {
+    "Wow, perfect" -> stdout;
 };
 
 if (myStringVar == "Hello") {
+    "Hello bestie" -> stdout;
+} else if (myStringVar == "Hi") {
     "Hi bestie" -> stdout;
+} else {
+    "Bye bestie" -> stdout;
 };

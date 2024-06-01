@@ -17,7 +17,9 @@ statement: (
 		| instructionsCanvas
 	) ';';
 
-if: 'if' '(' condition ')' '{' statement* '}';
+if: 'if' '(' condition ')' '{' statement* '}' elseif* else?;
+elseif: 'else' 'if' '(' condition ')' '{' statement* '}';
+else: 'else' '{' statement* '}';
 while: 'until' '(' condition ')' '{' statement* '}';
 
 condition:

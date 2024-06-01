@@ -406,9 +406,30 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitIf(pdrawParser.IfContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("if");
     res.add("condition", visit(ctx.condition()));
-    ctx
-      .statement()
-      .forEach(statement -> res.add("statements", visit(statement)));
+    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+
+    if (ctx.elseif() != null) {
+      ctx.elseif().forEach(elseif -> res.add("elif", visit(elseif)));
+    }
+
+    if (ctx.else_() != null) {
+      res.add("elseStat", visit(ctx.else_()));
+    }
+    return res;
+  }
+
+  @Override
+  public ST visitElseif(pdrawParser.ElseifContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("elif");
+    res.add("condition", visit(ctx.condition()));
+    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+    return res;
+  }
+
+  @Override
+  public ST visitElse(pdrawParser.ElseContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("else");
+    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
     return res;
   }
 
