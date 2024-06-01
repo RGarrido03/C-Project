@@ -561,7 +561,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     String value = ctx.getText().split("=")[1].replace(";", "");
     switch (prop) {
       case "color":
-        // TODO check if it's a color
         Boolean isColorValid = isColorWord(value) || isHexColor(value);
         if (!isColorValid) {
           ErrorHandling.printError(
@@ -571,25 +570,15 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         }
         return isColorValid;
       case "position":
-        // TODO check if it's a position
         return visitTuple(ctx.tuple());
       case "orientation":
-        // TODO check if it's an orientation
         return visit(ctx.angle());
-      case "thickness":
-        // TODO check if it's a thickness
+      case "thickness", "pressure":
         return visit(ctx.expression());
-      case "pressure":
-        // TODO check if it's a pressure
-        return visit(ctx.expression());
-      default:
+        default:
         break;
     }
-    // possible props
     return res;
-    // return visitChildren(ctx); //TODO see if we should visit variable
-    // we can visit tuple, expression, or angle
-    // return res;
   }
 
   @Override
@@ -654,7 +643,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitExprAddSubMultDivModPow(pdrawParser.ExprAddSubMultDivModPowContext ctx) {
-    // TODO: Concatentate string+string
 
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       ErrorHandling.printError(
@@ -664,7 +652,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
           ctx.expression(0).getText(),
           ctx.expression(1).getText()
         )
-      ); // TODO improve this
+      );
       return false;
     }
     pdrawParser.ExpressionContext left_ctx = ctx.expression(0);
@@ -705,8 +693,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         ctx.expression(0).getText(),
         ctx.expression(1).getText()
       )
-    ); // TODO improve this
-
+    );
 
     return false;
   }
