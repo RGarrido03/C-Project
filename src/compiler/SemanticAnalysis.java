@@ -1007,7 +1007,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitExprConditionAnd(pdrawParser.ExprConditionAndContext ctx) {
+  public Boolean visitExprConditionAndOr(pdrawParser.ExprConditionAndOrContext ctx) {
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       return false;
     }
@@ -1015,22 +1015,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     for (int i = 0; i < 2; i++) {
       if (!(ctx.expression(i).symbol.getType() instanceof BoolType)) {
         ErrorHandling.printError(ctx, ctx.expression(i).getText() + " is not a bool");
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  @Override
-  public Boolean visitExprConditionOr(pdrawParser.ExprConditionOrContext ctx) {
-    if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
-      return false;
-    }
-
-    for (int i = 0; i < 2; i++) {
-      if (!(ctx.expression(i).symbol.getType() instanceof BoolType)) {
-        ErrorHandling.printError(ctx, ctx.expression(0).getText() + " is not a bool");
         return false;
       }
     }

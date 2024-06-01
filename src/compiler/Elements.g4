@@ -9,8 +9,7 @@ expression
 	| expression '==' expression		                    # ExprConditionEquals
 	| expression '!=' expression		                    # ExprConditionNotEquals
 	| expression op = ('<' | '<=' | '>' | '>=') expression	# ExprConditionOrderRelation
-	| expression 'and' expression                           # ExprConditionAnd
-	| expression 'or' expression                            # ExprConditionOr
+	| expression op = ('and' | 'or') expression             # ExprConditionAndOr
 	| typeCast											    # ExprCast
 	| stdin												    # ExprStdIn
 	| INT												    # ExprInteger
