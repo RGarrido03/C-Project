@@ -30,9 +30,10 @@ instruction:
 
 assignment
 	returns[types.Symbol symbol]:
-	Type variable '=' expression	# AssignmentVar
-	| object						# AssignmentPen // SEE ME TODO: Adicionei 2 hipoteses de assignment, ver se é necessário
-	| variable '=' expression		# ReAssignmentVar;
+	Type variable '=' expression				# AssignmentVar
+	| object									# AssignmentPen // SEE ME TODO: Adicionei 2 hipoteses de assignment, ver se é necessário
+	| variable '=' expression					# ReAssignmentVar
+	| Type (variable '=' expression (',')?)+	# AssignmentMultipleVars;
 
 stdin: 'stdin' expression;
 

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import .antlr.pdrawParser;
 import types.*;
 
 @SuppressWarnings("CheckReturnValue")
@@ -361,6 +363,54 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return false;
     }
   }
+
+  @Override
+  public Boolean visitAssignmentMultipleVars(pdrawParser.AssignmentMultipleVarsContext ctx) {
+    Boolean res = false;
+    String type = ctx.Type().getText();
+
+    List<pdrawParser.VariableContext> variables = ctx.variable();
+    List<pdrawParser.ExpressionContext> expressions = ctx.expression();
+
+    if (variables.size() != expressions.size()) {
+      ErrorHandling.printError(ctx, "Invalid number of variables and expressions");
+      return false;
+    }
+
+    for (int i = 0; i < variables.size();) {
+      String name = variables.get(i).getText();
+      pdrawParser.ExpressionContext expressionCtx = expressions.get(i);
+
+      Boolean expressionResult = visit(expressionCtx);
+
+      if (!expressionResult) {
+        ErrorHandling.printError(ctx, "Expression is not valid");
+        return false;
+      }
+      if (!symbolTable.containsKey(name)) {
+        ErrorHandling.printInfo(expressionCtx.getText());
+        System.out.println(
+            expressionCtx.symbol.getType().toString() + " " + type);
+        if (!expressionCtx.symbol.getType().toString().equals(type)) {
+          ErrorHandling.printError(
+              ctx,
+              String.format("Variable %s is not of type %s. ", name, type));
+          return false;
+        } else {
+          System.out.println(createType(type).toString());
+          symbolTable.put(name, new Symbol(createType(type), name));
+          return true;
+        }
+      } else {
+        ErrorHandling.printError(
+            ctx,
+            String.format("Variable %s already defined", name));
+        return false;
+      }
+    }
+    return false;
+  }
+
 
   // our made not antlr
   private Type createType(String type) {
