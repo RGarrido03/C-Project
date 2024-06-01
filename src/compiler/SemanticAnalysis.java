@@ -957,6 +957,30 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
+  public Boolean visitWhile(pdrawParser.WhileContext ctx) {
+    if (!visit(ctx.condition())) {
+      ErrorHandling.printError(ctx, "Condition is not valid");
+      return false;
+    }
+    return ctx.statement().stream().allMatch(this::visit);
+  }
+
+  @Override
+  public Boolean visitConditionExpression(pdrawParser.ConditionExpressionContext ctx) {
+    if (!visit(ctx.expression())) {
+      return false;
+    }
+
+    if (!checkConditionTypes(List.of(ctx.expression().symbol.getType()))) {
+      ErrorHandling.printError(ctx, "Expression" + ctx.expression().getText()
+              + "is not numeric, a boolean or a string.");
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
   public Boolean visitConditionEquals(pdrawParser.ConditionEqualsContext ctx) {
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       return false;

@@ -80,6 +80,11 @@ if <condition>:
     <statements; separator="\n">
 >>
 
+while(condition, statements) ::= <<
+while <condition>:
+    <statements>
+>>
+
 condition(e1, e2, equals) ::= "<e1> <if(equals)>==<else>!=<endif> <e2>"
 
 

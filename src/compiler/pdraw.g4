@@ -7,6 +7,7 @@ statement: (
 		instruction
 		| assignment
 		| if
+		| while
 		| class
 		| object
 		| execute
@@ -17,10 +18,12 @@ statement: (
 	) ';';
 
 if: 'if' '(' condition ')' '{' statement* '}';
+while: 'until' '(' condition ')' '{' statement* '}';
 
 condition:
 	expression '==' expression		# ConditionEquals
-	| expression '!=' expression	# ConditionNotEquals;
+	| expression '!=' expression	# ConditionNotEquals
+	| expression                    # ConditionExpression;
 
 instruction:
 	variable moveAction expression	# InstructionMoveAction
