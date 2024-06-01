@@ -226,7 +226,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExprParent(pdrawParser.ExprParentContext ctx) {
-    return visit(ctx.expression());
+    ST res = pdrawTemplate.getInstanceOf("parent");
+    res.add("expression", visit(ctx.expression()));
+    return res;
   }
 
   @Override
