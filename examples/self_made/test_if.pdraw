@@ -7,12 +7,14 @@ if (myRealVar == myBoolVar) {
     "1.0 is true" -> stdout;
 };
 
+% Else
 if (myIntVar != 1.0) {
     "This shouldn't be printed" -> stdout;
 } else {
     "Wow, perfect" -> stdout;
 };
 
+% Elif and else
 if (myStringVar == "Hello") {
     "Hello bestie" -> stdout;
 } else if (myStringVar == "Hi") {
@@ -21,18 +23,17 @@ if (myStringVar == "Hello") {
     "Bye bestie" -> stdout;
 };
 
-if (myStringVar == "Hello") {
-    "Hello bestie" -> stdout;
-} else if (myStringVar == "Hi") {
-    "Hi bestie" -> stdout;
-} else {
-    "Bye bestie" -> stdout;
-};
-
+% And
 if (myStringVar == "Hello" and myIntVar == 1) {
     "Yay! Anddddd" -> stdout;
 };
 
+% Or
 if (myStringVar == "Hi" or myIntVar == 1) {
     "Yay! Orrrrr" -> stdout;
+};
+
+% Order relation
+if (myIntVar < 5) {
+    "Less than" -> stdout;
 };

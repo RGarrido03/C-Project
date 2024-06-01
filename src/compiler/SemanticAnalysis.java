@@ -991,6 +991,22 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
+  public Boolean visitExprConditionOrderRelation(pdrawParser.ExprConditionOrderRelationContext ctx) {
+    if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
+      return false;
+    }
+
+    for (int i = 0; i < 2; i++) {
+      if (!(ctx.expression(i).symbol.getType().isNumeric())) {
+        ErrorHandling.printError(ctx, ctx.expression(i).getText() + " is not numeric");
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  @Override
   public Boolean visitExprConditionAnd(pdrawParser.ExprConditionAndContext ctx) {
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       return false;

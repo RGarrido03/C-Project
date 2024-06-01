@@ -463,6 +463,15 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitExprConditionOrderRelation(pdrawParser.ExprConditionOrderRelationContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("condition");
+    res.add("e1", visit(ctx.expression(0)));
+    res.add("symbol", ctx.op.getText());
+    res.add("e2", visit(ctx.expression(1)));
+    return res;
+  }
+
+  @Override
   public ST visitExprConditionAnd(pdrawParser.ExprConditionAndContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("conditionAnd");
     res.add("e1", visit(ctx.expression(0)));
@@ -482,8 +491,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitExprConditionEquals(pdrawParser.ExprConditionEqualsContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("condition");
     res.add("e1", visit(ctx.expression(0)));
+    res.add("symbol", "==");
     res.add("e2", visit(ctx.expression(1)));
-    res.add("equals", "true");
     return res;
   }
 
@@ -491,6 +500,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitExprConditionNotEquals(pdrawParser.ExprConditionNotEqualsContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("condition");
     res.add("e1", visit(ctx.expression(0)));
+    res.add("symbol", "!=");
     res.add("e2", visit(ctx.expression(1)));
     return res;
   }
