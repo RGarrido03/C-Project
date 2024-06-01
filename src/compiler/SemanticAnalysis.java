@@ -948,7 +948,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitIf(pdrawParser.IfContext ctx) {
-    if (!visit(ctx.condition())) {
+    if (!visit(ctx.expression())) {
       ErrorHandling.printError(ctx, "Condition is not valid");
       return false;
     }
@@ -969,7 +969,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitElseif(pdrawParser.ElseifContext ctx) {
-    if (!visit(ctx.condition())) {
+    if (!visit(ctx.expression())) {
       ErrorHandling.printError(ctx, "Condition is not valid");
       return false;
     }
@@ -983,7 +983,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitWhile(pdrawParser.WhileContext ctx) {
-    if (!visit(ctx.condition())) {
+    if (!visit(ctx.expression())) {
       ErrorHandling.printError(ctx, "Condition is not valid");
       return false;
     }
@@ -991,22 +991,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitConditionExpression(pdrawParser.ConditionExpressionContext ctx) {
-    if (!visit(ctx.expression())) {
-      return false;
-    }
-
-    if (!checkConditionTypes(List.of(ctx.expression().symbol.getType()))) {
-      ErrorHandling.printError(ctx, "Expression" + ctx.expression().getText()
-              + "is not numeric, a boolean or a string.");
-      return false;
-    }
-
-    return true;
-  }
-
-  @Override
-  public Boolean visitConditionEquals(pdrawParser.ConditionEqualsContext ctx) {
+  public Boolean visitExprConditionEquals(pdrawParser.ExprConditionEqualsContext ctx) {
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       return false;
     }
@@ -1036,8 +1021,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitConditionNotEquals(
-    pdrawParser.ConditionNotEqualsContext ctx
+  public Boolean visitExprConditionNotEquals(
+    pdrawParser.ExprConditionNotEqualsContext ctx
   ) {
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       return false;

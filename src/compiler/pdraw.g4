@@ -17,15 +17,10 @@ statement: (
 		| instructionsCanvas
 	) ';';
 
-if: 'if' '(' condition ')' '{' statement* '}' elseif* else?;
-elseif: 'else' 'if' '(' condition ')' '{' statement* '}';
+if: 'if' '(' expression ')' '{' statement* '}' elseif* else?;
+elseif: 'else' 'if' '(' expression ')' '{' statement* '}';
 else: 'else' '{' statement* '}';
-while: 'until' '(' condition ')' '{' statement* '}';
-
-condition:
-	expression '==' expression		# ConditionEquals
-	| expression '!=' expression	# ConditionNotEquals
-	| expression                    # ConditionExpression;
+while: 'until' '(' expression ')' '{' statement* '}';
 
 instruction:
 	variable moveAction expression	# InstructionMoveAction

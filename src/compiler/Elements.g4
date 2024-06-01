@@ -6,6 +6,8 @@ expression
 	| expression op = ('+' | '-') expression			# ExprAddSub
 	| op = ('+' | '-') e2 = expression					# ExprUnary
 	| <assoc = right> expression '^' expression			# ExprPow
+	| expression '==' expression		                # ExprConditionEquals
+	| expression '!=' expression		                # ExprConditionNotEquals
 	| typeCast											# ExprCast
 	| stdin												# ExprStdIn
 	| INT												# ExprInteger
