@@ -186,22 +186,22 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitClassProps(pdrawParser.ClassPropsContext ctx) {
-    ST res = pdrawTemplate.getInstanceOf("classProp");
+    ST res = classTemplate.getInstanceOf("classProps");
     res.add("prop", ctx.getText().split("=")[0]);
     if (ctx.expression() != null) {
-      res.add("value", visit(ctx.expression()));
+      res.add("expression", visit(ctx.expression()));
     }
     if (ctx.HexaColor() != null) {
-      res.add("value", "\"" + ctx.HexaColor().getText() + "\"");
+      res.add("expression", "\"" + ctx.HexaColor().getText() + "\"");
     }
     if (ctx.angle() != null) {
-      res.add("value", visit(ctx.angle()));
+      res.add("expression", visit(ctx.angle()));
     }
     if (ctx.Word() != null) {
-      res.add("value", "\"" + ctx.Word().getText() + "\"");
+      res.add("expression", "\"" + ctx.Word().getText() + "\"");
     }
     if (ctx.tuple() != null) {
-      res.add("value", visit(ctx.tuple()));
+      res.add("expression", visit(ctx.tuple()));
     }
     return res;
   }
