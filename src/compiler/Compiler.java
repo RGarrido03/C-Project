@@ -50,38 +50,34 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   ) {
     ST main = pdrawTemplate.getInstanceOf("instructionPipeline");
 
-    if (ctx.move() != null) {
-      ctx.move().forEach(moveContext -> {
-        ST res = pdrawTemplate.getInstanceOf("instruction");
-        res.add("variable", visit(ctx.variable()));
-        res.add("action", moveContext.moveAction().getText());
-        res.add("value", visit(moveContext.expression()));
-        main.add("statements", res);
-      });
-    }
-
-    if (ctx.rotate() != null) {
-      ctx.rotate().forEach(rotateContext -> {
-        ST res = pdrawTemplate.getInstanceOf("instruction");
-        res.add("variable", visit(ctx.variable()));
-        res.add("action", rotateContext.rotateAction().getText());
-
-        if (rotateContext.angle() != null) {
-          res.add("value", visit(rotateContext.angle()));
-        }
-        main.add("statements", res);
-      });
-    }
-
-    if (ctx.pause() != null) {
-      ctx.pause().forEach(pauseContext -> {
-        ST res = pdrawTemplate.getInstanceOf("pause");
-        res.add("INT", pauseContext.INT().getText());
-        main.add("statements", res);
-      });
+    for (int a = 1; a < ctx.children.size(); a++) {
+      if (visit(ctx.children.get(a)).render().startsWith("time.sleep")) {
+        main.add("statements", visit(ctx.children.get(a)).render());
+        continue;
+      }
+      main.add("statements", visit(ctx.variable()).render() + visit(ctx.children.get(a)).render());
     }
 
     return main;
+  }
+
+  @Override
+  public ST visitMove(pdrawParser.MoveContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("instruction");
+    res.add("action", ctx.moveAction().getText());
+    res.add("value", visit(ctx.expression()));
+    return res;
+  }
+
+  @Override
+  public ST visitRotate(pdrawParser.RotateContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("instruction");
+    res.add("action", ctx.rotateAction().getText());
+
+    if (ctx.angle() != null) {
+      res.add("value", visit(ctx.angle()));
+    }
+    return res;
   }
 
   @Override
