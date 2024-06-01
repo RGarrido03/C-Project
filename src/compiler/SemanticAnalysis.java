@@ -671,6 +671,13 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return true;
     }
 
+    // Concatenação de strings
+    if (ctx.op.getText().equals("+") && left_ctx.symbol.getType().isString() && right_ctx.symbol.getType().isString()) {
+      ctx.symbol = new Symbol(
+              new StringType(), left_ctx.getText() + right_ctx.getText());
+      return true;
+    }
+
     ErrorHandling.printError(
       ctx,
       String.format(
@@ -679,6 +686,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         ctx.expression(1).getText()
       )
     ); // TODO improve this
+
+
     return false;
   }
 

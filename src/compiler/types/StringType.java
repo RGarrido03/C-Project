@@ -9,6 +9,11 @@ public class StringType extends Type {
     super("string");
   }
 
+  public boolean isString() {
+    return true;
+  }
+
+
   @Override
   public Boolean toBoolean(Object value) {
     String str = (String) value;

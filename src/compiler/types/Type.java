@@ -19,6 +19,10 @@ public abstract class Type {
     return false;
   }
 
+  public boolean isString() {
+    return false;
+  }
+
   public String NO_POSSIBLE_CAST = "cannot be cast to any other type";
 
   public abstract Boolean toBoolean(Object value);
