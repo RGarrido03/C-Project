@@ -1,0 +1,7 @@
+int add = 3 + 1;
+int sub = 3 - 1;
+int mul = 3 * 1;
+real div = 3 / 1;
+int dre = 3 // 1;
+int pow = 3 ^ 2;
+int par = (3 + 2) * 4;

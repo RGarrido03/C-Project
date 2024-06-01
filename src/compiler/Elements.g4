@@ -2,22 +2,20 @@ grammar Elements;
 variable: Name | Word;
 expression
 	returns[types.Symbol symbol]:
-	expression op = ('/' | '//' | '*') expression	        # ExprMultDivMod
-	| expression op = ('+' | '-') expression			    # ExprAddSub
-	| op = ('+' | '-') e2 = expression					    # ExprUnary
-	| <assoc = right> expression '^' expression			    # ExprPow
-	| expression '==' expression		                    # ExprConditionEquals
-	| expression '!=' expression		                    # ExprConditionNotEquals
-	| expression op = ('<' | '<=' | '>' | '>=') expression	# ExprConditionOrderRelation
-	| expression op = ('and' | 'or') expression             # ExprConditionAndOr
-	| typeCast											    # ExprCast
-	| stdin												    # ExprStdIn
-	| INT												    # ExprInteger
-	| FLOAT												    # ExprFloat // FIXME change this
-	| STRING											    # ExprString
-	| BOOL												    # ExprBool
-	| variable											    # ExprVariable
-	| '(' expression ')'								    # ExprParent;
+	expression op = ('+' | '-' | '/' | '//' | '*' | '^') expression # ExprAddSubMultDivModPow
+	| op = ('+' | '-') e2 = expression					            # ExprUnary
+	| expression '==' expression		                            # ExprConditionEquals
+	| expression '!=' expression		                            # ExprConditionNotEquals
+	| expression op = ('<' | '<=' | '>' | '>=') expression	        # ExprConditionOrderRelation
+	| expression op = ('and' | 'or') expression                     # ExprConditionAndOr
+	| typeCast											            # ExprCast
+	| stdin												            # ExprStdIn
+	| INT												            # ExprInteger
+	| FLOAT												            # ExprFloat // FIXME change this
+	| STRING											            # ExprString
+	| BOOL												            # ExprBool
+	| variable											            # ExprVariable
+	| '(' expression ')'								            # ExprParent;
 
 stdin: 'stdin' expression;
 

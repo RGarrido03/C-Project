@@ -633,14 +633,10 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitExprAddSub(pdrawParser.ExprAddSubContext ctx) {
-    // para verficar se a conta da para fazer ele nao pode aceitar string+string
-    // por exemplo
+  public Boolean visitExprAddSubMultDivModPow(pdrawParser.ExprAddSubMultDivModPowContext ctx) {
+    // TODO: Concatentate string+string
 
-    Boolean leftResult = visit(ctx.expression(0));
-    Boolean rightResult = visit(ctx.expression(1));
-
-    if (!leftResult || !rightResult) {
+    if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       ErrorHandling.printError(
         ctx,
         String.format(
@@ -653,62 +649,37 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     }
     pdrawParser.ExpressionContext left_ctx = ctx.expression(0);
     pdrawParser.ExpressionContext right_ctx = ctx.expression(1);
-    String left = left_ctx.getText();
-    String right = right_ctx.getText();
 
     // preciso de saber se é uma variavel ou nao
-    if (symbolTable.containsKey(left)) {
-      // TODO: fazer verificação de tipos
-      Type leftType = symbolTable.get(left).getType();
-      if (!leftType.isNumeric()) {
-        ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s is not a number", left)
-        );
+    for (int i = 0; i < 2; i++) {
+      String text = ctx.expression(i).getText();
+      if (symbolTable.containsKey(text) && !symbolTable.get(text).getType().isNumeric()) {
+        ErrorHandling.printError(ctx, String.format("Variable %s is not a number", text));
         return false;
       }
     }
-    if (symbolTable.containsKey(right)) {
-      // TODO: fazer verificação de tipos
-      Type rightType = symbolTable.get(right).getType();
-      if (!rightType.isNumeric()) {
-        ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s is not a number", right)
-        );
-        return false;
-      }
-    }
-    // ja verifico as variaveis agora significa que passaram pelo if e se nao for
-    // variavel?
+
+    // ja verifico as variaveis agora significa que passaram pelo if e se nao for variavel?
     // tenho de ver o seu tipo
     if (
       left_ctx.symbol.getType().isNumeric() &&
       right_ctx.symbol.getType().isNumeric()
     ) {
-      ctx.symbol = new Symbol(left_ctx.symbol.getType(), left); // o da esquerda define o tipo final
+      ctx.symbol = new Symbol(
+              ctx.op.getText().equals("/") ? new RealType() : left_ctx.symbol.getType(),
+              left_ctx.getText()); // o da esquerda define o tipo final
       return true;
-    } else {
-      ErrorHandling.printError(
-        ctx,
-        String.format(
-          "Expression %s or %s are not valid",
-          ctx.expression(0).getText(),
-          ctx.expression(1).getText()
-        )
-      ); // TODO improve this
-      return false;
     }
-  }
 
-  @Override
-  public Boolean visitExprPow(pdrawParser.ExprPowContext ctx) {
-    Boolean baseResult = visit(ctx.expression(0)); // Base
-    ErrorHandling.printInfo(ctx.expression(0).symbol.getType().toString());
-    Boolean exponentResult = visit(ctx.expression(1)); // Expoente
-    ErrorHandling.printInfo(ctx.expression(1).symbol.getType().toString());
-    // Se a verificação for bem-sucedida, retorne true
-    return baseResult && exponentResult;
+    ErrorHandling.printError(
+      ctx,
+      String.format(
+        "Expression %s or %s are not valid",
+        ctx.expression(0).getText(),
+        ctx.expression(1).getText()
+      )
+    ); // TODO improve this
+    return false;
   }
 
   @Override
@@ -782,73 +753,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     }
     ctx.symbol = symbolTable.get(ctx.getText()); // TODO this should be a random string
     return res;
-  }
-
-  public Boolean visitExprMultDivMod(pdrawParser.ExprMultDivModContext ctx) {
-    Boolean leftResult = visit(ctx.expression(0));
-    Boolean rightResult = visit(ctx.expression(1));
-
-    if (!leftResult || !rightResult) {
-      ErrorHandling.printError(
-        ctx,
-        String.format(
-          "Expression %s or %s are not valid",
-          ctx.expression(0).getText(),
-          ctx.expression(1).getText()
-        )
-      ); // TODO improve this
-      return false;
-    }
-    pdrawParser.ExpressionContext left_ctx = ctx.expression(0);
-    pdrawParser.ExpressionContext right_ctx = ctx.expression(1);
-    String left = left_ctx.getText();
-    String right = right_ctx.getText();
-
-    // preciso de saber se é uma variavel ou nao
-    if (symbolTable.containsKey(left)) {
-      // TODO: fazer verificação de tipos
-      Type leftType = symbolTable.get(left).getType();
-      if (!leftType.isNumeric()) {
-        ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s is not a number", left)
-        );
-        return false;
-      }
-    }
-    if (symbolTable.containsKey(right)) {
-      // TODO: fazer verificação de tipos
-      Type rightType = symbolTable.get(right).getType();
-      if (!rightType.isNumeric()) {
-        ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s is not a number", right)
-        );
-        return false;
-      }
-    }
-    // ja verifico as variaveis agora significa que passaram pelo if e se nao for
-    // variavel?
-    // tenho de ver o seu tipo
-    if (
-      left_ctx.symbol.getType().isNumeric() &&
-      right_ctx.symbol.getType().isNumeric()
-    ) {
-      if (ctx.op.getText() == "/") {
-        ctx.symbol = new Symbol(new RealType(), left); // o da esquerda define o tipo final
-      } else ctx.symbol = new Symbol(left_ctx.symbol.getType(), left); // o da esquerda define o tipo final
-      return true;
-    } else {
-      ErrorHandling.printError(
-        ctx,
-        String.format(
-          "Expression %s or %s are not valid",
-          ctx.expression(0).getText(),
-          ctx.expression(1).getText()
-        )
-      ); // TODO improve this
-      return false;
-    }
   }
 
   @Override
