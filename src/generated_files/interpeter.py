@@ -34,7 +34,7 @@ class SymbolTable:
     def __init__(self):
         self.variables = {}
 
-    def add_variable(self, name, value, type_):
+    def add_variable(self,ctx, name, value, type_):
 
         if name in self.variables:
             ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' already exists")
@@ -48,14 +48,14 @@ class SymbolTable:
                                     value}' are not of the same type")
             sys.exit(1)
 
-    def get_variable(self, name):
+    def get_variable(self,ctx, name):
         try:
             return self.variables[name]
         except:
             ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' not found")
             sys.exit(1)
 
-    def update_variable(self, name, value):
+    def update_variable(self,ctx, name, value):
         if name in self.variables:
             if isinstance(self.variables[name], type(value)):
                 self.variables[name] = value
@@ -96,7 +96,14 @@ class Interpreter(ipdrawVisitor):
         if condition:
             for statement in ctx.statement():
                 self.visit(statement)
-        elif ctx.elseBlock():
+            return None
+        
+        if ctx.elseIfBlock():
+            for elifBlock in ctx.elseIfBlock():
+                if self.visit(elifBlock):
+                    return None
+
+        if ctx.elseBlock():
             self.visit(ctx.elseBlock())
 
         return None
@@ -106,6 +113,15 @@ class Interpreter(ipdrawVisitor):
             self.visit(statement)
 
         return None
+    
+    def visitElseIfBlock(self, ctx: ipdrawParser.ElseIfBlockContext):
+        condition = self.visit(ctx.condition())
+        if condition:
+            for statement in ctx.statement():
+                self.visit(statement)
+            return True
+
+        return False
 
     def visitWhileLoop(self, ctx: ipdrawParser.WhileLoopContext):
         cicle = ctx.cicle.text == 'while'
@@ -225,16 +241,36 @@ class Interpreter(ipdrawVisitor):
 
         return self.visit(ctx.arrowProps())
 
-    def visitAssignmentVar(self, ctx: ipdrawParser.AssignmentVarContext):
-        var_name = ctx.variable().getText()
-        value = self.visit(ctx.expression())
-        self.symbols.add_variable(var_name, value, ctx.Type().getText())
+    def visitPostincdec(self, ctx: ipdrawParser.PostincdecContext):
+        variable = ctx.variable().getText()
+        value = self.symbols.get_variable(ctx,variable)
+        if not isinstance(value, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Variable '{variable}' is not a number")
+            sys.exit(1)
+        
+        if ctx.op.text == '++':
+            value += 1
+        elif ctx.op.text == '--':
+            value -= 1
+        
+        self.symbols.update_variable(ctx,variable, value)
         return value
+
+    def visitAssignmentVar(self, ctx: ipdrawParser.AssignmentVarContext):
+        tipo = ctx.Type().getText()
+        i = 0
+        
+        for i, var in enumerate(ctx.variable()):
+            value = self.visit(ctx.expression(i))
+            self.symbols.add_variable(ctx,var.getText(), value, tipo)
+
+
+        return None
 
     def visitReAssignmentVar(self, ctx: ipdrawParser.ReAssignmentVarContext):
         var_name = ctx.variable().getText()
         value = self.visit(ctx.expression())
-        self.symbols.update_variable(var_name, value)
+        self.symbols.update_variable(ctx,var_name, value)
 
         return value
 
@@ -264,7 +300,7 @@ class Interpreter(ipdrawVisitor):
 
     def visitVariable(self, ctx: ipdrawParser.VariableContext):
 
-        return self.symbols.get_variable(ctx.getText())
+        return self.symbols.get_variable(ctx,ctx.getText())
 
     def visitExprAddSub(self, ctx: ipdrawParser.ExprAddSubContext):
         left = self.visit(ctx.expression(0))
@@ -289,6 +325,9 @@ class Interpreter(ipdrawVisitor):
         except:
             ErrorHandling.print_error_ctx(ctx,f"Value '{left}' cannot be raised to the power of '{right}'")
             sys.exit(1)
+
+    def visitExprPostIncDec(self, ctx: ipdrawParser.ExprPostIncDecContext):
+        return self.visit(ctx.postincdec())
 
     def visitExprString(self, ctx: ipdrawParser.ExprStringContext):
         finalString = ""

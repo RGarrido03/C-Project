@@ -14,11 +14,14 @@ statement: (
 		| print
 		| stdin
 		| pause
+		| postincdec
 	) ';';
 
 // Define an if statement with optional else clause
 ifStatement:
-	'if' '(' condition ')' '{' statement* '}' elseBlock?;
+	'if' '(' condition ')' '{' statement* '}' elseIfBlock* elseBlock?;
+
+elseIfBlock: 'else' 'if' '(' condition ')' '{' statement* '}';
 
 elseBlock: 'else' '{' statement* '}';
 
@@ -30,7 +33,7 @@ whileLoop:
 forLoop:
 	'for' '(' assignment ';' condition ';' assignment ')' '{' statement* '}' finallyBlock?;
 
-finallyBlock: 'finally' '{' statement* '}';
+finallyBlock: 'finally' '{' statement* '}'; //TODO
 
 // Define conditions for if and loop statements
 condition:
@@ -54,8 +57,8 @@ instruction:
 
 // Define assignments and reassignments
 assignment:
-	Type variable '=' expression	# AssignmentVar
-	| variable '=' expression		# ReAssignmentVar;
+	Type variable '=' expression (',' variable '=' expression)?	# AssignmentVar
+	| variable '=' expression									# ReAssignmentVar;
 
 // Define standard input
 stdin: 'stdin' expression;
@@ -71,20 +74,24 @@ print:
 // Define variables
 variable: Name | Word;
 
-// Define expressions for mathematical and logical operations
+postincdec:
+	variable op = ('++' | '--');
+
+	// Define expressions for mathematical and logical operations
 expression:
 	expression op = ('/' | '//' | '*' | 'mod') expression	# ExprMultDivMod
-	| expression op = ('+' | '-') expression			# ExprAddSub
-	| op = ('+' | '-') expression						# ExprUnary
-	| < assoc = right> expression '^' expression		# ExprPow
-	| typeCast											# ExprCast
-	| stdin												# ExprStdIn
-	| INT												# ExprInteger
-	| FLOAT												# ExprFloat
-	| STRING+											# ExprString
-	| BOOL												# ExprBool
-	| variable											# ExprVariable
-	| '(' expression ')'								# ExprParent;
+	| expression op = ('+' | '-') expression				# ExprAddSub
+	| op = ('+' | '-') expression							# ExprUnary
+	| postincdec											# ExprPostIncDec
+	| < assoc = right> expression '^' expression			# ExprPow
+	| typeCast												# ExprCast
+	| stdin													# ExprStdIn
+	| INT													# ExprInteger
+	| FLOAT													# ExprFloat
+	| STRING+												# ExprString
+	| BOOL													# ExprBool
+	| variable												# ExprVariable
+	| '(' expression ')'									# ExprParent;
 // TODO bitwise?
 
 // Define tuple for coordinates or positions
@@ -92,8 +99,8 @@ tuple: '(' expression ',' expression ')';
 
 // Define angle in degrees or radians
 angle:
-	expression ('º'|'deg')		# Degree
-	| expression 'rad'?	# Radian;
+	expression ('º' | 'deg')	# Degree
+	| expression 'rad'?			# Radian;
 
 // Define rotation actions
 rotateAction: 'left' | 'right';
@@ -131,7 +138,7 @@ ESC: '\\' .;
 STRING: '"' (ESC | .)*? '"' | '\'' (ESC | .)*? '\'';
 
 // Define comments and whitespace
-Comment: (('%' .*?'\n')|('%*' .*? '*%') ) -> skip;
+Comment: (('%' .*? '\n') | ('%*' .*? '*%')) -> skip;
 WS: [ \r\t\n]+ -> skip;
 
 // ipdraw linguagem apenas para uma caneta ja recebe o objeto caneta e portanto não precisa de criar
