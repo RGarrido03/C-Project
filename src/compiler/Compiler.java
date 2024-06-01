@@ -1,7 +1,10 @@
+import java.util.ArrayList;
 import java.util.List;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
+
+import .antlr.pdrawParser;
 import types.PenTAD;
 
 @SuppressWarnings("CheckReturnValue")
@@ -106,6 +109,26 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     assignment.add("type", (parseType(ctx.Type().getText())));
 
     return assignment;
+  }
+
+  @Override
+  public ST visitAssignmentMultipleVars(pdrawParser.AssignmentMultipleVarsContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("assignment");
+    System.out.println("VisitAssignmentMultipleVars");
+    ArrayList<String> vars = new ArrayList<>();
+    for (int i = 1; i < ctx.getChildCount(); i += 1) {
+      if (ctx.getChild(i).getText().equals(",")) {
+        continue;
+      }
+      vars.add(ctx.getChild(i).getText());
+    }
+
+    for (int i = 0; i < vars.size(); i += 3) {
+      res.add("assignVar", "true");
+      res.add("variable", vars.get(i));
+      res.add("expression", vars.get(i + 2));
+    }
+    return res;
   }
 
   @Override
