@@ -576,29 +576,29 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitArrowProps(pdrawParser.ArrowPropsContext ctx) {
     Boolean res = false;
 
-    String prop = ctx.getText().split(" ")[0].trim();
-    String value = ctx.getText().split(" ")[1].replace(";", "");
-    switch (prop) {
-      case "color":
-        Boolean isColorValid = isColorWord(value) || isHexColor(value);
-        if (!isColorValid) {
-          ErrorHandling.printError(
+    String prop = ctx.getText();
+
+    Boolean containsColor = prop.contains("color");
+
+    if (containsColor) {
+      prop = prop.split("color")[1];
+      Boolean isColorValid = isColorWord(prop) || isHexColor(prop);
+      if (!isColorValid) {
+        ErrorHandling.printError(
             ctx,
-            String.format("The value %s is not a color", value)
-          );
-        }
-        return isColorValid;
-      case "position":
-        return visitTuple(ctx.tuple());
-      case "orientation":
-        return visit(ctx.angle());
-      case "thickness":
-        return visit(ctx.expression());
-      case "pressure":
-        return visit(ctx.expression());
-      default:
-        break;
+            String.format("The value %s is not a color", prop));
+      }
+      return isColorValid;
+    } else if (prop.contains("position")) {
+      return visitTuple(ctx.tuple());
+    } else if (prop.contains("orientation")) {
+      return visit(ctx.angle());
+    } else if (prop.contains("thickness")) {
+      return visit(ctx.expression());
+    } else if (prop.contains("pressure")) {
+      return visit(ctx.expression());
     }
+
     return res;
   }
 
