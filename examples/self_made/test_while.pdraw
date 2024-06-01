@@ -1,0 +1,10 @@
+int length = 0;
+real angle = 1.0;
+bool done = false;
+
+until (done) {
+   length = int(stdin "length: ");
+   angle = real(stdin "rotation angle (degrees): ") / 180;
+   string t = stdin "finish (y/N)?: ";
+   done = t;
+};
