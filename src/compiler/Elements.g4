@@ -51,5 +51,5 @@ ESC: '\\' .;
 STRING: '"' (. | ESC)*? '"' | '\'' (. | ESC)*? '\'';
 
 // .gitignore
-Comment: '%' ~[\r\n]* -> skip;
+//Comment: '%' ~[\r\n]* -> skip;
 WS: [ \r\t\n]+ -> skip;

@@ -13,5 +13,7 @@ class DefaultPen(Pen):
 a__: int = 2+4-(6*4)
 s__: int = (7-a__)
 d__: int = 9/1
+f__: int = 2//3
+e__: int = 2%3
 
 turtle.done()
