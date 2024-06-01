@@ -2,7 +2,7 @@ grammar Elements;
 variable: Name | Word;
 expression
 	returns[types.Symbol symbol]:
-	expression op = ('/' | '//' | '*') expression	# ExprMultDivMod
+	expression op = ('/' | '//' | '*') expression	    # ExprMultDivMod
 	| expression op = ('+' | '-') expression			# ExprAddSub
 	| op = ('+' | '-') e2 = expression					# ExprUnary
 	| <assoc = right> expression '^' expression			# ExprPow

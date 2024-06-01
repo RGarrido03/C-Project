@@ -338,6 +338,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return false;
     }
     if (!symbolTable.containsKey(name)) {
+      ErrorHandling.printInfo(expressionCtx.getText());
       System.out.println(
         expressionCtx.symbol.getType().toString() + " " + type
       );
@@ -703,14 +704,11 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitExprPow(pdrawParser.ExprPowContext ctx) {
     Boolean baseResult = visit(ctx.expression(0)); // Base
+    ErrorHandling.printInfo(ctx.expression(0).symbol.getType().toString());
     Boolean exponentResult = visit(ctx.expression(1)); // Expoente
-
-    // Verificação semântica para operações de potência
-    if (!baseResult || !exponentResult) {
-      return false; // Se algum dos operandos for inválido, retorne false
-    }
-
-    return true; // Se a verificação for bem-sucedida, retorne true
+    ErrorHandling.printInfo(ctx.expression(1).symbol.getType().toString());
+    // Se a verificação for bem-sucedida, retorne true
+    return baseResult && exponentResult;
   }
 
   @Override
@@ -755,6 +753,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitExprInteger(pdrawParser.ExprIntegerContext ctx) {
     Boolean res = true;
     String x = ctx.INT().getText();
+    ErrorHandling.printInfo(ctx.getText());
     ctx.symbol = new Symbol(new IntType(), x);
     return res;
   }

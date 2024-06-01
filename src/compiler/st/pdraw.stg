@@ -25,6 +25,8 @@ pass
 turtle.done()
 >>
 
+pow(e1,e2) ::= "<e1, e2>"
+
 expression(e1, op, e2) ::= "<e1><op><e2>"
 
 parent(expression) ::= "(<expression>)"

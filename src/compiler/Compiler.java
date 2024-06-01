@@ -228,9 +228,10 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExprPow(pdrawParser.ExprPowContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    // return res;
+    ST res = pdrawTemplate.getInstanceOf("pow");
+    res.add("e1", visit(ctx.expression(0)).render());
+    res.add("e2", visit(ctx.expression(1)).render());
+    return res;
   }
 
   @Override
