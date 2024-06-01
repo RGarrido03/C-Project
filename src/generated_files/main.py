@@ -10,8 +10,8 @@ class DefaultPen(Pen):
         super().__init__()
 
 
-a__: int = 2+4-(6*4)
-s__: int = (7-a__)
-d__: int = 9/1
+Canvas1__ = Canvas((100,100))
+Canvas2__ = Canvas()
+Canvas2__.set_background("red")
 
 turtle.done()

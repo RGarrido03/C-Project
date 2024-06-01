@@ -19,9 +19,15 @@ object(variable, penType) ::= <<
 >>
 
 createCanvasClass(canvasName, tuple, title) ::= <<
-<classNamcanvasNamee> = Canvas(<tuple>)
+<canvasName> = Canvas(<tuple>)
+
 >>
 
 instructionCanvas(canvasName,tuple, title, color) ::= <<
-    <canvasName>.setCanvasSize(<tuple>)
+<if(title)><canvasName>.set_title("<title>")
+<endif>
+<if(color)><canvasName>.set_background("<color>")
+<endif>
+<if(tuple)><canvasName>.set_dimension(<tuple>)
+<endif>
 >>

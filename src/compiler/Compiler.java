@@ -159,7 +159,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     res.add("canvasName", visit(ctx.variable()));
     //TODO STring title can dar asneira
     res.add("title", ctx.STRING().getText());
-    res.add("tuple", visit(ctx.tuple()));
+    if (ctx.tuple() != null) {
+      res.add("tuple", visit(ctx.tuple()));
+    }
     return res;
   }
 
