@@ -910,6 +910,26 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
+  public Boolean visitFor(pdrawParser.ForContext ctx) {
+    if (!visit(ctx.assignment(0))) {
+      ErrorHandling.printError(ctx, "Assignment " + ctx.assignment(0).getText() + " is not valid");
+      return false;
+    }
+
+    if (!visit(ctx.expression())) {
+      ErrorHandling.printError(ctx, "Condition is not valid");
+      return false;
+    }
+
+    if (!visit(ctx.assignment(1))) {
+      ErrorHandling.printError(ctx, "Assignment " + ctx.assignment(1).getText() + " is not valid");
+      return false;
+    }
+
+    return ctx.statement().stream().allMatch(this::visit);
+  }
+
+  @Override
   public Boolean visitWhile(pdrawParser.WhileContext ctx) {
     if (!visit(ctx.expression())) {
       ErrorHandling.printError(ctx, "Condition is not valid");

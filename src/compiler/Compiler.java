@@ -457,6 +457,16 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitFor(pdrawParser.ForContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("while");
+    res.add("assignment", visit(ctx.assignment(0)));
+    res.add("condition", visit(ctx.expression()));
+    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+    res.add("statements", visit(ctx.assignment(1)));
+    return res;
+  }
+
+  @Override
   public ST visitWhile(pdrawParser.WhileContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("while");
     res.add("condition", visit(ctx.expression()));

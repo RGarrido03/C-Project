@@ -7,6 +7,7 @@ statement: (
 		instruction
 		| assignment
 		| if
+		| for
 		| while
 		| class
 		| object
@@ -20,6 +21,8 @@ statement: (
 if: 'if' '(' expression ')' '{' statement* '}' elseif* else?;
 elseif: 'else' 'if' '(' expression ')' '{' statement* '}';
 else: 'else' '{' statement* '}';
+
+for: 'for' '(' assignment ';' expression ';' assignment ')' '{' statement* '}';
 while: 'until' '(' expression ')' '{' statement* '}';
 
 move: moveAction expression;

@@ -38,6 +38,7 @@ statement(something) ::= <%
 %>
 
 instruction(variable, action, value) ::= "<variable>.<action>(<value>)"
+
 instructionPipeline(statements) ::= <<
 <statements; separator="\n">
 >>
@@ -79,8 +80,9 @@ else:
     <statements; separator="\n">
 >>
 
-while(condition, statements) ::= <<
+while(assignment, condition, statements) ::= <<
 
+<if(assignment)><assignment><endif>
 while <condition>:
     <statements; separator="\n">
 
