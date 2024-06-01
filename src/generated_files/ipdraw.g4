@@ -81,7 +81,7 @@ expression:
 	| stdin												# ExprStdIn
 	| INT												# ExprInteger
 	| FLOAT												# ExprFloat
-	| STRING											# ExprString
+	| STRING+											# ExprString
 	| BOOL												# ExprBool
 	| variable											# ExprVariable
 	| '(' expression ')'								# ExprParent;

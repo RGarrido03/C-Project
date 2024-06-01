@@ -291,7 +291,11 @@ class Interpreter(ipdrawVisitor):
             sys.exit(1)
 
     def visitExprString(self, ctx: ipdrawParser.ExprStringContext):
-        return ctx.STRING().getText()[1:-1]
+        finalString = ""
+        for string in ctx.STRING():
+            finalString += string.getText()[1:-1]
+        
+        return finalString
 
     def visitExprCast(self, ctx: ipdrawParser.ExprCastContext):
         return self.visit(ctx.typeCast())

@@ -1,89 +1,52 @@
-
-int a = 5;
-int b = 10;
-real c = 5.5;
-bool d = true;
-string e = "Hello";
-
-
-a = 15;
-b = 20;
-c = 10.5;
-d = false;
-e = "World";
-
-
-int sum = a + b;
-real difference = c - 5.0;
-int product = a * b;
-real quotient = c / 2.0;
-int md = b mod a;
-int power = a ^ 2 ;
-
-
-int cast_real = int(3.7);
-real cast_int = real(5);
-bool cast_int_to_bool = bool(1);
-string cast_bool_to_string = string(true);
-
-
-if (a == 15) {
-    sum = sum + 10;
-} else {
-    sum = sum - 10;
-};
-
-if (b != 20) {
-    difference = difference - 5.0;
-} else {
-    difference = difference + 5.0;
-};
-
-
-int count = 0;
-while (count < 5) {
-    count = count + 1;
-};
-until (count>10){
-    count = count+1;
-};
-
-for (int i = 0; i < 3; i = i + 1) {
-    product = product * 2;
-};
-
-
-for (int j = 0; j < 3; j = j + 1) {
-    quotient = quotient / 2.0;
-};
-
-  down;
-forward 100;
-right 90º;
-forward 100;
-right 90º;
-forward 100;
-right 90º;
-forward 100;
-  up;
-
-
-color #FF5733;
-position (200, 200);
-orientation 45º;
+position (100,100);
+down;
+pressure 1;
 thickness 5;
-pressure 100;
+color red;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+up;
 
 
-string user_input = stdin "Enter a value: ";
-user_input -> stdout;
+position (200,200);
+thickness 10;
+color blue;
+down;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+up;
 
+% usar a abordagem com while
+position (0,0);
+thickness 2;
+color green;
+int i = 0;
+down;
+while (i lt 5) {
+    forward 100;
+    right 90º;
+    i = i + 1;
+};
 
-pause 1000000;
+position (20,20);
+color violet;
+thickness 5;
+for(int oi =0;oi < 100;oi=oi+1){
+    forward 20;
+    
+    right 3.6 * (oi/10) deg;
+};
 
+up;
+"Acabei" "junta te" "please" -> stdout;
 
-"An error occurred" -> stderr;
-
-
-position (100, 100);
-orientation 3.14 rad;
