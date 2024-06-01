@@ -75,11 +75,6 @@ print(<expression><if(stdErr)>, file=sys.stderr<endif>)
 
 input(text) ::= "input(<text>)"
 
-execute(variable, String) ::= <<
-    <variable> = eval(<String>)
-    
->>
-
 if(condition, statements) ::= <<
 if <condition>:
     <statements; separator="\n">
