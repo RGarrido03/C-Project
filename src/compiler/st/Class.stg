@@ -9,19 +9,11 @@ class <className>(Pen):
 
 classProps(prop, expression) ::= "self.<prop> = <expression>"
 
-arrowProps(variable, value1, value2) ::= <<<variable>.<value1> = "<value2>"
+arrowProps(variable, value1, value2) ::= "<variable>.<value1> = <value2>"
 
->>
+object(variable, penType) ::= "<variable> = <if(penType)><penType><else>DefaultPen<endif>()"
 
-object(variable, penType) ::= <<
-<variable> = <if(penType)><penType><else>DefaultPen<endif>()
-
->>
-
-createCanvasClass(canvasName, tuple, title) ::= <<
-<canvasName> = Canvas(<tuple>)
-
->>
+createCanvasClass(canvasName, tuple, title) ::= "<canvasName> = Canvas(<tuple>)"
 
 instructionCanvas(canvasName,tuple, title, color) ::= <<
 <if(title)><canvasName>.set_title("<title>")

@@ -17,35 +17,29 @@ class DefaultPen(Pen):
 <classes; separator="\n\n">
 
 <if(statements)>
-<statements>
+<statements; separator="\n">
 <else>
 pass
 <endif>
 
 turtle.done()
-
 >>
 
-expression(e1, op, e2) ::=<<
-<e1><op><e2>
->>
+expression(e1, op, e2) ::= "<e1><op><e2>"
 
 parent(expression) ::= "(<expression>)"
 
 other(text) ::= "<text>"
 
-statement(something) ::=<<
+statement(something) ::= <%
 <if(something)>
 <something>
 <endif>
->>
+%>
 
-instruction(variable, action, value) ::= <<
-<variable>.<action>(<value>)
+instruction(variable, action, value) ::= "<variable>.<action>(<value>)"
 
->>
-
-assignment(assignVar, assignPen, reassignVar, variable, object, expression, type) ::= <<
+assignment(assignVar, assignPen, reassignVar, variable, object, expression, type) ::= <%
 <if(assignVar)>
 <variable>: <type> = <expression>
 <elseif(assignPen)>
@@ -53,41 +47,31 @@ assignment(assignVar, assignPen, reassignVar, variable, object, expression, type
 <elseif(reassignVar)>
 <variable> = <expression>
 <endif>
+%>
 
->>
+cast(Type, expression) ::= "<Type>(<expression>)"
 
+pause(INT) ::= "time.sleep(<INT>/1000)"
 
-// Medium Level
-cast(Type, expression) ::= <<
-<Type>(<expression>)
-
->>
-
-pause(INT) ::= <<
-time.sleep(<INT>/1000)
-
->>
-
-print(expression, stdErr) ::= <<
-print(<expression><if(stdErr)>, file=sys.stderr<endif>)
-
->>
+print(expression, stdErr) ::= "print(<expression><if(stdErr)>, file=sys.stderr<endif>)"
 
 input(text) ::= "input(<text>)"
 
 if(condition, statements) ::= <<
+
 if <condition>:
     <statements; separator="\n">
+
 >>
 
 while(condition, statements) ::= <<
+
 while <condition>:
-    <statements>
+    <statements; separator="\n">
+
 >>
 
 condition(e1, e2, equals) ::= "<e1> <if(equals)>==<else>!=<endif> <e2>"
-
-
 
 execute(variable, String) ::= <<
 def execute(filename):
@@ -97,5 +81,4 @@ def execute(filename):
    stream = CommonTokenStream(lexer)
    parser = ipdrawParser(stream)
    tree = parser.execute()
-
 >>
