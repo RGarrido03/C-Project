@@ -38,15 +38,15 @@ while (i lt 5) {
     i = i + 1;
 };
 
-position (0,0);
+position (20,20);
 color violet;
 thickness 5;
 for(int oi =0;oi < 100;oi=oi+1){
     forward 20;
     
-    right 3.6 * (oi/15) deg;
+    right 3.6 * (oi/10) deg;
 };
 
 up;
-"Acabei" -> stdout;
+"Acabei" "junta te" "please" -> stdout;
 

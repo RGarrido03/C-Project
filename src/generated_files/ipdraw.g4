@@ -73,7 +73,7 @@ variable: Name | Word;
 
 // Define expressions for mathematical and logical operations
 expression:
-	expression op = ('/' | '//' | '*' | '%') expression	# ExprMultDivMod
+	expression op = ('/' | '//' | '*' | 'mod') expression	# ExprMultDivMod
 	| expression op = ('+' | '-') expression			# ExprAddSub
 	| op = ('+' | '-') expression						# ExprUnary
 	| < assoc = right> expression '^' expression		# ExprPow
@@ -81,7 +81,7 @@ expression:
 	| stdin												# ExprStdIn
 	| INT												# ExprInteger
 	| FLOAT												# ExprFloat
-	| STRING											# ExprString
+	| STRING+											# ExprString
 	| BOOL												# ExprBool
 	| variable											# ExprVariable
 	| '(' expression ')'								# ExprParent;

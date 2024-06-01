@@ -13,21 +13,20 @@ statement: (
 		| print
 		| stdin
 		| pause
-		
+		| instructionsCanvas
 	) ';';
 
 if: 'if' '(' condition ')' '{' statement* '}';
 
 condition:
-    expression '==' expression      # ConditionEquals
-    | expression '!=' expression    # ConditionNotEquals
-    ;
+	expression '==' expression		# ConditionEquals
+	| expression '!=' expression	# ConditionNotEquals;
 
 instruction:
 	variable moveAction expression	# InstructionMoveAction
 	| variable rotateAction angle	# InstructionRotateAction
 	| variable penAction			# InstructionPenAction
-	| variable '<-' arrowProps  # InstructionArrowProps;
+	| variable '<-' arrowProps		# InstructionArrowProps;
 
 assignment
 	returns[types.Symbol symbol]:

@@ -15,5 +15,8 @@ s__: int = (7-a__)
 d__: int = 9/1
 f__: int = 2//3
 e__: int = 2%3
+Canvas1__ = Canvas((100,100))
+Canvas2__ = Canvas()
+Canvas2__.set_background("red")
 
 turtle.done()

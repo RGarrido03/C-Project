@@ -18,8 +18,16 @@ object(variable, penType) ::= <<
 
 >>
 
-createCanvasClass(className, tuple) ::= <<
-turtle.setup<tuple>
-turtle.title(<className>)
+createCanvasClass(canvasName, tuple, title) ::= <<
+<canvasName> = Canvas(<tuple>)
 
+>>
+
+instructionCanvas(canvasName,tuple, title, color) ::= <<
+<if(title)><canvasName>.set_title("<title>")
+<endif>
+<if(color)><canvasName>.set_background("<color>")
+<endif>
+<if(tuple)><canvasName>.set_dimension(<tuple>)
+<endif>
 >>

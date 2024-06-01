@@ -5,6 +5,9 @@ class:
 	'define' 'canvas' variable STRING? tuple?			# CreateCanvas
 	| 'define' 'pen' variable '{' (classProps ';')* '}'	# CreatePen;
 
+instructionsCanvas:
+	variable 'background' (Word | HexaColor) # BackgroundCanvas;
+
 classProps:
 	'color' '=' (Word | HexaColor)
 	| 'position' '=' tuple
