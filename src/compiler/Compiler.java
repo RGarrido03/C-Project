@@ -73,6 +73,14 @@ public class Compiler extends pdrawBaseVisitor<ST> {
       });
     }
 
+    if (ctx.pause() != null) {
+      ctx.pause().forEach(pauseContext -> {
+        ST res = pdrawTemplate.getInstanceOf("pause");
+        res.add("INT", pauseContext.INT().getText());
+        main.add("statements", res);
+      });
+    }
+
     return main;
   }
 

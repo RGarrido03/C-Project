@@ -26,9 +26,9 @@ move: moveAction expression;
 rotate: rotateAction angle;
 
 instruction:
-	variable (move | rotate)+   # InstructionMoveRotateAction
-	| variable penAction	    # InstructionPenAction
-	| variable '<-' arrowProps  # InstructionArrowProps;
+	variable (move | rotate | pause)+   # InstructionMoveRotateAction
+	| variable penAction	            # InstructionPenAction
+	| variable '<-' arrowProps          # InstructionArrowProps;
 
 assignment
 	returns[types.Symbol symbol]:

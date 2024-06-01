@@ -11,15 +11,7 @@ define pen PenType1 {
 };
 
 pen p1 = new PenType1;
-
-p1 down; % pen in canvas with pressure 0
-p1 forward 10; % pen p1 advances 10
-p1 <- color red; % set pen color
-p1 left 10; % pen p1 rotated counterclockwise 10 degrees
-p1 backward 10; % pen p1 retreats 10
-p1 <- color  blue;
-p1 right 20; % pen p1 rotated clockwise 10 degrees
-p1 forward 10; % pen p1 retreats 10
-
 p1 down;
-p1 forward 10 right 144º forward 10 right 144º forward 10 right 144º forward 10 right 144º forward 10;
+
+p1 forward 10 right 144º forward 10 right 144º;
+p1 forward 20 right 100º pause 1000 forward 10 pause 2000 right 144º;

@@ -234,6 +234,14 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       }
     }
 
+    if (ctx.pause() != null) {
+      for (pdrawParser.PauseContext pauseContext : ctx.pause()) {
+        if (!visit(pauseContext)) {
+          return false;
+        }
+      }
+    }
+
     return true;
   }
 
