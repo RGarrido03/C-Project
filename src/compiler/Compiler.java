@@ -4,9 +4,6 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
-import .antlr.pdrawParser;
-import types.PenTAD;
-
 @SuppressWarnings("CheckReturnValue")
 public class Compiler extends pdrawBaseVisitor<ST> {
 
@@ -48,29 +45,35 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
-  public ST visitInstructionMoveAction(
-    pdrawParser.InstructionMoveActionContext ctx
+  public ST visitInstructionMoveRotateAction(
+    pdrawParser.InstructionMoveRotateActionContext ctx
   ) {
-    System.out.println("VisitInstructionMoveAction");
-    ST res = pdrawTemplate.getInstanceOf("instruction");
-    res.add("variable", visit(ctx.variable()));
-    res.add("action", ctx.moveAction().getText());
-    res.add("value", visit(ctx.expression()));
-    return res;
-  }
+    ST main = pdrawTemplate.getInstanceOf("other");
 
-  @Override
-  public ST visitInstructionRotateAction(
-    pdrawParser.InstructionRotateActionContext ctx
-  ) {
-    System.out.println("VisitInstructionRotateAction");
-    ST res = pdrawTemplate.getInstanceOf("instruction");
-    res.add("variable", visit(ctx.variable()));
-    res.add("action", ctx.rotateAction().getText());
-    if (ctx.angle() != null) {
-      res.add("value", visit(ctx.angle()));
+    if (ctx.move() != null) {
+      ctx.move().forEach(moveContext -> {
+        ST res = pdrawTemplate.getInstanceOf("instruction");
+        res.add("variable", visit(ctx.variable()));
+        res.add("action", moveContext.moveAction().getText());
+        res.add("value", visit(moveContext.expression()));
+        main.add("text", res);
+      });
     }
-    return res;
+
+    if (ctx.rotate() != null) {
+      ctx.rotate().forEach(rotateContext -> {
+        ST res = pdrawTemplate.getInstanceOf("instruction");
+        res.add("variable", visit(ctx.variable()));
+        res.add("action", rotateContext.rotateAction().getText());
+
+        if (rotateContext.angle() != null) {
+          res.add("value", visit(rotateContext.angle()));
+        }
+        main.add("text", res);
+      });
+    }
+
+    return main;
   }
 
   @Override

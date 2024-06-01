@@ -22,11 +22,13 @@ elseif: 'else' 'if' '(' expression ')' '{' statement* '}';
 else: 'else' '{' statement* '}';
 while: 'until' '(' expression ')' '{' statement* '}';
 
+move: moveAction expression;
+rotate: rotateAction angle;
+
 instruction:
-	variable moveAction expression	# InstructionMoveAction
-	| variable rotateAction angle	# InstructionRotateAction
-	| variable penAction			# InstructionPenAction
-	| variable '<-' arrowProps		# InstructionArrowProps;
+	variable (move | rotate)+   # InstructionMoveRotateAction
+	| variable penAction	    # InstructionPenAction
+	| variable '<-' arrowProps  # InstructionArrowProps;
 
 assignment
 	returns[types.Symbol symbol]:
