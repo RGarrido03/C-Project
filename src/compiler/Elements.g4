@@ -2,7 +2,7 @@ grammar Elements;
 variable: Name | Word;
 expression
 	returns[types.Symbol symbol]:
-	expression op = ('/' | '//' | '*' | '%') expression	# ExprMultDivMod
+	expression op = ('/' | '//' | '*') expression	# ExprMultDivMod
 	| expression op = ('+' | '-') expression			# ExprAddSub
 	| op = ('+' | '-') e2 = expression					# ExprUnary
 	| <assoc = right> expression '^' expression			# ExprPow
@@ -51,5 +51,5 @@ ESC: '\\' .;
 STRING: '"' (. | ESC)*? '"' | '\'' (. | ESC)*? '\'';
 
 // .gitignore
-//Comment: '%' ~[\r\n]* -> skip;
+Comment: '%' ~[\r\n]* -> skip;
 WS: [ \r\t\n]+ -> skip;
