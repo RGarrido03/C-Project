@@ -3,6 +3,7 @@
 % Drawing operations are always applied through (object alike) pens, so a programmer should devise a program
 % as if he/she/it is drawing by its own hand(s).
 
+%# TODO
 % predefined colors: white, black, green, red, blue, yellow
 % hex integer literal: #DDDDDDDD (32 bits); colors are integers (first 24 bits specify RGB)
 % reserved word background: is the canvas background color

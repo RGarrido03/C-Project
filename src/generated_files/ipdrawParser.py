@@ -128,8 +128,8 @@ class ipdrawParser ( Parser ):
                      "'neq'", "'<'", "'lt'", "'>'", "'gt'", "'<='", "'lte'", 
                      "'>='", "'gte'", "'&&'", "'and'", "'||'", "'or'", "'='", 
                      "'stdin'", "'pause'", "'->'", "'stdout'", "'stderr'", 
-                     "'/'", "'//'", "'*'", "'%'", "'+'", "'-'", "'^'", "','", 
-                     "'\\u00BA'", "'deg'", "'rad'", "'left'", "'right'", 
+                     "'/'", "'//'", "'*'", "'mod'", "'+'", "'-'", "'^'", 
+                     "','", "'\\u00BA'", "'deg'", "'rad'", "'left'", "'right'", 
                      "'forward'", "'backward'", "'down'", "'up'", "'color'", 
                      "'position'", "'orientation'", "'thickness'", "'pressure'" ]
 

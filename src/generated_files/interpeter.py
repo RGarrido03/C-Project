@@ -8,8 +8,6 @@ import time
 from lib import *
 from ErrorHandler import ErrorHandling
 
-# TODO FAZER VERIFICADOR SEMANTICO
-
 
 def parseType(type_):
     if type_ == 'int':
@@ -22,11 +20,11 @@ def parseType(type_):
         return str
 
 
-def handleCondition(exp1, exp2):
-    if not (isinstance(exp1, Number) and isinstance(exp2, Number)) or (
-        isinstance(exp1, type(exp2))):
+def handleCondition(ctx,exp1, exp2):
+    if not ((isinstance(exp1, Number) and isinstance(exp2, Number)) or (
+        isinstance(exp1, type(exp2)))):
 
-        ErrorHandling.print_error(f"Values '{exp1}' and '{\
+        ErrorHandling.print_error_ctx(ctx,f"Values '{exp1}' and '{\
                                 exp2}' are not of the same type")
         sys.exit(1)
     return True
@@ -39,14 +37,14 @@ class SymbolTable:
     def add_variable(self, name, value, type_):
 
         if name in self.variables:
-            ErrorHandling.print_error(f"Variable '{name}' already exists")
+            ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' already exists")
             sys.exit(1)
 
         elif isinstance(value, parseType(type_)):
             self.variables[name] = value
 
         else:
-            ErrorHandling.print_error(f"Variable '{name}' and value '{\
+            ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' and value '{\
                                     value}' are not of the same type")
             sys.exit(1)
 
@@ -54,7 +52,7 @@ class SymbolTable:
         try:
             return self.variables[name]
         except:
-            ErrorHandling.print_error(f"Variable '{name}' not found")
+            ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' not found")
             sys.exit(1)
 
     def update_variable(self, name, value):
@@ -62,11 +60,11 @@ class SymbolTable:
             if isinstance(self.variables[name], type(value)):
                 self.variables[name] = value
             else:
-                ErrorHandling.print_error(f"Variable '{name}' and value '{\
+                ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' and value '{\
                                         value}' are not of the same type")
                 sys.exit(1)
         else:
-            ErrorHandling.print_error(f"Variable '{name}' not found")
+            ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' not found")
             sys.exit(1)
 
     def __str__(self):
@@ -101,13 +99,13 @@ class Interpreter(ipdrawVisitor):
         elif ctx.elseBlock():
             self.visit(ctx.elseBlock())
 
-        return None  # TODO
+        return None
 
     def visitElseBlock(self, ctx: ipdrawParser.ElseBlockContext):
         for statement in ctx.statement():
             self.visit(statement)
 
-        return None  # TODO
+        return None
 
     def visitWhileLoop(self, ctx: ipdrawParser.WhileLoopContext):
         cicle = ctx.cicle.text == 'while'
@@ -120,7 +118,7 @@ class Interpreter(ipdrawVisitor):
             for statement in ctx.statement():
                 self.visit(statement)
 
-        return None  # TODO
+        return None
 
     def visitForLoop(self, ctx: ipdrawParser.ForLoopContext):
         self.visit(ctx.assignment(0))
@@ -131,50 +129,50 @@ class Interpreter(ipdrawVisitor):
 
             self.visit(ctx.assignment(1))
 
-        return None  # TODO
+        return None
 
     # TODO implementar breaks, continue e ...
     def visitFinallyBlock(self, ctx: ipdrawParser.FinallyBlockContext):
 
-        return None  # TODO
-
+        return None
+    
     def visitConditionNot(self, ctx: ipdrawParser.ConditionNotContext):
         return not self.visit(ctx.condition())
 
     def visitConditionEquals(self, ctx: ipdrawParser.ConditionEqualsContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        if handleCondition(exp1, exp2):
+        if handleCondition(ctx,exp1, exp2):
             return exp1 == exp2
 
     def visitConditionNotEquals(self, ctx: ipdrawParser.ConditionNotEqualsContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        if handleCondition(exp1, exp2):
+        if handleCondition(ctx,exp1, exp2):
             return exp1 != exp2
 
     def visitConditionLessThan(self, ctx: ipdrawParser.ConditionLessThanContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        if handleCondition(exp1, exp2):
+        if handleCondition(ctx,exp1, exp2):
             return exp1 < exp2
 
     def visitConditionGreaterThan(self, ctx: ipdrawParser.ConditionGreaterThanContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        if handleCondition(exp1, exp2):
+        if handleCondition(ctx,exp1, exp2):
             return exp1 > exp2
 
     def visitConditionLessEqual(self, ctx: ipdrawParser.ConditionLessEqualContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        if handleCondition(exp1, exp2):
+        if handleCondition(ctx,exp1, exp2):
             return exp1 <= exp2
 
     def visitConditionGreaterEqual(self, ctx: ipdrawParser.ConditionGreaterEqualContext):
         exp1 = self.visit(ctx.expression(0))
         exp2 = self.visit(ctx.expression(1))
-        if handleCondition(exp1, exp2):
+        if handleCondition(ctx,exp1, exp2):
             return exp1 >= exp2
 
     def visitConditionAnd(self, ctx: ipdrawParser.ConditionAndContext):
@@ -192,10 +190,15 @@ class Interpreter(ipdrawVisitor):
 
     def visitInstructionMoveAction(self, ctx: ipdrawParser.InstructionMoveActionContext):
         move = ctx.moveAction().getText()
+        amount = self.visit(ctx.expression())
+        if not isinstance(amount, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{amount}' is not a number")
+            sys.exit(1)
+            
         if move == 'forward':
-            self.pen.forward(self.visit(ctx.expression()))
+            self.pen.forward(amount)
         elif move == 'backward':
-            self.pen.backward(self.visit(ctx.expression()))
+            self.pen.backward(amount)
 
         return None
 
@@ -240,7 +243,11 @@ class Interpreter(ipdrawVisitor):
         return input(self.visit(ctx.expression()))
 
     def visitPause(self, ctx: ipdrawParser.PauseContext):
-        pause_time = int(self.visit(ctx.expression()))
+        pause_time = self.visit(ctx.expression())
+        if not isinstance(pause_time, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{pause_time}' is not a number")
+            sys.exit(1)
+
         time.sleep(pause_time / 1_000_000)  # Convert microseconds to seconds
 
         return None
@@ -262,6 +269,9 @@ class Interpreter(ipdrawVisitor):
     def visitExprAddSub(self, ctx: ipdrawParser.ExprAddSubContext):
         left = self.visit(ctx.expression(0))
         right = self.visit(ctx.expression(1))
+        if not (isinstance(left, Number) and isinstance(right, Number)):
+            ErrorHandling.print_error_ctx(ctx,f"Values '{left}' and '{right}' are not numbers")
+            sys.exit(1)
 
         if ctx.op.text == '+':
             return left + right
@@ -271,8 +281,14 @@ class Interpreter(ipdrawVisitor):
     def visitExprPow(self, ctx: ipdrawParser.ExprPowContext):
         left = self.visit(ctx.expression(0))
         right = self.visit(ctx.expression(1))
-
-        return left ** right
+        if not (isinstance(left, Number) and isinstance(right, Number)):
+            ErrorHandling.print_error_ctx(ctx,f"Values '{left}' and '{right}' are not numbers")
+            sys.exit(1)
+        try:
+            return left ** right
+        except:
+            ErrorHandling.print_error_ctx(ctx,f"Value '{left}' cannot be raised to the power of '{right}'")
+            sys.exit(1)
 
     def visitExprString(self, ctx: ipdrawParser.ExprStringContext):
         return ctx.STRING().getText()[1:-1]
@@ -285,8 +301,12 @@ class Interpreter(ipdrawVisitor):
         return self.visit(ctx.expression())
 
     def visitExprUnary(self, ctx: ipdrawParser.ExprUnaryContext):
+        expr = self.visit(ctx.expression())
+        if not isinstance(expr, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{expr}' is not a number")
+            sys.exit(1)
 
-        return - self.visit(ctx.expression()) if ctx.op.text == '-' else self.visit(ctx.expression())
+        return - expr if ctx.op.text == '-' else expr
 
     def visitExprFloat(self, ctx: ipdrawParser.ExprFloatContext):
 
@@ -310,33 +330,48 @@ class Interpreter(ipdrawVisitor):
     def visitExprMultDivMod(self, ctx: ipdrawParser.ExprMultDivModContext):
         left = self.visit(ctx.expression(0))
         right = self.visit(ctx.expression(1))
-
-        if ctx.op.text == '*':
-            return left * right
-        elif ctx.op.text == '/':
-            return left / right
-        elif ctx.op.text == '%':
-            return left % right
-        elif ctx.op.text == '//':
-            return left // right
+        if not (isinstance(left, Number) and isinstance(right, Number)):
+            ErrorHandling.print_error_ctx(ctx,f"Values '{left}' and '{right}' are not numbers")
+            sys.exit(1)
+        try:
+            if ctx.op.text == '*':
+                return left * right
+            elif ctx.op.text == '/':
+                return left / right
+            elif ctx.op.text == 'mod':
+                return left % right
+            elif ctx.op.text == '//':
+                return left // right
+        except:
+            ErrorHandling.print_error_ctx(ctx,f"Value '{left}' and '{right}' cannot be {ctx.op.text}")
+            sys.exit(1)
 
     def visitTuple(self, ctx: ipdrawParser.TupleContext):
         expr1 = self.visit(ctx.expression(0))
         expr2 = self.visit(ctx.expression(1))
-
+        if not (isinstance(expr1, Number) and isinstance(expr2, Number)):
+            ErrorHandling.print_error_ctx(ctx,f"Values '{expr1}' and '{expr2}' are not numbers")
+            sys.exit(1)
         return (expr1, expr2)
 
     def visitDegree(self, ctx: ipdrawParser.DegreeContext):
-
-        return self.visit(ctx.expression())
+        expr = self.visit(ctx.expression())
+        if not isinstance(expr, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{expr}' is not a number")
+            sys.exit(1)
+        return expr
 
     def visitRadian(self, ctx: ipdrawParser.RadianContext):
+        expr = self.visit(ctx.expression())
+        if not isinstance(expr, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{expr}' is not a number")
+            sys.exit(1)
 
-        return math.degrees(self.visit(ctx.expression()))
+        return math.degrees(expr)
 
     def visitArrowColor(self, ctx: ipdrawParser.ArrowColorContext):
         self.pen.set_color(ctx.getText().replace('color', ''))
-
+        #TODO cor meio estranha tipo ser um hexa com coisas extras, ou uma cor por inventar
         return None
 
     def visitArrowPosition(self, ctx: ipdrawParser.ArrowPositionContext):
@@ -350,24 +385,35 @@ class Interpreter(ipdrawVisitor):
         return None
 
     def visitArrowPressure(self, ctx: ipdrawParser.ArrowPressureContext):
-        self.pen.set_pressure(self.visit(ctx.expression()))
+        expr = self.visit(ctx.expression())
+        if not isinstance(expr, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{expr}' is not a number")
+            sys.exit(1)
+        self.pen.set_pressure(expr)
 
         return None
 
     def visitArrowThickness(self, ctx: ipdrawParser.ArrowThicknessContext):
-        self.pen.set_thickness(self.visit(ctx.expression()))
+        expr = self.visit(ctx.expression())
+        if not isinstance(expr, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{expr}' is not a number")
+            sys.exit(1)
+        self.pen.set_thickness(expr)
 
         return None
 
     def visitTypeCast(self, ctx: ipdrawParser.TypeCastContext):
 
         tipo = ctx.Type().getText()
-
-        if tipo == 'int':
-            return int(self.visit(ctx.expression()))
-        elif tipo == 'real':
-            return float(self.visit(ctx.expression()))
-        elif tipo == 'bool':
-            return bool(self.visit(ctx.expression()))
-        else:
-            return str(self.visit(ctx.expression()))
+        try:
+            if tipo == 'int':
+                return int(self.visit(ctx.expression()))
+            elif tipo == 'real':
+                return float(self.visit(ctx.expression()))
+            elif tipo == 'bool':
+                return bool(self.visit(ctx.expression()))
+            else:
+                return str(self.visit(ctx.expression()))
+        except:
+            ErrorHandling.print_error_ctx(ctx,f"Value '{self.visit(ctx.expression())}' cannot be cast to '{tipo}'")
+            sys.exit(1)
