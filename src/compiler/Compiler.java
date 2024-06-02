@@ -154,10 +154,12 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitSetCanvas(pdrawParser.SetCanvasContext ctx) {
-    ST res = null;
+    ST res = pdrawTemplate.getInstanceOf("instructionCanvas");
 
-    return visitChildren(ctx);
-    // return res;
+    res.add("canvasName", visit(ctx.variable()));
+    res.add("setActive", "true");
+
+    return res;
   }
 
   @Override

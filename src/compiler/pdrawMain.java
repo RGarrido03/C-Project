@@ -19,7 +19,8 @@ public class pdrawMain {
       pdrawParser parser = new pdrawParser(tokens);
       // replace error listener:
       //parser.removeErrorListeners(); // remove ConsoleErrorListener
-      //parser.addErrorListener(new ErrorHandlingListener());
+      // TODO ver lexer things
+      // parser.addErrorListener(new ErrorHandlingListener());
       // begin parsing at main rule:
       ParseTree tree = parser.main();
       if (parser.getNumberOfSyntaxErrors() == 0) {

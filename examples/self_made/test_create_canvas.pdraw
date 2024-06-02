@@ -2,4 +2,45 @@
 real width = real(stdin "width: ");
 real height = real(stdin "height: ");
 
-define canvas Canvas1 "Example p2" (width,height); % default has no name and size (500,500)
+define canvas Canvas1 "Example p2" (width,height); 
+define canvas Canvas2 "Example our example" (width*2,height*2); 
+Canvas1 background green;
+Canvas2 background red;
+
+define pen PenType2 {
+   color = blue;
+   position = (int(width)//2,int(height)//2);
+};
+
+pen p2 = new PenType2;
+
+set Canvas1; %set active canvas
+
+p2 down;
+p2 backward real(stdin "size: ");
+p2 forward 10;
+p2 right 144º;
+p2 forward 10;
+p2 right 144º;
+p2 forward 10;
+p2 right 144º;
+p2 forward 10;
+p2 right 144º;
+p2 forward 10;
+
+set Canvas2; %set active canvas
+
+p2 down;
+p2 backward real(stdin "size: ");
+p2 forward 10;
+p2 right 144º;
+p2 forward 10;
+p2 right 144º;
+p2 forward 10;
+p2 right 144º;
+p2 forward 10;
+p2 right 144º;
+p2 forward 10;
+
+
+

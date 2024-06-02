@@ -9,42 +9,45 @@ class DefaultPen(Pen):
     def __init__(self) -> None:
         super().__init__()
 
-mycanvas = Canvas("Example p2", (500, 500), "white")
-Canvas.set_active(mycanvas)
-another =  Canvas("Example p2", (700, 700), "red")
+class PenType2__(Pen):
+    def __init__(self) -> None:
+        super().__init__()
+        self.color = "blue"
+        self.position = (int(width__) // 2,int(height__) // 2)
 
-mypen = DefaultPen()
-mypen.set_color("blue")
-mypen.set_thickness(3)
-mypen.set_position((200, 200))
-mypen.set_orientation(90)
-mypen.down()
-for i in range(10):
-    mypen.forward(100)
-    mypen.left(36)
+width__: float = float(input("width: "))
+height__: float = float(input("height: "))
+Canvas1__ = Canvas((width__,height__))
+Canvas2__ = Canvas((width__ * 2,height__ * 2))
+Canvas1__.set_background("green")
 
-Canvas.set_active(another)
+Canvas2__.set_background("red")
 
-mypen.set_color("blue")
-mypen.set_thickness(3)
-mypen.set_position((200, 200))
-mypen.set_orientation(90)
-for i in range(10):
-    mypen.forward(100)
-    mypen.left(36)
+p2__ = PenType2__()
+Canvas.set_active(Canvas1__)
 
+p2__.down()
+p2__.backward(float(input("size: ")))
+p2__.forward(10)
+p2__.right(144.0)
+p2__.forward(10)
+p2__.right(144.0)
+p2__.forward(10)
+p2__.right(144.0)
+p2__.forward(10)
+p2__.right(144.0)
+p2__.forward(10)
+Canvas.set_active(Canvas2__)
 
-
-
-
-
-
-add__: int = 3 + 1
-sub__: int = 3 - 1
-mul__: int = 3 * 1
-div__: float = 3 / 1
-dre__: int = 3 // 1
-pow__: int = 3 ^ 2
-par__: int = (3 + 2) * 4
-word__: str = "Bruno" + "Lopes"
+p2__.down()
+p2__.backward(float(input("size: ")))
+p2__.forward(10)
+p2__.right(144.0)
+p2__.forward(10)
+p2__.right(144.0)
+p2__.forward(10)
+p2__.right(144.0)
+p2__.forward(10)
+p2__.right(144.0)
+p2__.forward(10)
 turtle.done()

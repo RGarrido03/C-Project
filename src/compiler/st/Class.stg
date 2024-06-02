@@ -15,11 +15,13 @@ object(variable, penType) ::= "<variable> = <if(penType)><penType><else>DefaultP
 
 createCanvasClass(canvasName, tuple, title) ::= "<canvasName> = Canvas(<tuple>)"
 
-instructionCanvas(canvasName,tuple, title, color) ::= <<
+instructionCanvas(canvasName,tuple, title, color, setActive) ::= <<
 <if(title)><canvasName>.set_title("<title>")
 <endif>
 <if(color)><canvasName>.set_background("<color>")
 <endif>
 <if(tuple)><canvasName>.set_dimension(<tuple>)
+<endif>
+<if(setActive)>Canvas.set_active(<canvasName>)
 <endif>
 >>
