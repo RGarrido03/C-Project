@@ -10,7 +10,9 @@ class DefaultPen(Pen):
         super().__init__()
 
 
-x: int = 9
-y: int = 10
+pila__: int = 2
+x__: int = 9
+y__: int = pila__ + 10
 
+w__: int = 0
 turtle.done()

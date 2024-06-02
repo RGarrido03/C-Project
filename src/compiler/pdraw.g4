@@ -40,7 +40,7 @@ assignment
 	| object									# AssignmentPen // SEE ME TODO: Adicionei 2 hipoteses de assignment, ver se é necessário
 	| variable '=' expression					# ReAssignmentVar
 	| Type (variable '=' expression (',')?)+	# AssignmentMultipleVars
-	| Type variable+							# AssignmentVarsNoValue;
+	| Type variable (',' variable)*				# AssignmentVarsNoValue;
 
 stdin: 'stdin' expression;
 

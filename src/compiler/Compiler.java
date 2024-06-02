@@ -144,9 +144,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
       if (ctx.getChild(i).getText().equals(",")) {
         continue;
       }
-      vars.add(ctx.getChild(i).getText());
+      // se o i for impar
+      if (!(i % 2 == 0)) {
+        vars.add(visit(ctx.getChild(i)).render());
+      } else vars.add(ctx.getChild(i).getText());
     }
-    // E o type?
 
     for (int i = 0; i < vars.size(); i += 3) {
       ST res = pdrawTemplate.getInstanceOf("assignment");
@@ -165,6 +167,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitAssignmentVarsNoValue(
     pdrawParser.AssignmentVarsNoValueContext ctx
   ) {
+    String type = ctx.Type().getText();
+
     ST res = pdrawTemplate.getInstanceOf("assignment");
     System.out.println("VisitAssignmentVarNoValue");
     ArrayList<String> vars = new ArrayList<>();
@@ -172,13 +176,18 @@ public class Compiler extends pdrawBaseVisitor<ST> {
       if (ctx.getChild(i).getText().equals(",")) {
         continue;
       }
-      vars.add(ctx.getChild(i).getText());
+      // se o i for impar
+      if (!(i % 2 == 0)) {
+        vars.add(visit(ctx.getChild(i)).render());
+      } else vars.add(ctx.getChild(i).getText());
     }
 
-    for (int i = 0; i < vars.size(); i += 3) {
+    for (int i = 0; i < vars.size(); i += 1) {
       res.add("assignVar", "true");
       res.add("variable", vars.get(i));
-      res.add("expression", vars.get(i + 2));
+      res.add("expression", defaultType(type));
+
+      res.add("type", parseType(type));
     }
     return res;
   }

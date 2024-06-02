@@ -441,8 +441,24 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     pdrawParser.AssignmentVarsNoValueContext ctx
   ) {
     Boolean res = false;
+    List<pdrawParser.VariableContext> variables = ctx.variable();
+    String type = ctx.Type().getText();
 
-    return false;
+    for (pdrawParser.VariableContext var : variables) {
+      String name = var.getText();
+      if (!symbolTable.containsKey(name)) {
+        symbolTable.put(name, new Symbol(createType(type), name));
+        res = true;
+      } else {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s already defined", name)
+        );
+        return false;
+      }
+    }
+
+    return res;
   }
 
   // our made not antlr
