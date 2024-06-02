@@ -16,6 +16,7 @@ statement: (
 		| stdin
 		| pause
 		| instructionsCanvas
+		| incdec
 	) ';';
 
 if: 'if' '(' expression ')' '{' statement* '}' elseif* else?;

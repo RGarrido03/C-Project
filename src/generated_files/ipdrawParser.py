@@ -185,7 +185,7 @@ class ipdrawParser ( Parser ):
     RULE_pause = 12
     RULE_print = 13
     RULE_variable = 14
-    RULE_postincdec = 15
+    RULE_incdec = 15
     RULE_expression = 16
     RULE_tuple = 17
     RULE_angle = 18
@@ -198,7 +198,7 @@ class ipdrawParser ( Parser ):
     ruleNames =  [ "main", "statement", "ifStatement", "elseIfBlock", "elseBlock", 
                    "whileLoop", "forLoop", "finallyBlock", "condition", 
                    "instruction", "assignment", "stdin", "pause", "print", 
-                   "variable", "postincdec", "expression", "tuple", "angle", 
+                   "variable", "incdec", "expression", "tuple", "angle", 
                    "rotateAction", "moveAction", "penAction", "arrowProps", 
                    "typeCast" ]
 
@@ -389,8 +389,8 @@ class ipdrawParser ( Parser ):
             return self.getTypedRuleContext(ipdrawParser.PauseContext,0)
 
 
-        def postincdec(self):
-            return self.getTypedRuleContext(ipdrawParser.PostincdecContext,0)
+        def incdec(self):
+            return self.getTypedRuleContext(ipdrawParser.IncdecContext,0)
 
 
         def getRuleIndex(self):
@@ -464,7 +464,7 @@ class ipdrawParser ( Parser ):
 
             elif la_ == 9:
                 self.state = 64
-                self.postincdec()
+                self.incdec()
                 pass
 
 
@@ -2060,7 +2060,7 @@ class ipdrawParser ( Parser ):
         return localctx
 
 
-    class PostincdecContext(ParserRuleContext):
+    class IncdecContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -2073,29 +2073,29 @@ class ipdrawParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return ipdrawParser.RULE_postincdec
+            return ipdrawParser.RULE_incdec
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPostincdec" ):
-                listener.enterPostincdec(self)
+            if hasattr( listener, "enterIncdec" ):
+                listener.enterIncdec(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPostincdec" ):
-                listener.exitPostincdec(self)
+            if hasattr( listener, "exitIncdec" ):
+                listener.exitIncdec(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPostincdec" ):
-                return visitor.visitPostincdec(self)
+            if hasattr( visitor, "visitIncdec" ):
+                return visitor.visitIncdec(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def postincdec(self):
+    def incdec(self):
 
-        localctx = ipdrawParser.PostincdecContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 30, self.RULE_postincdec)
+        localctx = ipdrawParser.IncdecContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 30, self.RULE_incdec)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
@@ -2210,6 +2210,31 @@ class ipdrawParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class ExprIncDecContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a ipdrawParser.ExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def incdec(self):
+            return self.getTypedRuleContext(ipdrawParser.IncdecContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExprIncDec" ):
+                listener.enterExprIncDec(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExprIncDec" ):
+                listener.exitExprIncDec(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExprIncDec" ):
+                return visitor.visitExprIncDec(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class ExprMultDivModContext(ExpressionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a ipdrawParser.ExpressionContext
@@ -2235,31 +2260,6 @@ class ipdrawParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitExprMultDivMod" ):
                 return visitor.visitExprMultDivMod(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ExprPostIncDecContext(ExpressionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a ipdrawParser.ExpressionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def postincdec(self):
-            return self.getTypedRuleContext(ipdrawParser.PostincdecContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExprPostIncDec" ):
-                listener.enterExprPostIncDec(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExprPostIncDec" ):
-                listener.exitExprPostIncDec(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExprPostIncDec" ):
-                return visitor.visitExprPostIncDec(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -2502,11 +2502,11 @@ class ipdrawParser ( Parser ):
                 pass
 
             elif la_ == 2:
-                localctx = ipdrawParser.ExprPostIncDecContext(self, localctx)
+                localctx = ipdrawParser.ExprIncDecContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 252
-                self.postincdec()
+                self.incdec()
                 pass
 
             elif la_ == 3:

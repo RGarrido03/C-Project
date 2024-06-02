@@ -847,6 +847,55 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
+  public Boolean visitExprIncDec(pdrawParser.ExprIncDecContext ctx) {
+    Boolean res = true;
+    String var = ctx.incdec().variable().getText();
+    if (!symbolTable.containsKey(var)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not defined", var)
+      );
+
+      return false;
+    }
+    if (!symbolTable.get(var).getType().isNumeric()) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not a number", var)
+      );
+      return false;
+    }
+
+    ctx.symbol =
+      new Symbol(symbolTable.get(var).getType(), ctx.incdec().getText());
+    return true;
+    // ctx.symbol = new Symbol(ctx.incdec().variable().getText(), ctx.incdec().getText());
+
+    // return visitChildren(ctx);
+  }
+
+  @Override
+  public Boolean visitIncdec(pdrawParser.IncdecContext ctx) {
+    String var = ctx.variable().getText();
+    if (!symbolTable.containsKey(var)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not defined", var)
+      );
+
+      return false;
+    }
+    if (!symbolTable.get(var).getType().isNumeric()) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not a number", var)
+      );
+      return false;
+    }
+    return true;
+  }
+
+  @Override
   public Boolean visitExprInteger(pdrawParser.ExprIntegerContext ctx) {
     Boolean res = true;
     String x = ctx.INT().getText();

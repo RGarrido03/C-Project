@@ -14,7 +14,7 @@ statement: (
 		| print
 		| stdin
 		| pause
-		| postincdec
+		| incdec
 	) ';';
 
 // Define an if statement with optional else clause
@@ -75,14 +75,14 @@ print:
 // Define variables
 variable: Name | Word;
 
-postincdec: variable op = ('++' | '--');
+incdec: variable op = ('++' | '--');
 
 // Define expressions for mathematical and logical operations
 expression:
 	expression op = ('/' | '//' | '*' | 'mod') expression	# ExprMultDivMod
 	| expression op = ('+' | '-') expression				# ExprAddSub
 	| op = ('+' | '-') expression							# ExprUnary
-	| postincdec											# ExprPostIncDec
+	| incdec												# ExprIncDec
 	| < assoc = right> expression '^' expression			# ExprPow
 	| typeCast												# ExprCast
 	| stdin													# ExprStdIn

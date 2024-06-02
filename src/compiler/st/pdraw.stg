@@ -37,6 +37,8 @@ statement(something) ::= <%
 <endif>
 %>
 
+incdec(variable,op) ::= "(<variable>:=<variable><op>1)"
+
 instruction(variable, action, value,fontsize) ::= "<variable>.<action>(<value> <if(fontsize)>,<fontsize><endif>)"
 
 instructionPipeline(statements) ::= <<

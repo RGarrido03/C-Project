@@ -344,6 +344,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitExprIncDec(pdrawParser.ExprIncDecContext ctx) {
+    return visit(ctx.incdec());
+  }
+
+  @Override
   public ST visitExprParent(pdrawParser.ExprParentContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("parent");
     res.add("expression", visit(ctx.expression()));
@@ -412,6 +417,19 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST str = visit(ctx.expression());
     System.out.println(str.render() + "STDIN TESTE");
     res.add("text", str);
+    return res;
+  }
+
+  @Override
+  public ST visitIncdec(pdrawParser.IncdecContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("incdec");
+    ST str = visit(ctx.variable());
+    String op = ctx.op.getText();
+    if (op.equals("++")) op = "+";
+    if (op.equals("--")) op = "-";
+
+    res.add("variable", str);
+    res.add("op", op);
     return res;
   }
 

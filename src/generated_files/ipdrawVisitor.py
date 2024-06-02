@@ -159,8 +159,8 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ipdrawParser#postincdec.
-    def visitPostincdec(self, ctx:ipdrawParser.PostincdecContext):
+    # Visit a parse tree produced by ipdrawParser#incdec.
+    def visitIncdec(self, ctx:ipdrawParser.IncdecContext):
         return self.visitChildren(ctx)
 
 
@@ -179,13 +179,13 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ipdrawParser#ExprMultDivMod.
-    def visitExprMultDivMod(self, ctx:ipdrawParser.ExprMultDivModContext):
+    # Visit a parse tree produced by ipdrawParser#ExprIncDec.
+    def visitExprIncDec(self, ctx:ipdrawParser.ExprIncDecContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ipdrawParser#ExprPostIncDec.
-    def visitExprPostIncDec(self, ctx:ipdrawParser.ExprPostIncDecContext):
+    # Visit a parse tree produced by ipdrawParser#ExprMultDivMod.
+    def visitExprMultDivMod(self, ctx:ipdrawParser.ExprMultDivModContext):
         return self.visitChildren(ctx)
 
 

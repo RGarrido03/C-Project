@@ -164,7 +164,7 @@ stdin
 pause
 print
 variable
-postincdec
+incdec
 expression
 tuple
 angle
