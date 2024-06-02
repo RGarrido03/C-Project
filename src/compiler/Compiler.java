@@ -105,20 +105,34 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitInstructionArrowProps(
-    pdrawParser.InstructionArrowPropsContext ctx
-  ) {
-    ST res = pdrawTemplate.getInstanceOf("arrowProps");
-    System.out.println("Variable, value1, value2: " + ctx.getText());
-
-    res.add("variable", visit(ctx.variable()));
+      pdrawParser.InstructionArrowPropsContext ctx) {
+    ST res;
     if (ctx.getText().contains("color")) {
+      res = pdrawTemplate.getInstanceOf("arrowProps");
+      res.add("variable", visit(ctx.variable()));
       res.add("value1", "color");
       res.add("value2", '"' + ctx.getText().split("color")[1] + '"');
+      return res;
+    } else if (ctx.getText().contains("thickness")) {
+      res = pdrawTemplate.getInstanceOf("assigntopen");
+      res.add("variable", visit(ctx.variable()));
+      System.out.println(ctx.getText());
+      res.add("new", "thickness");
+      res.add("pos", ctx.getText().split("thickness")[1]);
+      return res;
+    } else if (ctx.getText().contains("pressure")) {
+      res = pdrawTemplate.getInstanceOf("assigntopen");
+      res.add("variable", visit(ctx.variable()));
+      res.add("new", "pressure");
+      res.add("pos", ctx.getText().split("pressure")[1]);
+      return res;
     } else {
-      res.add("value1", ctx.getText().split("<-")[1].split(" ")[0]);
-      res.add("value2", ctx.getText().split("<-")[1].split(" ")[2]);
+      res = pdrawTemplate.getInstanceOf("assigntopen");
+      res.add("variable", visit(ctx.variable()));
+      res.add("new", ctx.getText().split("<-")[1].replaceAll("\\(.*?\\)", ""));
+      res.add("pos", ctx.getText().split("<-")[1].replace("position", ""));
+      return res;
     }
-    return res;
   }
 
   @Override
