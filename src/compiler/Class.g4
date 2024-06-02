@@ -6,7 +6,8 @@ class:
 	| 'define' 'pen' variable '{' (classProps ';')* '}'	# CreatePen;
 
 instructionsCanvas:
-	variable 'background' (Word | HexaColor) # BackgroundCanvas;
+	variable 'background' (Word | HexaColor)	# BackgroundCanvas
+	| 'set' variable							# SetCanvas;
 
 classProps:
 	'color' '=' (Word | HexaColor)

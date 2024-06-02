@@ -94,31 +94,41 @@ class Pen(ABC):
 
 
 class Canvas:
+    _instances = []
+    _active_instance = None
     def __init__(self, title: str  = "", tuple_size: tuple = (500, 500), background="white") -> None:
         self.title = title
         self.dim = tuple_size
         self.background = background
+        Canvas._instances.append(self)  # Adiciona a instância à lista de instâncias
+        if Canvas._active_instance is None:
+            Canvas._active_instance = self  # Define a primeira instância criada como ativa
         self.do_updates()
         
     
     def do_updates(self) -> None:
-        turtle.setup(width=self.dim[0], height=self.dim[1])
-        turtle.bgcolor(self.background)
-        turtle.title(self.title)
+        if Canvas._active_instance is self:
+            turtle.setup(width=self.dim[0], height=self.dim[1])
+            turtle.bgcolor(self.background)
+            turtle.title(self.title)
 
     def set_background(self, color: str) -> None:
         self.background = color
         self.do_updates()
         
     def clear(self) -> None:
-        turtle.clear()
+        if Canvas._active_instance is self:
+            turtle.clear()
+        
 
     def update(self) -> None:
-        turtle.update()
+        if Canvas._active_instance is self:
+            turtle.update()
         
     #TODO see if it is necessary
     def close(self) -> None:
-        turtle.bye()
+        if Canvas._active_instance is self:
+            turtle.bye()
     
     def set_title(self, title: str) -> None:
         self.title = title
@@ -128,6 +138,22 @@ class Canvas:
     def set_dimension(self, tuple_size: tuple) -> None:
         self.dim = tuple_size
         self.do_updates()
+        
+    @classmethod
+    def get_active_canvases(cls):
+        return [instance for instance in cls._instances if isinstance(instance, Canvas)]
+    
+    @classmethod
+    def set_active(cls, instance):
+        if instance in cls._instances:
+            cls._active_instance = instance
+            instance.do_updates()  # Atualiza o canvas ativo
+        else:
+            raise ValueError("The instance is not a part of the active canvases.")
+    
+    @classmethod
+    def get_active_instance(cls):
+        return cls._active_instance
             
     def __repr__(self) -> str:
         return f"Canvas(title={self.title}, dim={self.dim}, background={self.background})"

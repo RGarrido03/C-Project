@@ -195,14 +195,20 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     String variable = ctx.variable().getText();
 
     if (!symbolTable.containsKey(variable)) {
-      ErrorHandling.printError(ctx, String.format("Variable %s not defined", variable));
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s not defined", variable)
+      );
       return false;
     }
 
     Type type = symbolTable.get(variable).getType();
 
     if (!(type instanceof PenTAD)) {
-      ErrorHandling.printError(ctx, String.format("Variable %s is not a pen", variable));
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not a pen", variable)
+      );
       return false;
     }
 
@@ -214,7 +220,10 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
         String text = moveContext.moveAction().getText();
         if (!(text.equals("forward") || text.equals("backward"))) {
-          ErrorHandling.printError(ctx, text + " is not 'forward' or 'backward'");
+          ErrorHandling.printError(
+            ctx,
+            text + " is not 'forward' or 'backward'"
+          );
           return false;
         }
       }
@@ -343,7 +352,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitAssignmentMultipleVars(pdrawParser.AssignmentMultipleVarsContext ctx) {
+  public Boolean visitAssignmentMultipleVars(
+    pdrawParser.AssignmentMultipleVarsContext ctx
+  ) {
     Boolean res = false;
     String type = ctx.Type().getText();
 
@@ -351,7 +362,10 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     List<pdrawParser.ExpressionContext> expressions = ctx.expression();
 
     if (variables.size() != expressions.size()) {
-      ErrorHandling.printError(ctx, "Invalid number of variables and expressions");
+      ErrorHandling.printError(
+        ctx,
+        "Invalid number of variables and expressions"
+      );
       return false;
     }
 
@@ -368,11 +382,13 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       if (!symbolTable.containsKey(name)) {
         ErrorHandling.printInfo(expressionCtx.getText());
         System.out.println(
-            expressionCtx.symbol.getType().toString() + " " + type);
+          expressionCtx.symbol.getType().toString() + " " + type
+        );
         if (!expressionCtx.symbol.getType().toString().equals(type)) {
           ErrorHandling.printError(
-              ctx,
-              String.format("Variable %s is not of type %s. ", name, type));
+            ctx,
+            String.format("Variable %s is not of type %s. ", name, type)
+          );
           return false;
         } else {
           System.out.println(createType(type).toString());
@@ -381,14 +397,14 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         }
       } else {
         ErrorHandling.printError(
-            ctx,
-            String.format("Variable %s already defined", name));
+          ctx,
+          String.format("Variable %s already defined", name)
+        );
         return false;
       }
     }
     return false;
   }
-
 
   // our made not antlr
   private Type createType(String type) {
@@ -497,6 +513,21 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
+  public Boolean visitSetCanvas(pdrawParser.SetCanvasContext ctx) {
+    Boolean res = null;
+    String canvas_especifico = ctx.variable().getText();
+    if (!symbolTable.containsKey(canvas_especifico)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Canvas '%s' isn't defined", canvas_especifico)
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
   public Boolean visitBackgroundCanvas(
     pdrawParser.BackgroundCanvasContext ctx
   ) {
@@ -583,7 +614,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         return visit(ctx.angle());
       case "thickness", "pressure":
         return visit(ctx.expression());
-        default:
+      default:
         break;
     }
     return res;
@@ -602,8 +633,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       Boolean isColorValid = isColorWord(prop) || isHexColor(prop);
       if (!isColorValid) {
         ErrorHandling.printError(
-            ctx,
-            String.format("The value %s is not a color", prop));
+          ctx,
+          String.format("The value %s is not a color", prop)
+        );
       }
       return isColorValid;
     } else if (prop.contains("position")) {
@@ -650,8 +682,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitExprAddSubMultDivModPow(pdrawParser.ExprAddSubMultDivModPowContext ctx) {
-
+  public Boolean visitExprAddSubMultDivModPow(
+    pdrawParser.ExprAddSubMultDivModPowContext ctx
+  ) {
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       ErrorHandling.printError(
         ctx,
@@ -669,8 +702,14 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     // preciso de saber se é uma variavel ou nao
     for (int i = 0; i < 2; i++) {
       String text = ctx.expression(i).getText();
-      if (symbolTable.containsKey(text) && !symbolTable.get(text).getType().isNumeric()) {
-        ErrorHandling.printError(ctx, String.format("Variable %s is not a number", text));
+      if (
+        symbolTable.containsKey(text) &&
+        !symbolTable.get(text).getType().isNumeric()
+      ) {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s is not a number", text)
+        );
         return false;
       }
     }
@@ -681,16 +720,24 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       left_ctx.symbol.getType().isNumeric() &&
       right_ctx.symbol.getType().isNumeric()
     ) {
-      ctx.symbol = new Symbol(
-              ctx.op.getText().equals("/") ? new RealType() : left_ctx.symbol.getType(),
-              left_ctx.getText()); // o da esquerda define o tipo final
+      ctx.symbol =
+        new Symbol(
+          ctx.op.getText().equals("/")
+            ? new RealType()
+            : left_ctx.symbol.getType(),
+          left_ctx.getText()
+        ); // o da esquerda define o tipo final
       return true;
     }
 
     // Concatenação de strings
-    if (ctx.op.getText().equals("+") && left_ctx.symbol.getType().isString() && right_ctx.symbol.getType().isString()) {
-      ctx.symbol = new Symbol(
-              new StringType(), left_ctx.getText() + right_ctx.getText());
+    if (
+      ctx.op.getText().equals("+") &&
+      left_ctx.symbol.getType().isString() &&
+      right_ctx.symbol.getType().isString()
+    ) {
+      ctx.symbol =
+        new Symbol(new StringType(), left_ctx.getText() + right_ctx.getText());
       return true;
     }
 
@@ -912,7 +959,10 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitFor(pdrawParser.ForContext ctx) {
     if (!visit(ctx.assignment(0))) {
-      ErrorHandling.printError(ctx, "Assignment " + ctx.assignment(0).getText() + " is not valid");
+      ErrorHandling.printError(
+        ctx,
+        "Assignment " + ctx.assignment(0).getText() + " is not valid"
+      );
       return false;
     }
 
@@ -922,7 +972,10 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     }
 
     if (!visit(ctx.assignment(1))) {
-      ErrorHandling.printError(ctx, "Assignment " + ctx.assignment(1).getText() + " is not valid");
+      ErrorHandling.printError(
+        ctx,
+        "Assignment " + ctx.assignment(1).getText() + " is not valid"
+      );
       return false;
     }
 
@@ -939,14 +992,19 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitExprConditionOrderRelation(pdrawParser.ExprConditionOrderRelationContext ctx) {
+  public Boolean visitExprConditionOrderRelation(
+    pdrawParser.ExprConditionOrderRelationContext ctx
+  ) {
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       return false;
     }
 
     for (int i = 0; i < 2; i++) {
       if (!(ctx.expression(i).symbol.getType().isNumeric())) {
-        ErrorHandling.printError(ctx, ctx.expression(i).getText() + " is not numeric");
+        ErrorHandling.printError(
+          ctx,
+          ctx.expression(i).getText() + " is not numeric"
+        );
         return false;
       }
     }
@@ -955,14 +1013,19 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitExprConditionAndOr(pdrawParser.ExprConditionAndOrContext ctx) {
+  public Boolean visitExprConditionAndOr(
+    pdrawParser.ExprConditionAndOrContext ctx
+  ) {
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       return false;
     }
 
     for (int i = 0; i < 2; i++) {
       if (!(ctx.expression(i).symbol.getType() instanceof BoolType)) {
-        ErrorHandling.printError(ctx, ctx.expression(i).getText() + " is not a bool");
+        ErrorHandling.printError(
+          ctx,
+          ctx.expression(i).getText() + " is not a bool"
+        );
         return false;
       }
     }
@@ -971,7 +1034,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitExprConditionEquals(pdrawParser.ExprConditionEqualsContext ctx) {
+  public Boolean visitExprConditionEquals(
+    pdrawParser.ExprConditionEqualsContext ctx
+  ) {
     if (!visit(ctx.expression(0)) || !visit(ctx.expression(1))) {
       return false;
     }

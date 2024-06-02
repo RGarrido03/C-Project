@@ -55,7 +55,10 @@ public class Compiler extends pdrawBaseVisitor<ST> {
         main.add("statements", visit(ctx.children.get(a)).render());
         continue;
       }
-      main.add("statements", visit(ctx.variable()).render() + visit(ctx.children.get(a)).render());
+      main.add(
+        "statements",
+        visit(ctx.variable()).render() + visit(ctx.children.get(a)).render()
+      );
     }
 
     return main;
@@ -92,10 +95,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitInstructionArrowProps(
-      pdrawParser.InstructionArrowPropsContext ctx) {
+    pdrawParser.InstructionArrowPropsContext ctx
+  ) {
     ST res = pdrawTemplate.getInstanceOf("arrowProps");
     System.out.println("Variable, value1, value2: " + ctx.getText());
-    
+
     res.add("variable", visit(ctx.variable()));
     if (ctx.getText().contains("color")) {
       res.add("value1", "color");
@@ -119,7 +123,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
-  public ST visitAssignmentMultipleVars(pdrawParser.AssignmentMultipleVarsContext ctx) {
+  public ST visitAssignmentMultipleVars(
+    pdrawParser.AssignmentMultipleVarsContext ctx
+  ) {
     ST res = pdrawTemplate.getInstanceOf("assignment");
     System.out.println("VisitAssignmentMultipleVars");
     ArrayList<String> vars = new ArrayList<>();
@@ -140,6 +146,14 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitAssignmentPen(pdrawParser.AssignmentPenContext ctx) {
+    ST res = null;
+
+    return visitChildren(ctx);
+    // return res;
+  }
+
+  @Override
+  public ST visitSetCanvas(pdrawParser.SetCanvasContext ctx) {
     ST res = null;
 
     return visitChildren(ctx);
@@ -332,7 +346,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
-  public ST visitExprAddSubMultDivModPow(pdrawParser.ExprAddSubMultDivModPowContext ctx) {
+  public ST visitExprAddSubMultDivModPow(
+    pdrawParser.ExprAddSubMultDivModPowContext ctx
+  ) {
     ST res = pdrawTemplate.getInstanceOf("expression");
     res.add("e1", visit(ctx.expression(0)).render());
     res.add("op", ctx.op.getText());
@@ -429,7 +445,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitIf(pdrawParser.IfContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("if");
     res.add("condition", visit(ctx.expression()));
-    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+    ctx
+      .statement()
+      .forEach(statement -> res.add("statements", visit(statement)));
 
     if (ctx.elseif() != null) {
       ctx.elseif().forEach(elseif -> res.add("elif", visit(elseif)));
@@ -445,14 +463,18 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitElseif(pdrawParser.ElseifContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("elif");
     res.add("condition", visit(ctx.expression()));
-    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+    ctx
+      .statement()
+      .forEach(statement -> res.add("statements", visit(statement)));
     return res;
   }
 
   @Override
   public ST visitElse(pdrawParser.ElseContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("else");
-    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+    ctx
+      .statement()
+      .forEach(statement -> res.add("statements", visit(statement)));
     return res;
   }
 
@@ -461,7 +483,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("while");
     res.add("assignment", visit(ctx.assignment(0)));
     res.add("condition", visit(ctx.expression()));
-    ctx.statement().forEach(statement -> res.add("statements", visit(statement)));
+    ctx
+      .statement()
+      .forEach(statement -> res.add("statements", visit(statement)));
     res.add("statements", visit(ctx.assignment(1)));
     return res;
   }
@@ -471,13 +495,15 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("while");
     res.add("condition", visit(ctx.expression()));
     ctx
-            .statement()
-            .forEach(statement -> res.add("statements", visit(statement)));
+      .statement()
+      .forEach(statement -> res.add("statements", visit(statement)));
     return res;
   }
 
   @Override
-  public ST visitExprConditionOrderRelation(pdrawParser.ExprConditionOrderRelationContext ctx) {
+  public ST visitExprConditionOrderRelation(
+    pdrawParser.ExprConditionOrderRelationContext ctx
+  ) {
     ST res = pdrawTemplate.getInstanceOf("expression");
     res.add("e1", visit(ctx.expression(0)));
     res.add("op", ctx.op.getText());
@@ -495,7 +521,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
-  public ST visitExprConditionEquals(pdrawParser.ExprConditionEqualsContext ctx) {
+  public ST visitExprConditionEquals(
+    pdrawParser.ExprConditionEqualsContext ctx
+  ) {
     ST res = pdrawTemplate.getInstanceOf("expression");
     res.add("e1", visit(ctx.expression(0)));
     res.add("op", ctx.op.getText());
