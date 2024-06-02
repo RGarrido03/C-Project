@@ -21,6 +21,10 @@ public class TupleType extends Type {
         throw new IllegalArgumentException("Tuple cannot be cast to any other type");
     }
 
+    public boolean isString() {
+        return true;
+    }
+
     @Override
     public String toString(Object value) {
         // TODO: Implement this

@@ -212,23 +212,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return false;
     }
 
-    if (ctx.move() != null) {
-      for (pdrawParser.MoveContext moveContext : ctx.move()) {
-        if (!visit(moveContext.expression())) {
-          return false;
-        }
-
-        String text = moveContext.moveAction().getText();
-        if (!(text.equals("forward") || text.equals("backward"))) {
-          ErrorHandling.printError(
-            ctx,
-            text + " is not 'forward' or 'backward'"
-          );
-          return false;
-        }
-      }
-    }
-
     if (ctx.rotate() != null) {
       for (pdrawParser.RotateContext rotateContext : ctx.rotate()) {
         if (!visit(rotateContext.angle())) {
@@ -769,8 +752,18 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return true;
     }
 
-    //Soma
-    if (ctx.op.getText().equals("+"))
+    if (
+            left_ctx.symbol.getType().isTuple()
+            && right_ctx.symbol.getType().isTuple()
+            && ctx.op.getText().equals("+")
+    ) {
+      ctx.symbol =
+              new Symbol(new TupleType(),
+                      left_ctx.symbol.getValue()
+                              + "+" + right_ctx.symbol.getValue());
+
+      return true;
+    }
 
     // Concatenação de strings
     if (

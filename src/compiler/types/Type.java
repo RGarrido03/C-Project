@@ -18,8 +18,11 @@ public abstract class Type {
   public boolean isNumeric() {
     return false;
   }
-
   public boolean isString() {
+    return false;
+  }
+
+  public boolean isTuple() {
     return false;
   }
 
