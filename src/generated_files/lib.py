@@ -81,6 +81,12 @@ class Pen(ABC):
         self.position = t
         self.turtle.setpos(t)
     
+
+    def add_position(self, t:tuple) -> None:
+        t = (self.position[0]+t[0],self.position[1]+t[1])
+        self.position = t
+        self.turtle.setpos(t)
+    
     def set_orientation(self, degrees: float) -> None:
         self.orientation = degrees
         self.turtle.setheading(degrees)
