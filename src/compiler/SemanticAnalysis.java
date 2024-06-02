@@ -366,7 +366,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         );
         return false;
       } else {
-        System.out.println(createType(type).toString());
+        System.out.println(createType(type));
         symbolTable.put(name, new Symbol(createType(type), name));
         return true;
       }
@@ -768,6 +768,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         ); // o da esquerda define o tipo final
       return true;
     }
+
+    //Soma
+    if (ctx.op.getText().equals("+"))
 
     // Concatenação de strings
     if (
