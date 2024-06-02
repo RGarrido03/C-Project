@@ -1,0 +1,15 @@
+define pen PenType1 {
+   color = green;
+   position = (10,10);
+   orientation = 45º; % literal orientation in degrees (internally is always stored in radians)
+   % orientation = 0; % literal orientation in radians
+   % real PI constant predefined
+   thickness = 10; % default thickness is 1
+   pressure = -1; % up (pressure=-1); down (pressure>=0 and pressure <=1)
+   % pressure = 0; % down
+   % pressure = 1/3; % 1/3 of thickness
+};
+
+pen p1 = new PenType1;
+
+p1 = p1 + (5,5);
