@@ -250,18 +250,35 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         }
       }
     }
-  
-    if (ctx.write()!=null) {
-      
+
+    if (ctx.write() != null) {
       for (pdrawParser.WriteContext writeContext : ctx.write()) {
-        if(true){
+        if (!visit(writeContext)) {
           return false;
+        }
       }
+      System.out.println("write");
     }
-    System.out.println("write");
+    return true;
   }
-  return true;
-    
+
+  public Boolean visitWrite(pdrawParser.WriteContext ctx) {
+    String text = ctx.expression(0).getText();
+
+    if (text.startsWith("\"") && text.endsWith("\"")) {
+      // it means i is a String
+      try {
+        int fontSize = Integer.parseInt(ctx.expression(1).getText());
+      } catch (NumberFormatException e) {
+        ErrorHandling.printError(ctx, "Font size must be an integer");
+        return false;
+      }
+
+      return true;
+    }
+
+    ErrorHandling.printError(ctx, "Text to write must be a string");
+    return false;
   }
 
   @Override
@@ -380,11 +397,13 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return false;
     }
 
-    for (int i = 0; i < variables.size();) {
+    for (int i = 0; i < variables.size(); i += 1) {
       String name = variables.get(i).getText();
       pdrawParser.ExpressionContext expressionCtx = expressions.get(i);
 
       Boolean expressionResult = visit(expressionCtx);
+
+      System.out.println(createType(type).toString() + " " + name + " pILOXa");
 
       if (!expressionResult) {
         ErrorHandling.printError(ctx, "Expression is not valid");
@@ -402,9 +421,9 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
           );
           return false;
         } else {
-          System.out.println(createType(type).toString());
           symbolTable.put(name, new Symbol(createType(type), name));
-          return true;
+
+          res = true;
         }
       } else {
         ErrorHandling.printError(
@@ -414,7 +433,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         return false;
       }
     }
-    return false;
+    return res;
   }
 
   @Override
@@ -448,7 +467,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx) {
     Boolean res = false;
     String name = ctx.variable().getText();
-
+    System.out.println(symbolTable.toString() + "PIXA");
     if (!symbolTable.containsKey(name)) {
       ErrorHandling.printError(
         ctx,

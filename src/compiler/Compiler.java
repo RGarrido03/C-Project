@@ -136,7 +136,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitAssignmentMultipleVars(
     pdrawParser.AssignmentMultipleVarsContext ctx
   ) {
-    ST res = pdrawTemplate.getInstanceOf("assignment");
+    String type = ctx.Type().getText();
+    ST buffer = pdrawTemplate.getInstanceOf("other");
     System.out.println("VisitAssignmentMultipleVars");
     ArrayList<String> vars = new ArrayList<>();
     for (int i = 1; i < ctx.getChildCount(); i += 1) {
@@ -148,11 +149,16 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     // E o type?
 
     for (int i = 0; i < vars.size(); i += 3) {
+      ST res = pdrawTemplate.getInstanceOf("assignment");
+
       res.add("assignVar", "true");
       res.add("variable", vars.get(i));
+      res.add("type", parseType(type));
       res.add("expression", vars.get(i + 2));
+
+      buffer.add("text", res.render() + "\n");
     }
-    return res;
+    return buffer;
   }
 
   @Override
