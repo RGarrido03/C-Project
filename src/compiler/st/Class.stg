@@ -11,6 +11,8 @@ classProps(prop, expression) ::= "self.<prop> = <expression>"
 
 arrowProps(variable, value1, value2) ::= "<variable>.<value1> = <value2>"
 
+assigntopen(variable, pos, new) ::= "<variable>.<new> = <pos>"
+
 object(variable, penType) ::= "<variable> = <if(penType)><penType><else>DefaultPen<endif>()"
 
 createCanvasClass(canvasName, tuple, title) ::= "<canvasName> = Canvas(<title>,<tuple>)"
