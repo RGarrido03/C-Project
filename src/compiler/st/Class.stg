@@ -13,7 +13,7 @@ arrowProps(variable, value1, value2) ::= "<variable>.<value1> = <value2>"
 
 object(variable, penType) ::= "<variable> = <if(penType)><penType><else>DefaultPen<endif>()"
 
-createCanvasClass(canvasName, tuple, title) ::= "<canvasName> = Canvas(<tuple>)"
+createCanvasClass(canvasName, tuple, title) ::= "<canvasName> = Canvas(<title>,<tuple>)"
 
 instructionCanvas(canvasName,tuple, title, color, setActive) ::= <<
 <if(title)><canvasName>.set_title("<title>")

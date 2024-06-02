@@ -22,23 +22,25 @@ if: 'if' '(' expression ')' '{' statement* '}' elseif* else?;
 elseif: 'else' 'if' '(' expression ')' '{' statement* '}';
 else: 'else' '{' statement* '}';
 
-for: 'for' '(' assignment ';' expression ';' assignment ')' '{' statement* '}';
+for:
+	'for' '(' assignment ';' expression ';' assignment ')' '{' statement* '}';
 while: 'until' '(' expression ')' '{' statement* '}';
 
 move: moveAction expression;
 rotate: rotateAction angle;
 
 instruction:
-	variable (move | rotate | pause)+   # InstructionMoveRotateAction
-	| variable penAction	            # InstructionPenAction
-	| variable '<-' arrowProps          # InstructionArrowProps;
+	variable (move | rotate | pause)+	# InstructionMoveRotateAction
+	| variable penAction				# InstructionPenAction
+	| variable '<-' arrowProps			# InstructionArrowProps;
 
 assignment
 	returns[types.Symbol symbol]:
 	Type variable '=' expression				# AssignmentVar
 	| object									# AssignmentPen // SEE ME TODO: Adicionei 2 hipoteses de assignment, ver se é necessário
 	| variable '=' expression					# ReAssignmentVar
-	| Type (variable '=' expression (',')?)+	# AssignmentMultipleVars;
+	| Type (variable '=' expression (',')?)+	# AssignmentMultipleVars
+	| Type variable+							# AssignmentVarsNoValue;
 
 stdin: 'stdin' expression;
 

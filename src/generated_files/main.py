@@ -17,8 +17,8 @@ class PenType2__(Pen):
 
 width__: float = float(input("width: "))
 height__: float = float(input("height: "))
-Canvas1__ = Canvas((width__,height__))
-Canvas2__ = Canvas((width__ * 2,height__ * 2))
+Canvas1__ = Canvas("Example p2",(width__,height__))
+Canvas2__ = Canvas("Example our example",(width__ * 2,height__ * 2))
 Canvas1__.set_background("green")
 
 Canvas2__.set_background("red")

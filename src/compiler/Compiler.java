@@ -135,6 +135,29 @@ public class Compiler extends pdrawBaseVisitor<ST> {
       }
       vars.add(ctx.getChild(i).getText());
     }
+    // E o type?
+
+    for (int i = 0; i < vars.size(); i += 3) {
+      res.add("assignVar", "true");
+      res.add("variable", vars.get(i));
+      res.add("expression", vars.get(i + 2));
+    }
+    return res;
+  }
+
+  @Override
+  public ST visitAssignmentVarsNoValue(
+    pdrawParser.AssignmentVarsNoValueContext ctx
+  ) {
+    ST res = pdrawTemplate.getInstanceOf("assignment");
+    System.out.println("VisitAssignmentVarNoValue");
+    ArrayList<String> vars = new ArrayList<>();
+    for (int i = 1; i < ctx.getChildCount(); i += 1) {
+      if (ctx.getChild(i).getText().equals(",")) {
+        continue;
+      }
+      vars.add(ctx.getChild(i).getText());
+    }
 
     for (int i = 0; i < vars.size(); i += 3) {
       res.add("assignVar", "true");
@@ -541,5 +564,20 @@ public class Compiler extends pdrawBaseVisitor<ST> {
       case "bool" -> "bool";
       default -> "";
     };
+  }
+
+  private Object defaultType(String type) {
+    switch (type.toLowerCase()) {
+      case "int":
+        return 0;
+      case "real":
+        return 0.0;
+      case "string":
+        return "";
+      case "bool":
+        return false;
+      default:
+        return null;
+    }
   }
 }

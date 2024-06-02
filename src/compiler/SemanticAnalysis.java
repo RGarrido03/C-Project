@@ -317,6 +317,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitAssignmentVar(pdrawParser.AssignmentVarContext ctx) {
     Boolean res = false;
     String type = ctx.Type().getText();
+
     String name = ctx.variable().getText();
     pdrawParser.ExpressionContext expressionCtx = ctx.expression();
 
@@ -403,6 +404,15 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         return false;
       }
     }
+    return false;
+  }
+
+  @Override
+  public Boolean visitAssignmentVarsNoValue(
+    pdrawParser.AssignmentVarsNoValueContext ctx
+  ) {
+    Boolean res = false;
+
     return false;
   }
 
