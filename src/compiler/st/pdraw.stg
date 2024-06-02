@@ -37,7 +37,7 @@ statement(something) ::= <%
 <endif>
 %>
 
-instruction(variable, action, value) ::= "<variable>.<action>(<value>)"
+instruction(variable, action, value,fontsize) ::= "<variable>.<action>(<value> <if(fontsize)>,<fontsize><endif>)"
 
 instructionPipeline(statements) ::= <<
 <statements; separator="\n">

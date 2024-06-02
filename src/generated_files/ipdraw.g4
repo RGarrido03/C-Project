@@ -50,10 +50,11 @@ condition:
 
 // Define instructions for the drawing actions
 instruction:
-	moveAction expression	# InstructionMoveAction
-	| rotateAction angle	# InstructionRotateAction
-	| penAction				# InstructionPenAction
-	| arrowProps			# InstructionArrowProps;
+	moveAction expression				# InstructionMoveAction
+	| 'write' expression ',' expression	# InstructionWriteAction
+	| rotateAction angle				# InstructionRotateAction
+	| penAction							# InstructionPenAction
+	| arrowProps						# InstructionArrowProps;
 
 // Define assignments and reassignments
 assignment:
@@ -74,10 +75,9 @@ print:
 // Define variables
 variable: Name | Word;
 
-postincdec:
-	variable op = ('++' | '--');
+postincdec: variable op = ('++' | '--');
 
-	// Define expressions for mathematical and logical operations
+// Define expressions for mathematical and logical operations
 expression:
 	expression op = ('/' | '//' | '*' | 'mod') expression	# ExprMultDivMod
 	| expression op = ('+' | '-') expression				# ExprAddSub

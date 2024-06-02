@@ -218,6 +218,21 @@ class Interpreter(ipdrawVisitor):
 
         return None
 
+    def visitInstructionWriteAction(self, ctx: ipdrawParser.InstructionWriteActionContext):
+        text = self.visit(ctx.expression(0))
+        fontSize = self.visit(ctx.expression(1))
+        if not isinstance(fontSize, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{fontSize}' is not a number")
+            sys.exit(1)
+        
+        if not isinstance(text, str):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{text}' is not a string")
+            sys.exit(1)
+
+        self.pen.write(text,fontSize)
+
+        return None
+
     def visitInstructionRotateAction(self, ctx: ipdrawParser.InstructionRotateActionContext):
         rotate = ctx.rotateAction().getText()
 

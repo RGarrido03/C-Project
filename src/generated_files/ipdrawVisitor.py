@@ -104,6 +104,11 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ipdrawParser#InstructionWriteAction.
+    def visitInstructionWriteAction(self, ctx:ipdrawParser.InstructionWriteActionContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ipdrawParser#InstructionRotateAction.
     def visitInstructionRotateAction(self, ctx:ipdrawParser.InstructionRotateActionContext):
         return self.visitChildren(ctx)

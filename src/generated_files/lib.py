@@ -19,6 +19,14 @@ class Pen(ABC):
             self.turtle.penup()
         self.turtle.forward(distance)
         self.update_position()
+        
+    def write(self, text: str,fontSize:int) -> None:
+        if self.pressure >= 0:
+            self.turtle.pendown()
+        else:
+            self.turtle.penup()
+        self.turtle.write(text, align="center", font=("Arial", fontSize, "normal"))
+        self.update_position()
 
     def backward(self, distance: float) -> None:
         if self.pressure >= 0:
