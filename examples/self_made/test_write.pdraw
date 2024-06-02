@@ -1,0 +1,20 @@
+define pen PenType1 {
+   color = green;
+   position = (10,10);
+   orientation = 45º; % literal orientation in degrees (internally is always stored in radians)
+   % orientation = 0; % literal orientation in radians
+   % real PI constant predefined
+   thickness = 10; % default thickness is 1
+   pressure = -1; % up (pressure=-1); down (pressure>=0 and pressure <=1)
+   % pressure = 0; % down
+   % pressure = 1/3; % 1/3 of thickness
+};
+
+pen p1 = new PenType1;
+p1 down;
+
+p1 write "ola", 30;
+
+p1 forward 10 right 144º forward 10 right 144º write "hello world", 30;
+
+%p1 forward 20 right 100º pause 1000 forward 10 pause 2000 right 144º;

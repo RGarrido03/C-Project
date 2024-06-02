@@ -250,8 +250,18 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         }
       }
     }
-
-    return true;
+  
+    if (ctx.write()!=null) {
+      
+      for (pdrawParser.WriteContext writeContext : ctx.write()) {
+        if(true){
+          return false;
+      }
+    }
+    System.out.println("write");
+  }
+  return true;
+    
   }
 
   @Override

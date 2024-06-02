@@ -73,6 +73,16 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitWrite(pdrawParser.WriteContext ctx) {
+    // write: 	'write' expression ',' expression;
+    ST res = pdrawTemplate.getInstanceOf("instruction");
+    res.add("action", "write");
+    res.add("value", visit(ctx.expression(0)));
+    res.add("fontsize", visit(ctx.expression(1)));
+    return res;
+  }
+
+  @Override
   public ST visitRotate(pdrawParser.RotateContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("instruction");
     res.add("action", ctx.rotateAction().getText());

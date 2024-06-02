@@ -179,6 +179,15 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ipdrawParser#InstructionWriteAction.
+    def enterInstructionWriteAction(self, ctx:ipdrawParser.InstructionWriteActionContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#InstructionWriteAction.
+    def exitInstructionWriteAction(self, ctx:ipdrawParser.InstructionWriteActionContext):
+        pass
+
+
     # Enter a parse tree produced by ipdrawParser#InstructionRotateAction.
     def enterInstructionRotateAction(self, ctx:ipdrawParser.InstructionRotateActionContext):
         pass

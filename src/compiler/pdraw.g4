@@ -28,11 +28,11 @@ while: 'until' '(' expression ')' '{' statement* '}';
 
 move: moveAction expression;
 rotate: rotateAction angle;
-
+write: 'write' expression ',' expression;
 instruction:
-	variable (move | rotate | pause)+	# InstructionMoveRotateAction
-	| variable penAction				# InstructionPenAction
-	| variable '<-' arrowProps			# InstructionArrowProps;
+	variable (move | rotate | pause | write)+	# InstructionMoveRotateAction
+	| variable penAction						# InstructionPenAction
+	| variable '<-' arrowProps					# InstructionArrowProps;
 
 assignment
 	returns[types.Symbol symbol]:
