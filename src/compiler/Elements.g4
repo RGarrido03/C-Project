@@ -2,8 +2,9 @@ grammar Elements;
 variable: Name | Word;
 expression
 	returns[types.Symbol symbol]:
-	expression op = ('+' | '-' | '/' | '//' | '*' | '^') expression # ExprAddSubMultDivModPow
-		// SEEME this shit makes everything wrong
+	Constant															# ExprConst
+	| expression op = ('+' | '-' | '/' | '//' | '*' | '^') expression	# ExprAddSubMultDivModPow
+	// SEEME this shit makes everything wrong
 	| op = ('+' | '-') e2 = expression						# ExprUnary
 	| expression op = ('==' | '!=') expression				# ExprConditionEquals
 	| expression op = ('<' | '<=' | '>' | '>=') expression	# ExprConditionOrderRelation
@@ -49,7 +50,8 @@ BOOL: 'true' | 'false';
 
 // Misc
 
-Word: [a-zA-Z]+;
+Constant: 'PI' | 'E' | 'TAU';
+Word: [a-zA-Z]+; // quero que nao permita Const
 Name: Word [a-zA-Z0-9_]*;
 HexaColor: '#' [0-9a-fA-F]+;
 ESC: '\\' .;

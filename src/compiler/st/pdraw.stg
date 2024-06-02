@@ -23,6 +23,8 @@ pass
 <endif>
 
 turtle.done()
+print("Everything is done, please close the window.")
+
 >>
 
 expression(e1, op, e2) ::= "<e1> <op> <e2>"
@@ -38,6 +40,8 @@ statement(something) ::= <%
 %>
 
 incdec(variable,op) ::= "(<variable>:=<variable><op>1)"
+
+constants(constName)::="math.<constName>"
 
 instruction(variable, action, value,fontsize) ::= "<variable>.<action>(<value> <if(fontsize)>,<fontsize><endif>)"
 
@@ -57,7 +61,7 @@ assignment(assignVar, assignPen, reassignVar, variable, object, expression, type
 
 cast(Type, expression) ::= "<Type>(<expression>)"
 
-pause(INT) ::= "time.sleep(<INT>/1000)"
+pause(INT) ::= "time.sleep(<INT>/1_000_000)"
 
 print(expression, stdErr) ::= "print(<expression><if(stdErr)>, file=sys.stderr<endif>)"
 
@@ -82,10 +86,10 @@ else:
     <statements; separator="\n">
 >>
 
-while(assignment, condition, statements) ::= <<
+while(assignment, condition, statements, isUntil) ::= <<
 
 <if(assignment)><assignment><endif>
-while <condition>:
+while <if(isUntil)>not<else><endif> (<condition>):
     <statements; separator="\n">
 
 >>

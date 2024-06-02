@@ -25,7 +25,8 @@ else: 'else' '{' statement* '}';
 
 for:
 	'for' '(' assignment ';' expression ';' assignment ')' '{' statement* '}';
-while: 'until' '(' expression ')' '{' statement* '}';
+while:
+	op = ('until' | 'while') '(' expression ')' '{' statement* '}';
 
 move: moveAction expression;
 rotate: rotateAction angle;
@@ -52,4 +53,5 @@ print:
 	| (expression) '->' 'stderr'	# stderr;
 
 execute: variable '<-' 'execute' STRING;
+
 // TODO: Refactor to expression TODO aqui vai surgir uma feature poder redirecionar para todo o lado

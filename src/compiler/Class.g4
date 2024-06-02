@@ -18,10 +18,10 @@ classProps:
 // TODO: Adapt to any keyword TODO: General expressions instead of hardcoded ones
 
 arrowProps:
-	'color' (Word | HexaColor)
-	| 'position' tuple
-	| 'orientation' angle
-	| 'thickness' expression
-	| 'pressure' expression;
+	op = 'color' (Word | HexaColor)
+	| op = 'position' tuple
+	| op = 'orientation' angle
+	| op = 'thickness' expression
+	| op = 'pressure' expression;
 
 object: 'pen' variable '=' 'new' variable?;
