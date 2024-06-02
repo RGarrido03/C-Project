@@ -256,7 +256,7 @@ class Interpreter(ipdrawVisitor):
 
         return self.visit(ctx.arrowProps())
 
-    def visitPostincdec(self, ctx: ipdrawParser.PostincdecContext):
+    def visitIncdec(self, ctx: ipdrawParser.IncdecContext):
         variable = ctx.variable().getText()
         value = self.symbols.get_variable(ctx,variable)
         if not isinstance(value, Number):
@@ -341,8 +341,8 @@ class Interpreter(ipdrawVisitor):
             ErrorHandling.print_error_ctx(ctx,f"Value '{left}' cannot be raised to the power of '{right}'")
             sys.exit(1)
 
-    def visitExprPostIncDec(self, ctx: ipdrawParser.ExprPostIncDecContext):
-        return self.visit(ctx.postincdec())
+    def visitExprIncDec(self, ctx: ipdrawParser.ExprIncDecContext):
+        return self.visit(ctx.incdec())
 
     def visitExprString(self, ctx: ipdrawParser.ExprStringContext):
         finalString = ""

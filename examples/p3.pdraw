@@ -50,7 +50,7 @@ p1 <- position (0,0);
 p1 down;
 p1 forward 10 right 144º forward 10 right 144º forward 10 right 144º forward 10 right 144º forward 10;
 
-p1 = p1 + (5,5);
+%p1 = p1 + (5,5);
 p1 <-color green;
 int i;
 for (i = 0; i < 5; i = i+1) {
@@ -60,7 +60,7 @@ for (i = 0; i < 5; i = i+1) {
 pen pn = new; % pen with default attribute values
 pn <-color blue;
 pn <-thickness 10;
-pn <- pressure 1/2;
+pn <- pressure 1 / 2;
 
 int length;
 real angle;

@@ -212,6 +212,23 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return false;
     }
 
+    if (ctx.move() != null) {
+      for (pdrawParser.MoveContext moveContext : ctx.move()) {
+        if (!visit(moveContext.expression())) {
+          return false;
+        }
+
+        String text = moveContext.moveAction().getText();
+        if (!(text.equals("forward") || text.equals("backward"))) {
+          ErrorHandling.printError(
+            ctx,
+            text + " is not 'forward' or 'backward'"
+          );
+          return false;
+        }
+      }
+    }
+
     if (ctx.rotate() != null) {
       for (pdrawParser.RotateContext rotateContext : ctx.rotate()) {
         if (!visit(rotateContext.angle())) {
@@ -240,7 +257,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
           return false;
         }
       }
-      System.out.println("write");
     }
     return true;
   }
@@ -424,8 +440,24 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     pdrawParser.AssignmentVarsNoValueContext ctx
   ) {
     Boolean res = false;
+    List<pdrawParser.VariableContext> variables = ctx.variable();
+    String type = ctx.Type().getText();
 
-    return false;
+    for (pdrawParser.VariableContext var : variables) {
+      String name = var.getText();
+      if (!symbolTable.containsKey(name)) {
+        symbolTable.put(name, new Symbol(createType(type), name));
+        res = true;
+      } else {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s already defined", name)
+        );
+        return false;
+      }
+    }
+
+    return res;
   }
 
   // our made not antlr
@@ -450,7 +482,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitReAssignmentVar(pdrawParser.ReAssignmentVarContext ctx) {
     Boolean res = false;
     String name = ctx.variable().getText();
-    System.out.println(symbolTable.toString() + "PIXA");
     if (!symbolTable.containsKey(name)) {
       ErrorHandling.printError(
         ctx,
@@ -824,6 +855,62 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     Boolean res = true;
     ctx.symbol = new Symbol(new StringType(), "stdin");
     return res;
+  }
+
+  @Override
+  public Boolean visitExprConst(pdrawParser.ExprConstContext ctx) {
+    Boolean res = true;
+    ctx.symbol = new Symbol(new RealType(), ctx.getText());
+    return res;
+  }
+
+  @Override
+  public Boolean visitExprIncDec(pdrawParser.ExprIncDecContext ctx) {
+    Boolean res = true;
+    String var = ctx.incdec().variable().getText();
+    if (!symbolTable.containsKey(var)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not defined", var)
+      );
+
+      return false;
+    }
+    if (!symbolTable.get(var).getType().isNumeric()) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not a number", var)
+      );
+      return false;
+    }
+
+    ctx.symbol =
+      new Symbol(symbolTable.get(var).getType(), ctx.incdec().getText());
+    return true;
+    // ctx.symbol = new Symbol(ctx.incdec().variable().getText(), ctx.incdec().getText());
+
+    // return visitChildren(ctx);
+  }
+
+  @Override
+  public Boolean visitIncdec(pdrawParser.IncdecContext ctx) {
+    String var = ctx.variable().getText();
+    if (!symbolTable.containsKey(var)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not defined", var)
+      );
+
+      return false;
+    }
+    if (!symbolTable.get(var).getType().isNumeric()) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not a number", var)
+      );
+      return false;
+    }
+    return true;
   }
 
   @Override

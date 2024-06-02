@@ -278,12 +278,12 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ipdrawParser#postincdec.
-    def enterPostincdec(self, ctx:ipdrawParser.PostincdecContext):
+    # Enter a parse tree produced by ipdrawParser#incdec.
+    def enterIncdec(self, ctx:ipdrawParser.IncdecContext):
         pass
 
-    # Exit a parse tree produced by ipdrawParser#postincdec.
-    def exitPostincdec(self, ctx:ipdrawParser.PostincdecContext):
+    # Exit a parse tree produced by ipdrawParser#incdec.
+    def exitIncdec(self, ctx:ipdrawParser.IncdecContext):
         pass
 
 
@@ -314,21 +314,21 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ipdrawParser#ExprIncDec.
+    def enterExprIncDec(self, ctx:ipdrawParser.ExprIncDecContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ExprIncDec.
+    def exitExprIncDec(self, ctx:ipdrawParser.ExprIncDecContext):
+        pass
+
+
     # Enter a parse tree produced by ipdrawParser#ExprMultDivMod.
     def enterExprMultDivMod(self, ctx:ipdrawParser.ExprMultDivModContext):
         pass
 
     # Exit a parse tree produced by ipdrawParser#ExprMultDivMod.
     def exitExprMultDivMod(self, ctx:ipdrawParser.ExprMultDivModContext):
-        pass
-
-
-    # Enter a parse tree produced by ipdrawParser#ExprPostIncDec.
-    def enterExprPostIncDec(self, ctx:ipdrawParser.ExprPostIncDecContext):
-        pass
-
-    # Exit a parse tree produced by ipdrawParser#ExprPostIncDec.
-    def exitExprPostIncDec(self, ctx:ipdrawParser.ExprPostIncDecContext):
         pass
 
 
