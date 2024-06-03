@@ -1,4 +1,5 @@
 grammar Elements;
+import pdraw;
 variable: Name | Word;
 expression
 	returns[types.Symbol symbol]:
@@ -17,7 +18,10 @@ expression
 	| STRING												# ExprString
 	| BOOL													# ExprBool
 	| variable												# ExprVariable
+	| functionCall											# ExprFunctionCall
 	| '(' expression ')'									# ExprParent;
+
+functionCall: functionName '(' arguments? ')';
 
 stdin: 'stdin' expression;
 

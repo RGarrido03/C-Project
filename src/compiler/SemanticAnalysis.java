@@ -12,6 +12,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   private static final Set<String> htmlColorNames = new HashSet<>();
   private final Map<String, Symbol> symbolTable = new HashMap<>();
   private static final Pattern hexPattern = Pattern.compile("#[a-fA-F0-9]{6}");
+  // function symbol table
+  private final Map<String, Map<String, Symbol>> functionsTable = new HashMap<>();
 
   static {
     // Adicionar todas as cores nomeadas do HTML
@@ -1041,6 +1043,33 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitUp(pdrawParser.UpContext ctx) {
+    return visitChildren(ctx);
+  }
+
+  @Override
+  public Boolean visitFunctionDefinition(
+    pdrawParser.FunctionDefinitionContext ctx
+  ) {
+    return visitChildren(ctx);
+  }
+
+  @Override
+  public Boolean visitFunctionName(pdrawParser.FunctionNameContext ctx) {
+    return visitChildren(ctx);
+  }
+
+  @Override
+  public Boolean visitParameters(pdrawParser.ParametersContext ctx) {
+    return visitChildren(ctx);
+  }
+
+  @Override
+  public Boolean visitParameter(pdrawParser.ParameterContext ctx) {
+    return visitChildren(ctx);
+  }
+
+  @Override
+  public Boolean visitReturnStatement(pdrawParser.ReturnStatementContext ctx) {
     return visitChildren(ctx);
   }
 
