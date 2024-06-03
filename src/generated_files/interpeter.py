@@ -40,8 +40,13 @@ class SymbolTable:
             ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' already exists")
             sys.exit(1)
 
+
+        elif isinstance(value,list):
+            self.variables[name] = value
+
         elif isinstance(value, parseType(type_)):
             self.variables[name] = value
+        
 
         else:
             ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' and value '{\
@@ -57,7 +62,9 @@ class SymbolTable:
 
     def update_variable(self,ctx, name, value):
         if name in self.variables:
-            if isinstance(self.variables[name], type(value)):
+            if isinstance(type(self.variables[name]), list):
+                self.variables[name]=value
+            elif isinstance(self.variables[name], type(value)):
                 self.variables[name] = value
             else:
                 ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' and value '{\
@@ -90,6 +97,77 @@ class Interpreter(ipdrawVisitor):
 
     def visitStatement(self, ctx: ipdrawParser.StatementContext):
         return self.visitChildren(ctx)
+    
+    def visitRemoveArray(self, ctx: ipdrawParser.RemoveArrayContext):
+        variable = ctx.variable().getText()
+        index = self.visit(ctx.expression())
+        buff = self.symbols.get_variable(ctx,variable)
+
+        if not isinstance(index, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Index '{index}' must be a number")
+            sys.exit(1)
+        elif index < 0 or index >= len(buff)-1:
+            ErrorHandling.print_error_ctx(ctx,f"Index '{index}' out of range")
+            sys.exit(1)
+        elif not isinstance(buff, list):
+            ErrorHandling.print_error_ctx(ctx,f"Variable '{variable}' is not an array")
+            sys.exit(1)
+
+        buff.pop(index)
+        self.symbols.update_variable(ctx,variable, buff)
+        
+        return None
+
+
+    def visitAddArray(self, ctx: ipdrawParser.AddArrayContext):
+        variable = ctx.variable().getText()
+        index = self.visit(ctx.expression(0))
+        value = self.visit(ctx.expression(1))
+
+        buff = self.symbols.get_variable(ctx,variable)
+        type_ = buff[-1]
+
+        if not isinstance(index, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Index '{index}' must be a number")
+            sys.exit(1)
+        elif index < 0:
+            ErrorHandling.print_error_ctx(ctx,f"Index '{index}' must be greater than 0")
+            sys.exit(1)
+        elif not isinstance(buff, list):
+            ErrorHandling.print_error_ctx(ctx,f"Variable '{variable}' is not an array")
+            sys.exit(1)
+        
+        elif not isinstance(value, parseType(type_)):
+            ErrorHandling.print_error_ctx(ctx,f"Value '{value}' is not of type '{type_}'")
+            sys.exit(1)
+        
+        buff.pop()
+        if index >= len(buff):
+            buff.append(value)
+        else:
+            buff[index] = value
+        buff.append(type_)
+        self.symbols.update_variable(ctx,variable, buff)
+        
+        return None
+    
+    def visitArray(self, ctx: ipdrawParser.ArrayContext):
+        type_ = ctx.Type().getText()
+        variable = ctx.variable().getText()
+        buff=[]
+
+        for expression in ctx.expression():
+            value = self.visit(expression)
+            if not isinstance(value, parseType(type_)):
+                ErrorHandling.print_error_ctx(ctx,f"In the Array '{variable}'\n Value '{value}' is not of type '{type_}'")
+                sys.exit(1)
+            buff.append(value)
+        buff.append(type_)
+
+        self.symbols.add_variable(ctx,variable, buff, type_)
+        return None
+
+
 
     def visitIfStatement(self, ctx: ipdrawParser.IfStatementContext):
         condition = self.visit(ctx.condition())
@@ -328,6 +406,38 @@ class Interpreter(ipdrawVisitor):
             return left + right
         elif ctx.op.text == '-':
             return left - right
+        
+    def visitExprArray(self, ctx: ipdrawParser.ExprArrayContext):
+        return self.visit(ctx.getArray())
+    
+    def visitGetArray(self, ctx: ipdrawParser.GetArrayContext):
+        variable = ctx.variable().getText()
+        index = self.visit(ctx.expression())
+        buff = self.symbols.get_variable(ctx,variable)
+
+        if not isinstance(index, Number):
+            ErrorHandling.print_error_ctx(ctx,f"Index '{index}' must be a number")
+            sys.exit(1)
+        elif index < 0 or index >= len(buff)-1:
+            ErrorHandling.print_error_ctx(ctx,f"Index '{index}' out of range")
+            sys.exit(1)
+        elif not isinstance(buff, list):
+            ErrorHandling.print_error_ctx(ctx,f"Variable '{variable}' is not an array")
+            sys.exit(1)
+
+        return buff[index]
+
+    def visitExprLength(self, ctx: ipdrawParser.ExprLengthContext):
+        return self.visit(ctx.getLength())
+    
+    def visitGetLength(self, ctx: ipdrawParser.GetLengthContext):
+        variable = ctx.variable().getText()
+        buff = self.symbols.get_variable(ctx,variable)
+        if not isinstance(buff, list):
+            ErrorHandling.print_error_ctx(ctx,f"Variable '{variable}' is not an array")
+            sys.exit(1)
+
+        return len(buff)-1
 
     def visitExprPow(self, ctx: ipdrawParser.ExprPowContext):
         left = self.visit(ctx.expression(0))
@@ -369,6 +479,18 @@ class Interpreter(ipdrawVisitor):
     def visitExprFloat(self, ctx: ipdrawParser.ExprFloatContext):
 
         return float(ctx.FLOAT().getText())
+
+    def visitExprConst(self, ctx: ipdrawParser.ExprConstContext):
+        match ctx.Constant().getText():
+            case 'PI':
+                return math.pi
+            case 'E':
+                return math.e
+            case 'TAU':
+                return math.tau
+            case _:
+                # Code never reaches here because of grammar
+                return 1
 
     def visitExprStdIn(self, ctx: ipdrawParser.ExprStdInContext):
 

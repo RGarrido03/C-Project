@@ -26,6 +26,51 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ipdrawParser#array.
+    def enterArray(self, ctx:ipdrawParser.ArrayContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#array.
+    def exitArray(self, ctx:ipdrawParser.ArrayContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#addArray.
+    def enterAddArray(self, ctx:ipdrawParser.AddArrayContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#addArray.
+    def exitAddArray(self, ctx:ipdrawParser.AddArrayContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#removeArray.
+    def enterRemoveArray(self, ctx:ipdrawParser.RemoveArrayContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#removeArray.
+    def exitRemoveArray(self, ctx:ipdrawParser.RemoveArrayContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#getLength.
+    def enterGetLength(self, ctx:ipdrawParser.GetLengthContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#getLength.
+    def exitGetLength(self, ctx:ipdrawParser.GetLengthContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#getArray.
+    def enterGetArray(self, ctx:ipdrawParser.GetArrayContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#getArray.
+    def exitGetArray(self, ctx:ipdrawParser.GetArrayContext):
+        pass
+
+
     # Enter a parse tree produced by ipdrawParser#ifStatement.
     def enterIfStatement(self, ctx:ipdrawParser.IfStatementContext):
         pass
@@ -305,6 +350,15 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ipdrawParser#ExprLength.
+    def enterExprLength(self, ctx:ipdrawParser.ExprLengthContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ExprLength.
+    def exitExprLength(self, ctx:ipdrawParser.ExprLengthContext):
+        pass
+
+
     # Enter a parse tree produced by ipdrawParser#ExprFloat.
     def enterExprFloat(self, ctx:ipdrawParser.ExprFloatContext):
         pass
@@ -314,12 +368,30 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ipdrawParser#ExprConst.
+    def enterExprConst(self, ctx:ipdrawParser.ExprConstContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ExprConst.
+    def exitExprConst(self, ctx:ipdrawParser.ExprConstContext):
+        pass
+
+
     # Enter a parse tree produced by ipdrawParser#ExprIncDec.
     def enterExprIncDec(self, ctx:ipdrawParser.ExprIncDecContext):
         pass
 
     # Exit a parse tree produced by ipdrawParser#ExprIncDec.
     def exitExprIncDec(self, ctx:ipdrawParser.ExprIncDecContext):
+        pass
+
+
+    # Enter a parse tree produced by ipdrawParser#ExprArray.
+    def enterExprArray(self, ctx:ipdrawParser.ExprArrayContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ExprArray.
+    def exitExprArray(self, ctx:ipdrawParser.ExprArrayContext):
         pass
 
 

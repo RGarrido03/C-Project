@@ -15,7 +15,23 @@ statement: (
 		| stdin
 		| pause
 		| incdec
+		| array
+		| addArray
+		| removeArray
+
 	) ';';
+
+
+
+array: Type variable '=' '[' (expression (',' expression)*)? ']';
+
+addArray: variable '[' expression ']' '=' expression;
+
+removeArray: 'del' variable '[' expression ']';
+
+getLength: 'len' variable;
+
+getArray: variable '[' expression ']';
 
 // Define an if statement with optional else clause
 ifStatement:
@@ -86,6 +102,9 @@ expression:
 	| < assoc = right> expression '^' expression			# ExprPow
 	| typeCast												# ExprCast
 	| stdin													# ExprStdIn
+	| getArray												# ExprArray
+	| getLength												# ExprLength
+	| Constant												# ExprConst
 	| INT													# ExprInteger
 	| FLOAT													# ExprFloat
 	| STRING+												# ExprString
@@ -131,6 +150,7 @@ FLOAT: [0-9]+ '.' [0-9]+;
 BOOL: 'true' | 'false';
 
 // Define miscellaneous tokens
+Constant: 'PI' | 'E' | 'TAU';
 Word: [a-zA-Z]+;
 Name: Word [a-zA-Z0-9_]*;
 HexaColor: '#' [0-9a-fA-F]+;
