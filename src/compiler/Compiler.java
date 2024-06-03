@@ -256,9 +256,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExecute(pdrawParser.ExecuteContext ctx) {
-    ST res = null;
-    return visitChildren(ctx);
-    // return res;
+    ST res = pdrawTemplate.getInstanceOf("execute");
+    res.add("filename", ctx.STRING().getText());
+    res.add("pen", visit(ctx.variable()));
+    visitChildren(ctx);
+    return res;
   }
 
   @Override
