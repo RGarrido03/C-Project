@@ -1,11 +1,14 @@
-def int myFunc1():
-    "Hello from a function" <- stdout
+def int myFunc1(int k){
+    "Hello from a function" -> stdout;
+};
+
+def string loca(int i){
+    "Hello from another function" -> stdout;
+    return i;
+};
 
 
-def int anotherFunc(int i, int j):
-    "Hello from another function" <- stdout
-    return i + j
 
+int resultado = loca(1, 2);
 
-
-int resultado = anotherFunc(1, 2)
+% myFunc1(1); % isto tem de dar asneira?

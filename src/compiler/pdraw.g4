@@ -19,6 +19,7 @@ statement: (
 		| instructionsCanvas
 		| incdec
 		| functionDefinition
+		| functionCall /// apenas nas funcoes none
 		| returnStatement // Nao permitir no semantico que seja usado o return fora de uma funcao
 	) ';';
 
@@ -26,7 +27,7 @@ statement: (
 functionDefinition:
 	'def' Type functionName '(' parameters? ')' '{' statement* '}';
 
-functionName: Name;
+functionName: Name | Word;
 
 parameters: parameter (',' parameter)*;
 
