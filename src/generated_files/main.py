@@ -28,9 +28,9 @@ def execute(filename: str, pen: Pen):
     visitor.visit(tree)
 
 
-def myFunc1__(k__: int)->int:
+def myFunc1__(/parameter(), )->int:
     print("Hello from a function")
-def loca__(i__: int)->int:
+def loca__(/parameter(), )->int:
     print("Hello from another function")
 resultado__: int = loca__(1)
 turtle.done()

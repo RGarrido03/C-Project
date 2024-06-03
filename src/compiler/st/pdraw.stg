@@ -124,6 +124,6 @@ functionCall(name, args) ::= "<name>(<args>)"
 
 parameter(name, type) ::= "<name>: <type>"
 
-parameters(params) ::= "<params; separator=",">"
+parameters(params) ::= "<params>"
 
 returnStatement(expression) ::= "return <expression>"

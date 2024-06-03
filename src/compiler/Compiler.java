@@ -90,7 +90,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("parameters");
     for (int i = 0; i < ctx.parameter().size(); i++) res.add(
       "params",
-      visit(ctx.parameter(i)) + ", "
+      visit(ctx.parameter(i)).render() + ", "
     );
     return res;
   }
