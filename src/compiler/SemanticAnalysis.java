@@ -510,6 +510,31 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
+  public Boolean visitAddOrSubPointToPen(
+    pdrawParser.AddOrSubPointToPenContext ctx
+  ) {
+    if (
+      !symbolTable.containsKey(ctx.variable(0).getText()) ||
+      !symbolTable.containsKey(ctx.variable(1).getText())
+    ) {
+      ErrorHandling.printError(
+        ctx,
+        String.format(
+          "Variables %s or %s not defined",
+          ctx.variable(0).getText(),
+          ctx.variable(1).getText()
+        )
+      );
+      return false;
+    } else if (!ctx.variable(0).getText().equals(ctx.variable(1).getText())) {
+      ErrorHandling.printError(ctx, String.format("Variables aren't the same"));
+      return false;
+    }
+
+    return visit(ctx.tuple());
+  }
+
+  @Override
   public Boolean visitStdout(pdrawParser.StdoutContext ctx) {
     return visit(ctx.expression());
   }
@@ -784,14 +809,15 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     }
 
     if (
-            left_ctx.symbol.getType().isTuple()
-            && right_ctx.symbol.getType().isTuple()
-            && ctx.op.getText().equals("+")
+      left_ctx.symbol.getType().isTuple() &&
+      right_ctx.symbol.getType().isTuple() &&
+      ctx.op.getText().equals("+")
     ) {
       ctx.symbol =
-              new Symbol(new TupleType(),
-                      left_ctx.symbol.getValue()
-                              + "+" + right_ctx.symbol.getValue());
+        new Symbol(
+          new TupleType(),
+          left_ctx.symbol.getValue() + "+" + right_ctx.symbol.getValue()
+        );
 
       return true;
     }

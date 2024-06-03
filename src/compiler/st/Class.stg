@@ -11,6 +11,7 @@ classProps(prop, expression) ::= "self.<prop> = <expression>"
 
 arrowProps(variable, value1) ::= "<variable>.set_<value1>"
 
+addOrSubPoint(variable, value1, value2) ::= "<variable>.<value1>_position(<value2>)"
 
 
 object(variable, penType) ::= "<variable> = <if(penType)><penType><else>DefaultPen<endif>()"

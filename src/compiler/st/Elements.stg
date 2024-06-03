@@ -2,5 +2,5 @@ group Elements;
 
 tuple(e1, e2) ::= "(<e1>,<e2>)"
 
-addpoint(tuple1,op,tuple2) ::= "<tuple1><op><tuple2>"
+
 

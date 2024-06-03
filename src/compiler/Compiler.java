@@ -85,11 +85,17 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
-  public ST visitAddpoint(pdrawParser.AddpointContext ctx) {
-    ST res = elementsTemplate.getInstanceOf("addpoint");
-    res.add("tuple1", visit(ctx.tuple().expression(0)));
-    res.add("op", ctx.getText());
-    res.add("tuple2", visit(ctx.tuple().expression(1)));
+  public ST visitAddOrSubPointToPen(pdrawParser.AddOrSubPointToPenContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("addOrSubPoint");
+    res.add("variable", visit(ctx.variable(0)));
+    if (ctx.op.getText().equals("+")) {
+      res.add("value1", "add");
+    } else {
+      res.add("value1", "sub");
+    }
+
+    res.add("value2", visit(ctx.tuple()).render());
+
     return res;
   }
 

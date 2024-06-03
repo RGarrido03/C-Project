@@ -53,6 +53,7 @@ p1__.right(math.degrees(math.radians(144)) )
 p1__.forward(10 )
 p1__.right(math.degrees(math.radians(144)) )
 p1__.forward(10 )
+p1__.add_position((5,5))
 p1__.set_color("green")
 i__: int = 0
 
@@ -77,4 +78,6 @@ while not (done__):
     p1__.left(math.degrees(angle__) )
     t__: str = input("finish (y/N)?: ")
     done__ = (t__ == "y") or (t__ == "Y")
+
 turtle.done()
+print("Everything is done, please close the window.")

@@ -5,6 +5,7 @@ import Class;
 main: (statement)* EOF;
 statement: (
 		instruction
+		| addOrSubPointToPen
 		| assignment
 		| if
 		| for
@@ -19,6 +20,9 @@ statement: (
 		| incdec
 	) ';';
 
+addOrSubPointToPen:
+	variable '=' variable op = ('+' | '-') tuple; // TODO REFACTOR THIS
+
 if: 'if' '(' expression ')' '{' statement* '}' elseif* else?;
 elseif: 'else' 'if' '(' expression ')' '{' statement* '}';
 else: 'else' '{' statement* '}';
@@ -31,12 +35,11 @@ while:
 move: moveAction expression;
 rotate: rotateAction angle;
 write: 'write' expression ',' expression;
-addpoint: '+' tuple;
 
 instruction:
-	variable (move | rotate | pause | write | addpoint)+	# InstructionMoveRotateAction
-	| variable penAction						            # InstructionPenAction
-	| variable '<-' arrowProps					            # InstructionArrowProps;
+	variable (move | rotate | pause | write)+	# InstructionMoveRotateAction
+	| variable penAction						# InstructionPenAction
+	| variable '<-' arrowProps					# InstructionArrowProps;
 
 assignment
 	returns[types.Symbol symbol]:
