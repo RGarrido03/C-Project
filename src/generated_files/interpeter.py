@@ -480,6 +480,18 @@ class Interpreter(ipdrawVisitor):
 
         return float(ctx.FLOAT().getText())
 
+    def visitExprConst(self, ctx: ipdrawParser.ExprConstContext):
+        match ctx.Constant().getText():
+            case 'PI':
+                return math.pi
+            case 'E':
+                return math.e
+            case 'TAU':
+                return math.tau
+            case _:
+                # Code never reaches here because of grammar
+                return 1
+
     def visitExprStdIn(self, ctx: ipdrawParser.ExprStdInContext):
 
         return self.visit(ctx.stdin())

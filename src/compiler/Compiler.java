@@ -47,27 +47,71 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitFunctionDefinition(pdrawParser.FunctionDefinitionContext ctx) {
-    return visitChildren(ctx);
+    ST res = pdrawTemplate.getInstanceOf("functionDefinition");
+
+    res.add("name", visit(ctx.functionName()));
+    res.add("args", visit(ctx.parameters()));
+    for (int i = 0; i < ctx.statement().size(); i++) res.add(
+      "statements",
+      visit(ctx.statement().get(i))
+    );
+    res.add("returnType", parseType(ctx.Type().getText()));
+
+    return res;
   }
 
   @Override
   public ST visitFunctionName(pdrawParser.FunctionNameContext ctx) {
-    return visitChildren(ctx);
+    ST res = pdrawTemplate.getInstanceOf("other");
+    if (ctx.Name() == null) res.add(
+      "text",
+      ctx.Word().getText() + "__"
+    ); else res.add("text", ctx.Name().getText() + "__");
+    return res;
+  }
+
+  @Override
+  public ST visitExprFunctionCall(pdrawParser.ExprFunctionCallContext ctx) {
+    return visit(ctx.functionCall());
+  }
+
+  @Override
+  public ST visitFunctionCall(pdrawParser.FunctionCallContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("functionCall");
+    res.add("name", visit(ctx.functionName()));
+    res.add("args", visit(ctx.arguments()));
+
+    return res;
   }
 
   @Override
   public ST visitParameters(pdrawParser.ParametersContext ctx) {
-    return visitChildren(ctx);
+    ST res = pdrawTemplate.getInstanceOf("parameters");
+    for (int i = 0; i < ctx.parameter().size(); i++) res.add(
+      "params",
+      visit(ctx.parameter(i)).render() + ", "
+    );
+    return res;
   }
 
   @Override
   public ST visitParameter(pdrawParser.ParameterContext ctx) {
-    return visitChildren(ctx);
+    ST res = pdrawTemplate.getInstanceOf("parameter");
+    System.out.println(
+      visit(ctx.variable()).render() +
+      " PIXA " +
+      parseType(ctx.Type().getText())
+    );
+    res.add("name", visit(ctx.variable()).render());
+    res.add("type", parseType(ctx.Type().getText()));
+    return res;
   }
 
   @Override
   public ST visitReturnStatement(pdrawParser.ReturnStatementContext ctx) {
-    return visitChildren(ctx);
+    ST res = pdrawTemplate.getInstanceOf("returnStatement");
+    res.add("expression", visit(ctx.expression()));
+    return res;
   }
 
   @Override

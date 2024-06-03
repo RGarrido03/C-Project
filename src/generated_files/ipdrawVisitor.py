@@ -209,6 +209,11 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ipdrawParser#ExprConst.
+    def visitExprConst(self, ctx:ipdrawParser.ExprConstContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ipdrawParser#ExprIncDec.
     def visitExprIncDec(self, ctx:ipdrawParser.ExprIncDecContext):
         return self.visitChildren(ctx)

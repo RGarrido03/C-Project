@@ -22,6 +22,7 @@ statement: (
 		| addArray
 		| removeArray
 		| functionDefinition
+		| functionCall /// apenas nas funcoes
 		| returnStatement // Nao permitir no semantico que seja usado o return fora de uma funcao
 	) ';';
 
@@ -36,7 +37,7 @@ removeArray: 'del' variable '[' expression ']';
 functionDefinition:
 	'def' Type functionName '(' parameters? ')' '{' statement* '}';
 
-functionName: Name;
+functionName: Name | Word;
 
 parameters: parameter (',' parameter)*;
 
