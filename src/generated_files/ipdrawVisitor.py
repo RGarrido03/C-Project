@@ -19,6 +19,31 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ipdrawParser#array.
+    def visitArray(self, ctx:ipdrawParser.ArrayContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#addArray.
+    def visitAddArray(self, ctx:ipdrawParser.AddArrayContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#removeArray.
+    def visitRemoveArray(self, ctx:ipdrawParser.RemoveArrayContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#getLength.
+    def visitGetLength(self, ctx:ipdrawParser.GetLengthContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#getArray.
+    def visitGetArray(self, ctx:ipdrawParser.GetArrayContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ipdrawParser#ifStatement.
     def visitIfStatement(self, ctx:ipdrawParser.IfStatementContext):
         return self.visitChildren(ctx)
@@ -174,6 +199,11 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ipdrawParser#ExprLength.
+    def visitExprLength(self, ctx:ipdrawParser.ExprLengthContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ipdrawParser#ExprFloat.
     def visitExprFloat(self, ctx:ipdrawParser.ExprFloatContext):
         return self.visitChildren(ctx)
@@ -181,6 +211,11 @@ class ipdrawVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by ipdrawParser#ExprIncDec.
     def visitExprIncDec(self, ctx:ipdrawParser.ExprIncDecContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ipdrawParser#ExprArray.
+    def visitExprArray(self, ctx:ipdrawParser.ExprArrayContext):
         return self.visitChildren(ctx)
 
 

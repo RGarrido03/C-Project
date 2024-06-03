@@ -15,7 +15,23 @@ statement: (
 		| stdin
 		| pause
 		| incdec
+		| array
+		| addArray
+		| removeArray
+
 	) ';';
+
+
+
+array: Type variable '=' '[' (expression (',' expression)*)? ']';
+
+addArray: variable '[' expression ']' '=' expression;
+
+removeArray: 'del' variable '[' expression ']';
+
+getLength: 'len' variable;
+
+getArray: variable '[' expression ']';
 
 // Define an if statement with optional else clause
 ifStatement:
@@ -86,6 +102,8 @@ expression:
 	| < assoc = right> expression '^' expression			# ExprPow
 	| typeCast												# ExprCast
 	| stdin													# ExprStdIn
+	| getArray												# ExprArray
+	|getLength												# ExprLength
 	| INT													# ExprInteger
 	| FLOAT													# ExprFloat
 	| STRING+												# ExprString
