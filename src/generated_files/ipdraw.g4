@@ -103,7 +103,8 @@ expression:
 	| typeCast												# ExprCast
 	| stdin													# ExprStdIn
 	| getArray												# ExprArray
-	|getLength												# ExprLength
+	| getLength												# ExprLength
+	| Constant												# ExprConst
 	| INT													# ExprInteger
 	| FLOAT													# ExprFloat
 	| STRING+												# ExprString
@@ -149,6 +150,7 @@ FLOAT: [0-9]+ '.' [0-9]+;
 BOOL: 'true' | 'false';
 
 // Define miscellaneous tokens
+Constant: 'PI' | 'E' | 'TAU';
 Word: [a-zA-Z]+;
 Name: Word [a-zA-Z0-9_]*;
 HexaColor: '#' [0-9a-fA-F]+;

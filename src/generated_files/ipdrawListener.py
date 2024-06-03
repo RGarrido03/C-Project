@@ -368,6 +368,15 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ipdrawParser#ExprConst.
+    def enterExprConst(self, ctx:ipdrawParser.ExprConstContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ExprConst.
+    def exitExprConst(self, ctx:ipdrawParser.ExprConstContext):
+        pass
+
+
     # Enter a parse tree produced by ipdrawParser#ExprIncDec.
     def enterExprIncDec(self, ctx:ipdrawParser.ExprIncDecContext):
         pass
