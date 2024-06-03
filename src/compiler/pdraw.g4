@@ -18,7 +18,23 @@ statement: (
 		| pause
 		| instructionsCanvas
 		| incdec
+		| functionDefinition
+		| returnStatement // Nao permitir no semantico que seja usado o return fora de uma funcao
 	) ';';
+
+// high level stuff Function Definitions
+functionDefinition:
+	'def' Type functionName '(' parameters? ')' '{' statement* '}';
+
+functionName: Name;
+
+parameters: parameter (',' parameter)*;
+
+parameter: Type variable;
+
+arguments: expression (',' expression)*;
+
+returnStatement: 'return' expression?;
 
 addOrSubPointToPen:
 	variable '=' variable op = ('+' | '-') tuple; // TODO REFACTOR THIS

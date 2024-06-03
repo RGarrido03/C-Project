@@ -1,0 +1,11 @@
+def int myFunc1():
+    "Hello from a function" <- stdout
+
+
+def int anotherFunc(int i, int j):
+    "Hello from another function" <- stdout
+    return i + j
+
+
+
+int resultado = anotherFunc(1, 2)

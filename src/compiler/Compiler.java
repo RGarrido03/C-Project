@@ -47,6 +47,31 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitFunctionDefinition(pdrawParser.FunctionDefinitionContext ctx) {
+    return visitChildren(ctx);
+  }
+
+  @Override
+  public ST visitFunctionName(pdrawParser.FunctionNameContext ctx) {
+    return visitChildren(ctx);
+  }
+
+  @Override
+  public ST visitParameters(pdrawParser.ParametersContext ctx) {
+    return visitChildren(ctx);
+  }
+
+  @Override
+  public ST visitParameter(pdrawParser.ParameterContext ctx) {
+    return visitChildren(ctx);
+  }
+
+  @Override
+  public ST visitReturnStatement(pdrawParser.ReturnStatementContext ctx) {
+    return visitChildren(ctx);
+  }
+
+  @Override
   public ST visitInstructionMoveRotateAction(
     pdrawParser.InstructionMoveRotateActionContext ctx
   ) {
