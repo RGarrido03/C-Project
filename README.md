@@ -155,9 +155,6 @@ p2 -> stdout;
 | >=       | Maior ou igual a       |
 | and      | E lógico               |
 | or       | Ou lógico              |
-| move     | Move a caneta          |
-| moveTo   | Move a caneta para um ponto específico |
-| rotate   | Roda a caneta     |
 | up       | Levanta a caneta       |
 | down     | Baixa a caneta        |
 | pause   | Pausa o programa por milissegundos |
