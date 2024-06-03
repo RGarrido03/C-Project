@@ -5,7 +5,7 @@ main: (statement)* EOF;
 
 // Define the types of statements available
 statement: (
-		instruction
+		instruction+
 		| assignment
 		| ifStatement
 		// | execute
