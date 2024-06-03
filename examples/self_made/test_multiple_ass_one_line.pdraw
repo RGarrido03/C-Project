@@ -1,5 +1,5 @@
-int pila = 2; 
-int x = 9, y = pila + 10 ;
+int valor = 2; 
+int x = 9, y = valor + 10 ;
 
 int w;
 
