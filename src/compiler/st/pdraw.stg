@@ -113,3 +113,17 @@ while <if(isUntil)>not<else><endif> (<condition>):
 >>
 
 execute(filename, pen) ::= "execute(<filename>, <pen>)"
+
+
+functionDefinition(name, args, statements, returnType) ::= <<
+def <name>(<args>)-><returnType>:
+    <statements; separator="\n">
+>>
+
+functionCall(name, args) ::= "<name>(<args>)"
+
+parameter(name, type) ::= "<name>: <type>"
+
+parameters(params) ::= "<params; separator=",">"
+
+returnStatement(expression) ::= "return <expression>"

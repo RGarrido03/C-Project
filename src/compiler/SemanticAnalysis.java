@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +12,7 @@ import types.*;
 public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   private static final Set<String> htmlColorNames = new HashSet<>();
-  private final Map<String, Symbol> symbolTable = new HashMap<>();
+  private static Map<String, Symbol> symbolTable = new HashMap<>();
   private static final Pattern hexPattern = Pattern.compile("#[a-fA-F0-9]{6}");
   // function symbol table
   private final Map<String, Map<String, Symbol>> functionsTable = new HashMap<>();
@@ -347,6 +349,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     String type = ctx.Type().getText();
 
     String name = ctx.variable().getText();
+    System.out.println("PIXA " + name);
     pdrawParser.ExpressionContext expressionCtx = ctx.expression();
 
     Boolean expressionResult = visit(expressionCtx);
@@ -966,6 +969,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitExprVariable(pdrawParser.ExprVariableContext ctx) {
     Boolean res = true;
+
     if (!symbolTable.containsKey(ctx.getText())) {
       return false;
     }
@@ -1047,17 +1051,104 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitFunctionDefinition(
     pdrawParser.FunctionDefinitionContext ctx
   ) {
-    return visitChildren(ctx);
+    Boolean res = false;
+    System.out.println("Function definition: " + ctx.getText());
+    String functionName = ctx.functionName().getText();
+
+    if (
+      symbolTable.containsKey(functionName) ||
+      functionsTable.containsKey(functionName)
+    ) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Function %s already defined", functionName)
+      );
+      return false;
+    }
+
+    String type = ctx.Type().getText();
+    symbolTable.put(
+      functionName,
+      new Symbol(new FunctionType(type), functionName)
+    );
+    functionsTable.put(functionName, new HashMap<>());
+
+    // Novo escopo para a função
+    Map<String, Symbol> previousScope = new HashMap<>(symbolTable);
+    symbolTable = new HashMap<>();
+
+    res = visit(ctx.parameters());
+    if (!res) {
+      ErrorHandling.printError(ctx, "Function has errors at parameters");
+      symbolTable = previousScope; // Restaurar o escopo anterior
+      return false;
+    }
+
+    for (pdrawParser.StatementContext statement : ctx.statement()) {
+      res = visit(statement);
+      if (!res) {
+        ErrorHandling.printError(ctx, "Function has errors at body");
+        symbolTable = previousScope; // Restaurar o escopo anterior
+        return false;
+      }
+    }
+
+    // Restaurar o scope anterior
+    symbolTable = previousScope;
+    return res;
   }
 
   @Override
   public Boolean visitFunctionName(pdrawParser.FunctionNameContext ctx) {
-    return visitChildren(ctx);
+    return true; //supostamente nunca chega aqui
+  }
+
+  @Override
+  public Boolean visitFunctionCall(pdrawParser.FunctionCallContext ctx) {
+    String functionName = ctx.functionName().getText();
+    if (!symbolTable.containsKey(functionName)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Function %s not defined", functionName)
+      );
+      return false;
+    }
+    // TODO verificar os argumentos de entrada se batem certo com a definicao
+    // TODO ENORME
+    return true; //supostamente nunca chega aqui
+  }
+
+  @Override
+  public Boolean visitExprFunctionCall(
+    pdrawParser.ExprFunctionCallContext ctx
+  ) {
+    // Symbol tem de ser do tipo do return da funcao
+    // symbolTable.get(ctx.functionName().getText())
+    ctx.symbol = symbolTable.get(ctx.functionCall().functionName().getText());
+
+    return visit(ctx.functionCall());
   }
 
   @Override
   public Boolean visitParameters(pdrawParser.ParametersContext ctx) {
-    return visitChildren(ctx);
+    Map<String, Symbol> parameters = new HashMap<>();
+    for (pdrawParser.ParameterContext param : ctx.parameter()) {
+      // storar os
+      String name = param.variable().getText();
+      String type = param.Type().getText();
+
+      if (!parameters.containsKey(name)) {
+        parameters.put(name, new Symbol(createType(type), name));
+        break;
+      }
+
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s already defined at parameters", name)
+      );
+      return false;
+    }
+    return true;
   }
 
   @Override
@@ -1072,7 +1163,12 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitReturnStatement(pdrawParser.ReturnStatementContext ctx) {
-    return visitChildren(ctx);
+    if (visit(ctx.expression())) {
+      return true;
+    } else {
+      ErrorHandling.printError(ctx, "Return statement has errors");
+      return false;
+    }
   }
 
   @Override

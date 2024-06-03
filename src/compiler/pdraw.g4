@@ -19,7 +19,7 @@ statement: (
 		| instructionsCanvas
 		| incdec
 		| functionDefinition
-		| functionCall /// apenas nas funcoes none
+		| functionCall /// apenas nas funcoes
 		| returnStatement // Nao permitir no semantico que seja usado o return fora de uma funcao
 	) ';';
 
