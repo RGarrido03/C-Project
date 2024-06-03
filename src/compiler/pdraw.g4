@@ -18,9 +18,19 @@ statement: (
 		| pause
 		| instructionsCanvas
 		| incdec
+		| array
+		| addArray
+		| removeArray
 		| functionDefinition
 		| returnStatement // Nao permitir no semantico que seja usado o return fora de uma funcao
 	) ';';
+
+
+array: Type variable '=' '[' (expression (',' expression)*)? ']';
+
+addArray: variable '[' expression ']' '=' expression;
+
+removeArray: 'del' variable '[' expression ']';
 
 // high level stuff Function Definitions
 functionDefinition:

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +12,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   private static final Set<String> htmlColorNames = new HashSet<>();
   private final Map<String, Symbol> symbolTable = new HashMap<>();
+  private final Map<String, ArrayList<Object>> arrayTable = new HashMap<>();
   private static final Pattern hexPattern = Pattern.compile("#[a-fA-F0-9]{6}");
   // function symbol table
   private final Map<String, Map<String, Symbol>> functionsTable = new HashMap<>();

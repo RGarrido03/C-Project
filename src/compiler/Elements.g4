@@ -13,6 +13,8 @@ expression
 	| typeCast												# ExprCast
 	| stdin													# ExprStdIn
 	| incdec												# ExprIncDec
+	| getArray												# ExprArray
+	|getLength												# ExprLength
 	| INT													# ExprInteger
 	| FLOAT													# ExprFloat // FIXME change this
 	| STRING												# ExprString
@@ -20,6 +22,12 @@ expression
 	| variable												# ExprVariable
 	| functionCall											# ExprFunctionCall
 	| '(' expression ')'									# ExprParent;
+
+
+
+getLength: 'len' variable;
+
+getArray: variable '[' expression ']';
 
 functionCall: functionName '(' arguments? ')';
 
