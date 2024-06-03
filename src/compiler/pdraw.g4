@@ -69,7 +69,7 @@ assignment
 stdin: 'stdin' expression;
 
 // Medium level
-pause: 'pause' INT;
+pause: 'pause' expression;
 print:
 	(expression) '->' 'stdout'		# stdout
 	| (expression) '->' 'stderr'	# stderr;
