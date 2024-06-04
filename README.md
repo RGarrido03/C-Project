@@ -45,9 +45,11 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
 
 ## 2. Como executar
 
+Dar permissão para executar o script _run.sh_ (executa antlr4-build,run,cria enviroment):
+
 ```bash
-antlr4 -o ../compiler -visitor pdraw.g4 -listener pdraw.g4
-cd src
+chmod +x ./run.sh
+./run.sh
 ```
 
 ## 3. Estrutura
@@ -228,7 +230,7 @@ p2 -> stdout;
 
 
 > [!NOTE]
-> Existe precedência para o operador __and__ e só depois para o operador __or__, no entanto, inferimos as regras do python e por isso não criámos regras novas. No caso __==__ (igual), criámos regras para que este tenha menor precedência do que as setas. 
+> A árvore sintática não está a fazer a verificação da precedência para o operador __and__ e para o operador __or__, no entanto, inferimos as regras do python e por isso não criámos regras novas. Por isso, o __and__ percebe o __or__. No caso __==__ (igual), criámos regras para que este tenha menor precedência do que as setas. 
 
 ### Tipos de dados
 
@@ -414,12 +416,14 @@ A utilização destes templates vai permitir gerar código ou texto de saída du
 
 ## 13. Exemplos
 
-Como mencionado anteriormente o *ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw* e exemplors criados personalizados para cada ocasião em qonde é testado cada operação para efeitos de de testes.
+Como mencionado anteriormente o *p1.ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw*, *p4.pdraw* e exemplors criados personalizados para cada ocasião em qonde é testado cada operação para efeitos de de testes.
   
 ```bash
+├── p1.ipdraw
 ├── p1.pdraw
 ├── p2.pdraw
 ├── p3.pdraw
+├── p4.pdraw
 └── self_made
     ├── test_addpoint.pdraw
     ├── test_assignment.pdraw
@@ -432,6 +436,7 @@ Como mencionado anteriormente o *ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw* e 
     ├── test_create_canvas.pdraw
     ├── test_definepen_assignpen.pdraw
     ├── test_for.pdraw
+    ├── test_function.pdraw
     ├── test_if.pdraw
     ├── test_ipdraw.ipdraw
     ├── test_multiple_ass_one_line.pdraw
