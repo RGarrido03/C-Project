@@ -538,6 +538,15 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitExecute(pdrawParser.ExecuteContext ctx) {
+    if (!visit(ctx.expression())) {
+      return false;
+    }
+
+    if (!(ctx.expression().symbol.getType() instanceof StringType)) {
+      ErrorHandling.printError(ctx, "Expression " + ctx.expression().getText() + " must be a string");
+      return false;
+    }
+
     String var = ctx.variable().getText();
 
     if (!symbolTable.containsKey(var)) {
@@ -971,6 +980,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     Boolean res = true;
 
     if (!symbolTable.containsKey(ctx.getText())) {
+      ErrorHandling.printError(ctx, "Variable " + ctx.getText() + " is not defined");
       return false;
     }
     ctx.symbol = symbolTable.get(ctx.getText());
