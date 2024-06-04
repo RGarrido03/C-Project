@@ -902,9 +902,29 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     ctx.symbol =
       new Symbol(symbolTable.get(var).getType(), ctx.incdec().getText());
     return true;
-    // ctx.symbol = new Symbol(ctx.incdec().variable().getText(), ctx.incdec().getText());
+  }
 
-    // return visitChildren(ctx);
+  @Override
+  public Boolean visitReAssignmentIncDec(pdrawParser.ReAssignmentIncDecContext ctx) {
+    String var = ctx.incdec().variable().getText();
+    if (!symbolTable.containsKey(var)) {
+      ErrorHandling.printError(
+              ctx,
+              String.format("Variable %s is not defined", var)
+      );
+
+      return false;
+    }
+    if (!symbolTable.get(var).getType().isNumeric()) {
+      ErrorHandling.printError(
+              ctx,
+              String.format("Variable %s is not a number", var)
+      );
+      return false;
+    }
+
+    ctx.symbol = new Symbol(symbolTable.get(var).getType(), ctx.incdec().getText());
+    return true;
   }
 
   @Override
@@ -1062,11 +1082,13 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     Map<String, Symbol> previousScope = new HashMap<>(symbolTable);
     symbolTable = new HashMap<>();
 
-    res = visit(ctx.parameters());
-    if (!res) {
-      ErrorHandling.printError(ctx, "Function has errors at parameters");
-      symbolTable = previousScope; // Restaurar o escopo anterior
-      return false;
+    if (ctx.parameters() != null) {
+      res = visit(ctx.parameters());
+      if (!res) {
+        ErrorHandling.printError(ctx, "Function has errors at parameters");
+        symbolTable = previousScope; // Restaurar o escopo anterior
+        return false;
+      }
     }
 
     for (pdrawParser.StatementContext statement : ctx.statement()) {
@@ -1111,38 +1133,42 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
     // Verificar argumentos da função
     Map<String, Symbol> functionParams = functionsTable.get(functionName);
-    visit(ctx.arguments());
-    List<pdrawParser.ExpressionContext> arguments = ctx
-      .arguments()
-      .expression();
+    if (ctx.arguments() != null) {
+      visit(ctx.arguments());
 
-    if (functionParams.size() != arguments.size()) {
-      ErrorHandling.printError(
-        ctx,
-        String.format("Function %s argument count mismatch", functionName)
-      );
-      return false;
-    }
+      List<pdrawParser.ExpressionContext> arguments = ctx
+              .arguments()
+              .expression();
 
-    int i = 0;
-    for (String paramName : functionParams.keySet()) {
-      Symbol paramSymbol = functionParams.get(paramName);
-      Symbol argSymbol = arguments.get(i).symbol;
-
-      if (
-        !paramSymbol.getType().toString().equals(argSymbol.getType().toString())
-      ) {
+      if (functionParams.size() != arguments.size()) {
         ErrorHandling.printError(
-          ctx,
-          String.format(
-            "Argument type mismatch for parameter %s in function %s",
-            paramName,
-            functionName
-          )
+                ctx,
+                String.format("Function %s argument count mismatch", functionName)
         );
         return false;
       }
-      i++;
+
+
+      int i = 0;
+      for (String paramName : functionParams.keySet()) {
+        Symbol paramSymbol = functionParams.get(paramName);
+        Symbol argSymbol = arguments.get(i).symbol;
+
+        if (
+                !paramSymbol.getType().toString().equals(argSymbol.getType().toString())
+        ) {
+          ErrorHandling.printError(
+                  ctx,
+                  String.format(
+                          "Argument type mismatch for parameter %s in function %s",
+                          paramName,
+                          functionName
+                  )
+          );
+          return false;
+        }
+        i++;
+      }
     }
 
     return true;
@@ -1348,6 +1374,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       }
     }
 
+    ctx.symbol = new Symbol(new BoolType(), ctx.getText());
     return true;
   }
 

@@ -49,7 +49,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("functionDefinition");
 
     res.add("name", visit(ctx.functionName()));
-    res.add("args", visit(ctx.parameters()));
+
+    if (ctx.parameters() != null) {
+      res.add("args", visit(ctx.parameters()));
+    }
+
     for (int i = 0; i < ctx.statement().size(); i++) res.add(
       "statements",
       visit(ctx.statement().get(i))
@@ -78,7 +82,9 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitFunctionCall(pdrawParser.FunctionCallContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("functionCall");
     res.add("name", visit(ctx.functionName()));
-    res.add("args", visit(ctx.arguments()));
+    if (ctx.arguments() != null) {
+      res.add("args", visit(ctx.arguments()));
+    }
 
     return res;
   }
@@ -474,6 +480,11 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitReAssignmentIncDec(pdrawParser.ReAssignmentIncDecContext ctx) {
+    return visit(ctx.incdec());
+  }
+
+  @Override
   public ST visitExprArray(pdrawParser.ExprArrayContext ctx) {
     return visit(ctx.getArray());
   }
@@ -774,17 +785,12 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   private Object defaultType(String type) {
-    switch (type.toLowerCase()) {
-      case "int":
-        return 0;
-      case "real":
-        return 0.0;
-      case "string":
-        return "";
-      case "bool":
-        return false;
-      default:
-        return null;
-    }
+      return switch (type.toLowerCase()) {
+          case "int" -> 0;
+          case "real" -> 0.0;
+          case "string" -> "\"\"";
+          case "bool" -> false;
+          default -> null;
+      };
   }
 }

@@ -73,6 +73,7 @@ assignment
 	Type variable '=' expression				# AssignmentVar
 	| object									# AssignmentPen // SEE ME TODO: Adicionei 2 hipoteses de assignment, ver se é necessário
 	| variable '=' expression					# ReAssignmentVar
+	| incdec									# ReAssignmentIncDec
 	| Type (variable '=' expression (',')?)+	# AssignmentMultipleVars
 	| Type variable (',' variable)*				# AssignmentVarsNoValue;
 
