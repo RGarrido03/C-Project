@@ -29,7 +29,6 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
 - [12. StringTemplates (ST)](#12-stringtemplates-st)
 - [13. Exemplos](#13-exemplos)
 - [14. Contribuições](#14-contribuições)
-- [15. Duvidas](#15-duvidas)
 
 ---
 
@@ -234,13 +233,20 @@ p2 -> stdout;
 
 ### Tipos de dados
 
-Tipos de dados:
-- **int**
-- **string**
-- **bool**
-- **real**
-- **pen**
-- **canvas**
+Tipos (**Type**):
+- **Angle**
+- **Bool**
+- **Canvas**
+- **Fraction**
+- **Function**
+- **Int**
+- **PenTAD**
+- **Pen**
+- **Point**
+- **Real**
+- **String**
+- **Symbol**
+- **Tuple**
 
 O cast de tipos de dados também é possível:
 
@@ -313,7 +319,7 @@ A canvas é a tela virtual onde são desenhadas as figuras. Por predifinição, 
 define canvas Canvas1 "Example 1" (100,100);
 ```
 
-![Canvas](doc/image.png)
+![Canvas](doc/circle.gif)
 
 ```
 Canvas2 background red;
@@ -452,29 +458,3 @@ Como mencionado anteriormente o *p1.ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw*
 
 Use esta secção para expôr as contribuições individuais dos vários elementos do grupo e que
   justificam as participações individuais globais apresentadas no início.
-
-## 15. Duvidas
-
-```bash
-
-# on root directory (pdraw-t02)
-cd src/generated_files
-
-python -m venv env
-#or
-python3 -m venv env
-
-source env/bin/activate
-pip install antlr4-python3-runtime
-
-# nao precisa de ser o `mod`
-antlr4-build -python
-# DO NOT USE ANTLR4-RUN BECAUSE IS USES THE GLOBAL INTERPRETER
-# antlr4-run -python pdrawMain.py <-- THIS NEVER
-# USE ALWAYS VIRTUAL ENVIRONMENT
-python pdrawMain.py
-
-
-
-
-```
