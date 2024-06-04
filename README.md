@@ -48,9 +48,6 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
 ```bash
 antlr4 -o ../compiler -visitor pdraw.g4 -listener pdraw.g4
 cd src
-../antlr4-build_mod.sh -o compiler
-# TO RUN WITH GUI
-# cat ../../examples/p1.pdraw  | antlr4-test pdraw main -gui
 ```
 
 ## 3. Estrutura
