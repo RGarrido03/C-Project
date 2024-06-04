@@ -86,6 +86,16 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitArguments(pdrawParser.ArgumentsContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("other");
+    for (int i = 0; i < ctx.expression().size(); i++) {
+      res.add("text", visit(ctx.expression(i)).render() + ",");
+    }
+
+    return res;
+  }
+
+  @Override
   public ST visitParameters(pdrawParser.ParametersContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("parameters");
     for (int i = 0; i < ctx.parameter().size(); i++) res.add(
@@ -98,11 +108,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitParameter(pdrawParser.ParameterContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("parameter");
-    System.out.println(
-      visit(ctx.variable()).render() +
-      " PIXA " +
-      parseType(ctx.Type().getText())
-    );
+
     res.add("name", visit(ctx.variable()).render());
     res.add("type", parseType(ctx.Type().getText()));
     return res;

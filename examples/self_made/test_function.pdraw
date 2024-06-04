@@ -1,14 +1,15 @@
 def int myFunc1(int k){
     "Hello from a function" -> stdout;
+    return myFunc1(7);
 };
 
-def int loca(int i){
+def int loca(int i, int j, int w){
     "Hello from another function" -> stdout;
-    %% return i;
+    return i+1;
 };
 
 
 
-int resultado = loca(1);
+int resultado = loca(1,2,3);
 
 % myFunc1(1); % isto tem de dar asneira?

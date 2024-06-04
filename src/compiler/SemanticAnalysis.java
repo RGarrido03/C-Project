@@ -349,7 +349,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     String type = ctx.Type().getText();
 
     String name = ctx.variable().getText();
-    System.out.println("PIXA " + name);
     pdrawParser.ExpressionContext expressionCtx = ctx.expression();
 
     Boolean expressionResult = visit(expressionCtx);
@@ -360,9 +359,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     }
     if (!symbolTable.containsKey(name)) {
       ErrorHandling.printInfo(expressionCtx.getText());
-      System.out.println(
-        expressionCtx.symbol.getType().toString() + " " + type
-      );
+
       if (!expressionCtx.symbol.getType().toString().equals(type)) {
         ErrorHandling.printError(
           ctx,
@@ -370,7 +367,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         );
         return false;
       } else {
-        System.out.println(createType(type));
         symbolTable.put(name, new Symbol(createType(type), name));
         return true;
       }
@@ -407,17 +403,13 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
       Boolean expressionResult = visit(expressionCtx);
 
-      System.out.println(createType(type).toString() + " " + name + " pILOXa");
-
       if (!expressionResult) {
         ErrorHandling.printError(ctx, "Expression is not valid");
         return false;
       }
       if (!symbolTable.containsKey(name)) {
         ErrorHandling.printInfo(expressionCtx.getText());
-        System.out.println(
-          expressionCtx.symbol.getType().toString() + " " + type
-        );
+
         if (!expressionCtx.symbol.getType().toString().equals(type)) {
           ErrorHandling.printError(
             ctx,
@@ -1052,7 +1044,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     pdrawParser.FunctionDefinitionContext ctx
   ) {
     Boolean res = false;
-    System.out.println("Function definition: " + ctx.getText());
     String functionName = ctx.functionName().getText();
 
     if (
@@ -1093,6 +1084,16 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       }
     }
 
+    // // visitar o return
+    // if (ctx.returnStatement() != null) {
+    //   res = visit(ctx.returnStatement());
+    //   if (!res) {
+    //     ErrorHandling.printError(ctx, "Function has errors at return");
+    //     symbolTable = previousScope; // Restaurar o escopo anterior
+    //     return false;
+    //   }
+    // }
+
     // Restaurar o scope anterior
     symbolTable = previousScope;
     return res;
@@ -1106,16 +1107,51 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitFunctionCall(pdrawParser.FunctionCallContext ctx) {
     String functionName = ctx.functionName().getText();
-    if (!symbolTable.containsKey(functionName)) {
+    if (!functionsTable.containsKey(functionName)) {
       ErrorHandling.printError(
         ctx,
         String.format("Function %s not defined", functionName)
       );
       return false;
     }
-    // TODO verificar os argumentos de entrada se batem certo com a definicao
-    // TODO ENORME
-    return true; //supostamente nunca chega aqui
+
+    // Verificar argumentos da função
+    Map<String, Symbol> functionParams = functionsTable.get(functionName);
+    visit(ctx.arguments());
+    List<pdrawParser.ExpressionContext> arguments = ctx
+      .arguments()
+      .expression();
+
+    if (functionParams.size() != arguments.size()) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Function %s argument count mismatch", functionName)
+      );
+      return false;
+    }
+
+    int i = 0;
+    for (String paramName : functionParams.keySet()) {
+      Symbol paramSymbol = functionParams.get(paramName);
+      Symbol argSymbol = arguments.get(i).symbol;
+
+      if (
+        !paramSymbol.getType().toString().equals(argSymbol.getType().toString())
+      ) {
+        ErrorHandling.printError(
+          ctx,
+          String.format(
+            "Argument type mismatch for parameter %s in function %s",
+            paramName,
+            functionName
+          )
+        );
+        return false;
+      }
+      i++;
+    }
+
+    return true;
   }
 
   @Override
@@ -1139,7 +1175,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
       if (!parameters.containsKey(name)) {
         parameters.put(name, new Symbol(createType(type), name));
-        break;
+        symbolTable.put(name, new Symbol(createType(type), name));
+        continue;
       }
 
       ErrorHandling.printError(
@@ -1148,6 +1185,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       );
       return false;
     }
+    functionsTable.put(ctx.getParent().getChild(2).getText(), parameters);
+
     return true;
   }
 
@@ -1158,12 +1197,25 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitArguments(pdrawParser.ArgumentsContext ctx) {
-    return visitChildren(ctx);
+    for (pdrawParser.ExpressionContext expression : ctx.expression()) {
+      if (!visit(expression)) {
+        ErrorHandling.printError(ctx, "Argument has errors");
+        return false;
+      }
+    }
+
+    return true;
   }
 
   @Override
   public Boolean visitReturnStatement(pdrawParser.ReturnStatementContext ctx) {
+    // saber o nome da funcao
     if (visit(ctx.expression())) {
+      if (
+        ctx.expression().getClass() == pdrawParser.ExprFunctionCallContext.class
+      ) {
+        ErrorHandling.printWarning(ctx, "Be careful with recursivity");
+      }
       return true;
     } else {
       ErrorHandling.printError(ctx, "Return statement has errors");

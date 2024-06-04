@@ -28,10 +28,12 @@ def execute(filename: str, pen: Pen):
     visitor.visit(tree)
 
 
-def myFunc1__(/parameter(), )->int:
+def myFunc1__(k__: int, )->int:
     print("Hello from a function")
-def loca__(/parameter(), )->int:
+    return myFunc1__(7,)
+def loca__(i__: int, j__: int, w__: int, )->int:
     print("Hello from another function")
-resultado__: int = loca__(1)
-turtle.done()
+    return i__ + 1
+resultado__: int = loca__(1,2,3,)
 print("Everything is done, please close the window.")
+turtle.done()

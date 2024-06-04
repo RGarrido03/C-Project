@@ -40,8 +40,8 @@ def execute(filename: str, pen: Pen):
 pass
 <endif>
 
-turtle.done()
 print("Everything is done, please close the window.")
+turtle.done()
 
 >>
 
