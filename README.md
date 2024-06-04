@@ -419,12 +419,14 @@ A utilização destes templates vai permitir gerar código ou texto de saída du
 
 ## 13. Exemplos
 
-Como mencionado anteriormente o *ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw* e exemplors criados personalizados para cada ocasião em qonde é testado cada operação para efeitos de de testes.
+Como mencionado anteriormente o *p1.ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw*, *p4.pdraw* e exemplors criados personalizados para cada ocasião em qonde é testado cada operação para efeitos de de testes.
   
 ```bash
+├── p1.ipdraw
 ├── p1.pdraw
 ├── p2.pdraw
 ├── p3.pdraw
+├── p4.pdraw
 └── self_made
     ├── test_addpoint.pdraw
     ├── test_assignment.pdraw
@@ -437,6 +439,7 @@ Como mencionado anteriormente o *ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw* e 
     ├── test_create_canvas.pdraw
     ├── test_definepen_assignpen.pdraw
     ├── test_for.pdraw
+    ├── test_function.pdraw
     ├── test_if.pdraw
     ├── test_ipdraw.ipdraw
     ├── test_multiple_ass_one_line.pdraw
