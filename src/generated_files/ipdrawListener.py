@@ -575,6 +575,15 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ipdrawParser#ArrowSpeed.
+    def enterArrowSpeed(self, ctx:ipdrawParser.ArrowSpeedContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#ArrowSpeed.
+    def exitArrowSpeed(self, ctx:ipdrawParser.ArrowSpeedContext):
+        pass
+
+
     # Enter a parse tree produced by ipdrawParser#typeCast.
     def enterTypeCast(self, ctx:ipdrawParser.TypeCastContext):
         pass

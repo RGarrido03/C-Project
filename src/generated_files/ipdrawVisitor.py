@@ -324,6 +324,11 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ipdrawParser#ArrowSpeed.
+    def visitArrowSpeed(self, ctx:ipdrawParser.ArrowSpeedContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ipdrawParser#typeCast.
     def visitTypeCast(self, ctx:ipdrawParser.TypeCastContext):
         return self.visitChildren(ctx)

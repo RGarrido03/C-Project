@@ -713,6 +713,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return visit(ctx.expression());
     } else if (prop.contains("pressure")) {
       return visit(ctx.expression());
+    } else if (prop.contains("speed")) {
+      return visit(ctx.expression());
     }
 
     return res;
@@ -905,25 +907,28 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitReAssignmentIncDec(pdrawParser.ReAssignmentIncDecContext ctx) {
+  public Boolean visitReAssignmentIncDec(
+    pdrawParser.ReAssignmentIncDecContext ctx
+  ) {
     String var = ctx.incdec().variable().getText();
     if (!symbolTable.containsKey(var)) {
       ErrorHandling.printError(
-              ctx,
-              String.format("Variable %s is not defined", var)
+        ctx,
+        String.format("Variable %s is not defined", var)
       );
 
       return false;
     }
     if (!symbolTable.get(var).getType().isNumeric()) {
       ErrorHandling.printError(
-              ctx,
-              String.format("Variable %s is not a number", var)
+        ctx,
+        String.format("Variable %s is not a number", var)
       );
       return false;
     }
 
-    ctx.symbol = new Symbol(symbolTable.get(var).getType(), ctx.incdec().getText());
+    ctx.symbol =
+      new Symbol(symbolTable.get(var).getType(), ctx.incdec().getText());
     return true;
   }
 
@@ -1137,17 +1142,16 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       visit(ctx.arguments());
 
       List<pdrawParser.ExpressionContext> arguments = ctx
-              .arguments()
-              .expression();
+        .arguments()
+        .expression();
 
       if (functionParams.size() != arguments.size()) {
         ErrorHandling.printError(
-                ctx,
-                String.format("Function %s argument count mismatch", functionName)
+          ctx,
+          String.format("Function %s argument count mismatch", functionName)
         );
         return false;
       }
-
 
       int i = 0;
       for (String paramName : functionParams.keySet()) {
@@ -1155,15 +1159,18 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         Symbol argSymbol = arguments.get(i).symbol;
 
         if (
-                !paramSymbol.getType().toString().equals(argSymbol.getType().toString())
+          !paramSymbol
+            .getType()
+            .toString()
+            .equals(argSymbol.getType().toString())
         ) {
           ErrorHandling.printError(
-                  ctx,
-                  String.format(
-                          "Argument type mismatch for parameter %s in function %s",
-                          paramName,
-                          functionName
-                  )
+            ctx,
+            String.format(
+              "Argument type mismatch for parameter %s in function %s",
+              paramName,
+              functionName
+            )
           );
           return false;
         }
@@ -1339,15 +1346,17 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   }
 
   @Override
-  public Boolean visitExprConditionNot(pdrawParser.ExprConditionNotContext ctx) {
+  public Boolean visitExprConditionNot(
+    pdrawParser.ExprConditionNotContext ctx
+  ) {
     if (!visit(ctx.expression())) {
       return false;
     }
 
     if (!(ctx.expression().symbol.getType() instanceof BoolType)) {
       ErrorHandling.printError(
-              ctx,
-              ctx.expression().getText() + " is not a bool"
+        ctx,
+        ctx.expression().getText() + " is not a bool"
       );
       return false;
     }

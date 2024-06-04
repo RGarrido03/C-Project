@@ -255,7 +255,6 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   ) {
     String type = ctx.Type().getText();
     ST buffer = pdrawTemplate.getInstanceOf("other");
-    System.out.println("VisitAssignmentMultipleVars");
     ArrayList<String> vars = new ArrayList<>();
     for (int i = 1; i < ctx.getChildCount(); i += 1) {
       if (ctx.getChild(i).getText().equals(",")) {
@@ -569,7 +568,6 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitStdin(pdrawParser.StdinContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("input");
     ST str = visit(ctx.expression());
-    System.out.println(str.render() + "STDIN TESTE");
     res.add("text", str);
     return res;
   }
@@ -727,7 +725,6 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitWhile(pdrawParser.WhileContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("while");
-    System.out.println(ctx.op.getText());
     if (ctx.op.getText().equals("until")) res.add("isUntil", "true");
     res.add("condition", visit(ctx.expression()));
     ctx
@@ -785,12 +782,12 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   private Object defaultType(String type) {
-      return switch (type.toLowerCase()) {
-          case "int" -> 0;
-          case "real" -> 0.0;
-          case "string" -> "\"\"";
-          case "bool" -> false;
-          default -> null;
-      };
+    return switch (type.toLowerCase()) {
+      case "int" -> 0;
+      case "real" -> 0.0;
+      case "string" -> "\"\"";
+      case "bool" -> false;
+      default -> null;
+    };
   }
 }

@@ -558,6 +558,10 @@ class Interpreter(ipdrawVisitor):
         self.pen.set_position(self.visit(ctx.tuple_()))
 
         return None
+    def visitArrowPosition(self, ctx: ipdrawParser.ArrowPositionContext):
+        self.pen.set_speed(self.visit(ctx.expression()))
+
+        return None
 
     def visitArrowOrientation(self, ctx: ipdrawParser.ArrowOrientationContext):
         self.pen.set_orientation(self.visit(ctx.angle()))

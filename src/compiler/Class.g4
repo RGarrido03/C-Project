@@ -22,6 +22,7 @@ arrowProps:
 	| op = 'position' tuple
 	| op = 'orientation' angle
 	| op = 'thickness' expression
-	| op = 'pressure' expression;
+	| op = 'pressure' expression
+	| op = 'speed' expression;
 
 object: 'pen' variable '=' 'new' variable?;

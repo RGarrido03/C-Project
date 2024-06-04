@@ -12,6 +12,7 @@ class Pen(ABC):
         self.thickness = 1
         self.position = (0, 0)
         self.orientation = 0
+        self.speed = 1
         self.pressure = -1  # -1 means up
         self.isUp:bool=0
         self.turtle = turtle.Turtle()
@@ -67,7 +68,7 @@ class Pen(ABC):
         self.turtle.penup()
         self.turtle.setpos(self.position)
         self.turtle.setheading(self.orientation)
-
+        self.turtle.speed(self.speed)
         if self.pressure >= 0:
             self.turtle.pensize(self.thickness * self.pressure)
             self.turtle.pendown()
@@ -85,6 +86,13 @@ class Pen(ABC):
         self.position = t
         self.turtle.setpos(t)
     
+    
+    def set_speed(self, speed: int) -> None:
+        if speed < 0:
+            self.speed = 1
+        else:
+            self.speed = speed
+        self.turtle.speed(self.speed)
 
     def add_position(self, t:tuple) -> None:
         t = (self.position[0]+t[0],self.position[1]+t[1])

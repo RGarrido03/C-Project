@@ -18,12 +18,10 @@ statement: (
 		| array
 		| addArray
 		| removeArray
-
 	) ';';
 
-
-
-array: Type variable '=' '[' (expression (',' expression)*)? ']';
+array:
+	Type variable '=' '[' (expression (',' expression)*)? ']';
 
 addArray: variable '[' expression ']' '=' expression;
 
@@ -136,7 +134,8 @@ arrowProps:
 	| 'position' tuple			# ArrowPosition
 	| 'orientation' angle		# ArrowOrientation
 	| 'thickness' expression	# ArrowThickness
-	| 'pressure' expression		# ArrowPressure;
+	| 'pressure' expression		# ArrowPressure
+	| 'speed' expression		# ArrowSpeed;
 
 // Define types for variable declaration
 Type: 'real' | 'canvas' | 'int' | 'string' | 'bool';
