@@ -106,6 +106,76 @@ Com esta ferramenta podemos configurar com ações especifícas e personalizadas
 
 **Compiler** e **SemanticAnalysis** são os Visitors que foram implementados neste projeto.
 
+A seguir, demonstramos um exemplo do fluxo do projeto (caneta pode fazer __up__ e __down__), passando pela gramática, depois pela análise semântica e acabando no compilador com o tipo String Template.
+
+### Exemplo - InstructionPenAction
+
+1. Gramática
+```antlr4
+instruction:
+	variable (move | rotate | pause | write)+	# InstructionMoveRotateAction
+	| variable penAction						# InstructionPenAction
+	| variable '<-' arrowProps					# InstructionArrowProps;
+
+```
+
+2. Análise semântica
+```java
+  @Override
+  public Boolean visitInstructionPenAction(
+    pdrawParser.InstructionPenActionContext ctx
+  ) {
+    String variable = ctx.variable().getText();
+    // if variable (pen) is not in the Symbol Table.
+    if (!symbolTable.containsKey(variable)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s not defined", variable)
+      );
+      return false;
+    // variable is Type PEN. We only allow for the words "down" and "up". If so, the return value is true and it passes the semantic analysis.
+    } else {
+      Type type = symbolTable.get(variable).getType();
+      if (type instanceof PenTAD) {
+        Boolean penAction =
+          ctx.penAction().getText().equals("down") ||
+          ctx.penAction().getText().equals("up");
+        if (penAction) {
+          return true;
+        } else {
+          ErrorHandling.printError(ctx, "Instructions are not valid");
+          return false;
+        }
+      } else {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s is not a pen", variable)
+        );
+        return false;
+      }
+    }
+  }
+```
+
+3. String template
+```s
+instruction(variable, action, value, fontsize) ::= "<variable>.<action>(<value><if(fontsize)>, <fontsize><endif>)"
+```
+
+4. Compiler
+```java
+  @Override
+  public ST visitInstructionPenAction(
+    pdrawParser.InstructionPenActionContext ctx
+  ) {
+    // add tokens in StringTemplate
+    ST res = pdrawTemplate.getInstanceOf("instruction");
+    res.add("variable", visit(ctx.variable()));
+    res.add("action", ctx.penAction().getText());
+    return res;
+  }
+```
+
 ## 7. Variáveis, métodos, operadores e tipos de dados
 
 ### Variáveis e métodos
@@ -144,7 +214,7 @@ p2 -> stdout;
 | +        | Adição                 |
 | -        | Subtração              |
 | /        | Divisão                |
-| //       | Divisão inteira        |
+| //       | Divisão inteira        |== tem menor precedência do que as setas, mas aí nós fazemos.
 | *        | Multiplicação          |
 | ^        | Potência               |
 | ==       | Igual                  |
@@ -158,6 +228,10 @@ p2 -> stdout;
 | up       | Levanta a caneta       |
 | down     | Baixa a caneta        |
 | pause   | Pausa o programa por milissegundos |
+
+
+> [!NOTE]
+> Existe precedência para o operador __and__ e só depois para o operador __or__, no entanto, inferimos as regras do python e por isso não criámos regras novas. No caso __==__ (igual), criámos regras para que este tenha menor precedência do que as setas. 
 
 ### Tipos de dados
 
