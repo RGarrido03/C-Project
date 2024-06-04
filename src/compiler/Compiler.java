@@ -114,7 +114,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("parameter");
 
     res.add("name", visit(ctx.variable()).render());
-    res.add("type", parseType(ctx.Type().getText()));
+    res.add("type", parseType(ctx.type.getText()));
     return res;
   }
 
@@ -777,6 +777,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
       case "real" -> "float";
       case "string" -> "str";
       case "bool" -> "bool";
+      case "pen" -> "Pen";
       default -> "";
     };
   }

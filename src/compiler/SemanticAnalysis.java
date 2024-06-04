@@ -464,6 +464,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       case "real" -> new RealType();
       case "string" -> new StringType();
       case "bool" -> new BoolType();
+      case "pen" -> new PenTAD("Pen");
       default -> throw new IllegalArgumentException(
         String.format("Unsupported type: %s", type)
       );
@@ -647,7 +648,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       }
       symbolTable.put(
         penTAD_especifico,
-        new Symbol(new PenTAD(penTAD_especifico), penTAD_especifico)
+        new Symbol(new PenTAD("Pen"), penTAD_especifico)
       );
       return true;
     } else {
@@ -744,7 +745,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       }
     } else {
       // TODO duvidoso
-      symbolTable.put(var_left, new Symbol(new PenTAD(var_left), var_left));
+      symbolTable.put(var_left, new Symbol(new PenTAD("Pen"), var_left));
 
       return true;
     }
@@ -1138,12 +1139,17 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
     // Verificar argumentos da função
     Map<String, Symbol> functionParams = functionsTable.get(functionName);
+    System.out.println(functionParams.toString());
     if (ctx.arguments() != null) {
       visit(ctx.arguments());
 
       List<pdrawParser.ExpressionContext> arguments = ctx
         .arguments()
         .expression();
+
+      for (pdrawParser.ExpressionContext argument : arguments) {
+        System.out.println(argument.symbol.toString());
+      }
 
       if (functionParams.size() != arguments.size()) {
         ErrorHandling.printError(
@@ -1198,7 +1204,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     for (pdrawParser.ParameterContext param : ctx.parameter()) {
       // storar os
       String name = param.variable().getText();
-      String type = param.Type().getText();
+      String type = param.type.getText();
 
       if (!parameters.containsKey(name)) {
         parameters.put(name, new Symbol(createType(type), name));

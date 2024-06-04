@@ -3,13 +3,56 @@ def int myFunc1(int k){
     return myFunc1(7);
 };
 
+
+
 def int loca(int i, int j, int w){
     "Hello from another function" -> stdout;
     return i+1;
 };
 
 
+def int recursiveThing(int i){
+    if (i < 10){
+        "Hello from recursiveThing my var i is" + string(i) -> stdout;
+        return recursiveThing(i+1);
+    };
+    return 0;
+};
+
+
+def int recursiveWithPen(pen p, int i){
+    if (i < 100){
+        p left (360 / 100) deg;
+        p forward 10 * PI;
+        return recursiveWithPen(p,i+1);
+    };
+    return 0;
+};
+
+
+def int funcPartir(pen p){
+
+    return loca(1,2,3);
+};
 
 int resultado = loca(1,2,3);
 
-% myFunc1(1); % isto tem de dar asneira?
+int resultadoRecursivo = recursiveThing(0);
+"FIM" -> stdout;
+
+int a = 5;
+
+define pen PenType1 {
+   color = green;
+   position = ((10+2)-2, a);
+   orientation = (a + 35)º;
+   thickness = a;
+   pressure = -1 / 1;
+};
+pen p = new PenType1;
+p down;
+int resultadoRecursivoComPen = recursiveWithPen(p,0);
+
+% isto da asneira int resultado2 = myFunc1(1);
+
+% TODO fazer uma funcao que use canetas e que desenhe coisas com a canetas

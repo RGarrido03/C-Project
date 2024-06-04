@@ -41,7 +41,7 @@ functionName: Name | Word;
 
 parameters: parameter (',' parameter)*;
 
-parameter: Type variable;
+parameter: type=(Type|'pen') variable;
 
 arguments: expression (',' expression)*;
 

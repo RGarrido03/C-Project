@@ -7,7 +7,7 @@ expression
 	| expression op = ('+' | '-' | '/' | '//' | '*' | '^') expression	# ExprAddSubMultDivModPow
 	// SEEME this shit makes everything wrong
 	| op = ('+' | '-') e2 = expression						# ExprUnary
-	| op = ('~' | '!' | 'not') expression			        # ExprConditionNot
+	| op = ('~' | '!' | 'not') expression					# ExprConditionNot
 	| expression op = ('==' | '!=') expression				# ExprConditionEquals
 	| expression op = ('<' | '<=' | '>' | '>=') expression	# ExprConditionOrderRelation
 	| expression op = ('and' | 'or') expression				# ExprConditionAndOr
@@ -15,7 +15,7 @@ expression
 	| stdin													# ExprStdIn
 	| incdec												# ExprIncDec
 	| getArray												# ExprArray
-	|getLength												# ExprLength
+	| getLength												# ExprLength
 	| INT													# ExprInteger
 	| FLOAT													# ExprFloat // FIXME change this
 	| STRING												# ExprString
@@ -23,8 +23,6 @@ expression
 	| variable												# ExprVariable
 	| functionCall											# ExprFunctionCall
 	| '(' expression ')'									# ExprParent;
-
-
 
 getLength: 'len' variable;
 
