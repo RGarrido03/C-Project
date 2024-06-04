@@ -58,6 +58,8 @@ Dar permissão para executar o script _run.sh_ (executa antlr4-build,run,cria en
 chmod +x ./run.sh
 ./run.sh [options] <filename>
 ```
+>[!Note]
+>O script _run.sh_ foi criado para facilitar a compilação e execução do pdraw.
 
 ## 3. Estrutura
 
