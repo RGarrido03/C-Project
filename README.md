@@ -311,9 +311,9 @@ pen psec = new;
 | **position**    | Posição inicial representada por um ponto (tuplo)             |
 | **orientation** | Ângulo em graus da orientação da caneta                       |
 | **thickness**   | Espessura da caneta                                           |
-| **position**    | Pressão com que a caneta está a ser usada (_up_, _down_)      |
+| **pressure**    | Pressão com que a caneta está a ser usada (_up_, _down_)      |
 
-Podemos também adicionar pontos à caneta:
+Podemos também adicionar/subtrair pontos à caneta (o que resulta na alteração da posição da caneta):
 
 ```
 pen p1 = new PenType1;
