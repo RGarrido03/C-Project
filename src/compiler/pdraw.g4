@@ -26,8 +26,8 @@ statement: (
 		| returnStatement // Nao permitir no semantico que seja usado o return fora de uma funcao
 	) ';';
 
-
-array: Type variable '=' '[' (expression (',' expression)*)? ']';
+array:
+	Type variable '=' '[' (expression (',' expression)*)? ']';
 
 addArray: variable '[' expression ']' '=' expression;
 
