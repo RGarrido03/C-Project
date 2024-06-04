@@ -4,7 +4,7 @@ Cadeira: Compiladores
 
 Ano Letivo: 2023/2024
 
-Este projeto tem como objectivo construir uma linguagem de programação compilada, que crie programas em Python (linguagem escolhida). A ideia é parecida com a abstração usada na biblioteca turtle do Python. Desta forma, tem-se que seja possível executar desenhos 2D a partir de canetas. 
+Este projeto tem como objectivo construir uma linguagem de programação compilada, que crie programas em Python (linguagem escolhida). A ideia é parecida com a abstração usada na biblioteca turtle do Python. Desta forma, tem-se que seja possível executar desenhos 2D a partir de canetas.
 
 Com o ANTLR (ANother Tool for Language Recognition) atingimos este objetivo, um poderoso gerador para ler, processar, executar ou traduzir texto estruturado ou ficheiros binários. Foi usada a versão 4 do ANTLR na implementação do pdraw: [ANTLR4 (versão 4)](https://www.antlr.org/download.html).
 
@@ -14,21 +14,29 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
 
 ### Index
 
-- [0. Introdução](#relatório---tema-pdraw-grupo-pdraw-t02)
-- [1. Constituição dos grupos e participação individual global](#1-constituição-dos-grupos-e-participação-individual-global)
-- [2. Como executar](#2-como-executar)
-- [3. Estrutura](#3-estrutura)
-- [4. Pdraw](#4-pdraw)
-- [5. Gramática](#5-gramática)
-- [6. Visitors](#6-visitors)
-- [7. Variáveis, métodos, operadores e tipos de dados](#7-variáveis-métodos-operadores-e-tipos-de-dados)
-- [8. Caneta](#8-caneta)
-- [9. Canvas](#9-canvas)
-- [10. Setas de atributos](#10-setas-de-atributos)
-- [11. Instruções condicionais e loops](#11-instruções-condicionais-e-loops)
-- [12. StringTemplates (ST)](#12-stringtemplates-st)
-- [13. Exemplos](#13-exemplos)
-- [14. Contribuições](#14-contribuições)
+- [Relatório - tema **PDraw**, grupo **pdraw-t02**](#relatório---tema-pdraw-grupo-pdraw-t02)
+  - [Index](#index)
+  - [1. Constituição dos grupos e participação individual global](#1-constituição-dos-grupos-e-participação-individual-global)
+  - [2. Como executar](#2-como-executar)
+  - [3. Estrutura](#3-estrutura)
+  - [4. Pdraw](#4-pdraw)
+  - [5. Gramática](#5-gramática)
+  - [6. Visitors](#6-visitors)
+    - [Exemplo - InstructionPenAction](#exemplo---instructionpenaction)
+  - [7. Variáveis, métodos, operadores e tipos de dados](#7-variáveis-métodos-operadores-e-tipos-de-dados)
+    - [Variáveis e métodos](#variáveis-e-métodos)
+    - [Operadores](#operadores)
+    - [Tipos de dados](#tipos-de-dados)
+  - [8. Caneta](#8-caneta)
+  - [9. Canvas](#9-canvas)
+  - [10. Setas de atributos](#10-setas-de-atributos)
+  - [11. Instruções condicionais e loops](#11-instruções-condicionais-e-loops)
+    - [If](#if)
+    - [For](#for)
+    - [While](#while)
+  - [12. StringTemplates (ST)](#12-stringtemplates-st)
+  - [13. Exemplos](#13-exemplos)
+  - [14. Contribuições](#14-contribuições)
 
 ---
 
@@ -48,7 +56,7 @@ Dar permissão para executar o script _run.sh_ (executa antlr4-build,run,cria en
 
 ```bash
 chmod +x ./run.sh
-./run.sh
+./run.sh [options] <filename>
 ```
 
 ## 3. Estrutura
@@ -80,7 +88,7 @@ Organização do repositório (diretórios):
 
 A linguagem **PDraw** é uma linguagem de programação compilada que permite a criação de programas em Python. Permite aos utilizadores criar imagens e formas, proporcionando-lhes uma tela virtual.
 
-Todas as instruções são executadas em relação a uma caneta que é configurada com várias variáveis. A caneta é movida para cima ou para baixo, permitindo ao utilizador desenhar formas e imagens no ecrã. 
+Todas as instruções são executadas em relação a uma caneta que é configurada com várias variáveis. A caneta é movida para cima ou para baixo, permitindo ao utilizador desenhar formas e imagens no ecrã.
 
 Todas as instruções de atributos da caneta devem acabar com um ponto e vírgula e todas as linhas devem permitir a criação de comentários com o símbolo %.
 
@@ -96,7 +104,6 @@ Em ANTLR4 ao definirmos uma gramática formula-se regras sintáticas(_parser_) e
 
 O _pgdraw.g4_ importa a _Elements.g4_ e _Class.g4_ para ter mais simplicidade e organização da gramática.
 
-
 ## 6. Visitors
 
 Como já mencionado anteriormente, na árvore de análise sintática (_parse tree_) gerada pelo parser, pretendemos interagir com cada nó e é aqui que entra o **Visitor**.
@@ -104,11 +111,12 @@ Com esta ferramenta podemos configurar com ações especifícas e personalizadas
 
 **Compiler** e **SemanticAnalysis** são os Visitors que foram implementados neste projeto.
 
-A seguir, demonstramos um exemplo do fluxo do projeto (caneta pode fazer __up__ e __down__), passando pela gramática, depois pela análise semântica e acabando no compilador com o tipo String Template.
+A seguir, demonstramos um exemplo do fluxo do projeto (caneta pode fazer **up** e **down**), passando pela gramática, depois pela análise semântica e acabando no compilador com o tipo String Template.
 
 ### Exemplo - InstructionPenAction
 
 1. Gramática
+
 ```antlr4
 instruction:
 	variable (move | rotate | pause | write)+	# InstructionMoveRotateAction
@@ -118,6 +126,7 @@ instruction:
 ```
 
 2. Análise semântica
+
 ```java
   @Override
   public Boolean visitInstructionPenAction(
@@ -156,11 +165,13 @@ instruction:
 ```
 
 3. String template
+
 ```s
 instruction(variable, action, value, fontsize) ::= "<variable>.<action>(<value><if(fontsize)>, <fontsize><endif>)"
 ```
 
 4. Compiler
+
 ```java
   @Override
   public ST visitInstructionPenAction(
@@ -191,7 +202,7 @@ int par = (3 + 2) * 4;
 string word = "Love" + "C";
 ```
 
-As variáveis também podem ser declaradas com input. 
+As variáveis também podem ser declaradas com input.
 
 ```
 x = int(stdin "x: ");
@@ -207,33 +218,33 @@ p2 -> stdout;
 
 ### Operadores
 
-| Operador | Descrição              |
-| -------- | ---------------------- |
-| +        | Adição                 |
-| -        | Subtração              |
-| /        | Divisão                |
-| //       | Divisão inteira        |== tem menor precedência do que as setas, mas aí nós fazemos.
-| *        | Multiplicação          |
-| ^        | Potência               |
-| ==       | Igual                  |
-| !=       | Diferente              |
-| <        | Menor que              |
-| <=       | Menor ou igual a       |
-| >        | Maior que              |
-| >=       | Maior ou igual a       |
-| and      | E lógico               |
-| or       | Ou lógico              |
-| up       | Levanta a caneta       |
-| down     | Baixa a caneta        |
-| pause   | Pausa o programa por milissegundos |
-
+| Operador | Descrição                          |
+| -------- | ---------------------------------- | ------------------------------------------------------------- |
+| +        | Adição                             |
+| -        | Subtração                          |
+| /        | Divisão                            |
+| //       | Divisão inteira                    | == tem menor precedência do que as setas, mas aí nós fazemos. |
+| \*       | Multiplicação                      |
+| ^        | Potência                           |
+| ==       | Igual                              |
+| !=       | Diferente                          |
+| <        | Menor que                          |
+| <=       | Menor ou igual a                   |
+| >        | Maior que                          |
+| >=       | Maior ou igual a                   |
+| and      | E lógico                           |
+| or       | Ou lógico                          |
+| up       | Levanta a caneta                   |
+| down     | Baixa a caneta                     |
+| pause    | Pausa o programa por milissegundos |
 
 > [!NOTE]
-> A árvore sintática não está a fazer a verificação da precedência para o operador __and__ e para o operador __or__, no entanto, inferimos as regras do python e por isso não criámos regras novas. Por isso, o __and__ percebe o __or__. No caso __==__ (igual), criámos regras para que este tenha menor precedência do que as setas. 
+> A árvore sintática não está a fazer a verificação da precedência para o operador **and** e para o operador **or**, no entanto, inferimos as regras do python e por isso não criámos regras novas. Por isso, o **and** percebe o **or**. No caso **==** (igual), criámos regras para que este tenha menor precedência do que as setas.
 
 ### Tipos de dados
 
 Tipos (**Type**):
+
 - **Angle**
 - **Bool**
 - **Canvas**
@@ -262,13 +273,11 @@ r = real(1);
 r = real("1");
 ```
 
-
 ## 8. Caneta
 
 Existem 2 formas de criar uma caneta em **PDraw**:
 
 1. **Caneta com atributos**: A caneta com atributos é criada com atributos específicos. A declaração da caneta é feita com a definição dos atributos.
-
 
 ```
 define pen PenType1 {
@@ -294,7 +303,6 @@ ou com valores por defeito
 pen psec = new;
 ```
 
-
 | Variável        | Descricão                                                     |
 | --------------- | ------------------------------------------------------------- |
 | **color**       | Cor da caneta que pode ser uma palvra ou um valor hexadecimal |
@@ -310,7 +318,6 @@ pen p1 = new PenType1;
 p1 = p1 + (5,5);
 ```
 
-
 ## 9. Canvas
 
 A canvas é a tela virtual onde são desenhadas as figuras. Por predifinição, a canvas tem 500x500 de tamanho, sem nome e branco. Porém, pode ser alterada:
@@ -324,7 +331,6 @@ define canvas Canvas1 "Example 1" (100,100);
 ```
 Canvas2 background red;
 ```
-
 
 ## 10. Setas de atributos
 
@@ -381,7 +387,7 @@ until (done) {
 
 ## 12. StringTemplates (ST)
 
-Como StringTemplates divimos também em três secções para ser mais legível de leitura e compreensão. 
+Como StringTemplates divimos também em três secções para ser mais legível de leitura e compreensão.
 
 Por exemplo temos a _Class.stg_:
 
@@ -419,11 +425,10 @@ tuple(e1, e2) ::= "(<e1>,<e2>)"
 
 A utilização destes templates vai permitir gerar código ou texto de saída durante a compilação.
 
-
 ## 13. Exemplos
 
-Como mencionado anteriormente o *p1.ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw*, *p4.pdraw* e exemplors criados personalizados para cada ocasião em qonde é testado cada operação para efeitos de de testes.
-  
+Como mencionado anteriormente o _p1.ipdraw_, _p1.pdraw_ , _p2.pdraw_, _p3.pdraw_, _p4.pdraw_ e exemplors criados personalizados para cada ocasião em qonde é testado cada operação para efeitos de de testes.
+
 ```bash
 ├── p1.ipdraw
 ├── p1.pdraw
@@ -457,4 +462,4 @@ Como mencionado anteriormente o *p1.ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw*
 ## 14. Contribuições
 
 Use esta secção para expôr as contribuições individuais dos vários elementos do grupo e que
-  justificam as participações individuais globais apresentadas no início.
+justificam as participações individuais globais apresentadas no início.
