@@ -16,6 +16,11 @@ class DefaultPen(Pen):
         super().__init__()
 
 
+class PenType2__(Pen):
+    def __init__(self) -> None:
+        super().__init__()
+        self.color = "blue"
+        self.position = (int(width__) // 2,int(height__) // 2)
 
 
 def execute(filename: str, pen: Pen):
@@ -28,8 +33,24 @@ def execute(filename: str, pen: Pen):
     visitor.visit(tree)
 
 
-myRealVar__: float = 1.0
-myIntVar__: int = 1
-myIntVar2__: float = (1 + 1 + 1) * 1 + 9 / 8
+width__: float = float(input("width: "))
+height__: float = float(input("height: "))
+Canvas1__ = Canvas("Example p2",(width__,height__))
+p2__ = PenType2__()
+print(p2__)
+print("\n")
+time.sleep(10000/1_000_000)
+pass__: str = "passei"
+p2__.down()
+p2__.backward(float(input("size: ")))
+p2__.forward(10)
+p2__.right(math.degrees(math.radians(144)))
+p2__.forward(10)
+p2__.right(math.degrees(math.radians(144)))
+p2__.forward(10)
+p2__.right(math.degrees(math.radians(144)))
+p2__.forward(10)
+p2__.right(math.degrees(math.radians(144)))
+p2__.forward(10)
 print("Everything is done, please close the window.")
 turtle.done()
