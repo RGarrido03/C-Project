@@ -326,9 +326,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitPause(pdrawParser.PauseContext ctx) {
     ST pause = pdrawTemplate.getInstanceOf("pause");
-    int sec = Integer.parseInt(ctx.INT().getText());
-
-    pause.add("INT", sec);
+    pause.add("INT", visit(ctx.expression()));
     return pause;
   }
 

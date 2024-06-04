@@ -506,12 +506,16 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitPause(pdrawParser.PauseContext ctx) {
-    try {
-      Integer.parseInt(ctx.INT().getText());
-      return true;
-    } catch (NumberFormatException e) {
+    if (!visit(ctx.expression())) {
       return false;
     }
+
+    if (!ctx.expression().symbol.getType().isNumeric()) {
+      ErrorHandling.printError(ctx, "Expression " + ctx.expression().getText() + " is not numeric");
+      return false;
+    }
+
+    return true;
   }
 
   @Override
