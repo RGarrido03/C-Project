@@ -983,6 +983,10 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
     Boolean res = true;
 
     if (!symbolTable.containsKey(ctx.getText())) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s is not defined", ctx.getText())
+      );
       return false;
     }
     ctx.symbol = symbolTable.get(ctx.getText()); // TODO this should be a random string
@@ -1096,25 +1100,15 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         return false;
       }
     }
-
     for (pdrawParser.StatementContext statement : ctx.statement()) {
       res = visit(statement);
+
       if (!res) {
         ErrorHandling.printError(ctx, "Function has errors at body");
         symbolTable = previousScope; // Restaurar o escopo anterior
         return false;
       }
     }
-
-    // // visitar o return
-    // if (ctx.returnStatement() != null) {
-    //   res = visit(ctx.returnStatement());
-    //   if (!res) {
-    //     ErrorHandling.printError(ctx, "Function has errors at return");
-    //     symbolTable = previousScope; // Restaurar o escopo anterior
-    //     return false;
-    //   }
-    // }
 
     // Restaurar o scope anterior
     symbolTable = previousScope;
@@ -1283,23 +1277,31 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitIf(pdrawParser.IfContext ctx) {
+    Map<String, Symbol> previousScope = new HashMap<>(symbolTable);
+    System.out.println(symbolTable.toString() + "PIXAXA");
+
+    Boolean res = true;
+
     if (!visit(ctx.expression())) {
       ErrorHandling.printError(ctx, "Condition is not valid");
-      return false;
+
+      res = false;
     }
 
     if (!ctx.statement().stream().allMatch(this::visit)) {
-      return false;
+      res = false;
     }
 
     if (ctx.elseif() != null && !ctx.elseif().stream().allMatch(this::visit)) {
-      return false;
+      res = false;
     }
 
     if (ctx.else_() != null && !visit(ctx.else_())) {
-      return false;
+      res = false;
     }
-    return ctx.statement().stream().allMatch(this::visit);
+
+    symbolTable = previousScope;
+    return res;
   }
 
   @Override
@@ -1318,17 +1320,19 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitFor(pdrawParser.ForContext ctx) {
+    Map<String, Symbol> previousScope = new HashMap<>(symbolTable);
+    Boolean res = true;
     if (!visit(ctx.assignment(0))) {
       ErrorHandling.printError(
         ctx,
         "Assignment " + ctx.assignment(0).getText() + " is not valid"
       );
-      return false;
+      res = false;
     }
 
     if (!visit(ctx.expression())) {
       ErrorHandling.printError(ctx, "Condition is not valid");
-      return false;
+      res = false;
     }
 
     if (!visit(ctx.assignment(1))) {
@@ -1336,19 +1340,30 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         ctx,
         "Assignment " + ctx.assignment(1).getText() + " is not valid"
       );
-      return false;
+      res = false;
     }
 
-    return ctx.statement().stream().allMatch(this::visit);
+    if (!ctx.statement().stream().allMatch(this::visit)) {
+      res = false;
+    }
+
+    symbolTable = previousScope;
+    return res;
   }
 
   @Override
   public Boolean visitWhile(pdrawParser.WhileContext ctx) {
+    Map<String, Symbol> previousScope = new HashMap<>(symbolTable);
+    Boolean res = true;
     if (!visit(ctx.expression())) {
       ErrorHandling.printError(ctx, "Condition is not valid");
       return false;
     }
-    return ctx.statement().stream().allMatch(this::visit);
+    if (!ctx.statement().stream().allMatch(this::visit)) {
+      res = false;
+    }
+    symbolTable = previousScope;
+    return res;
   }
 
   @Override

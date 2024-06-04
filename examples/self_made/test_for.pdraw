@@ -1,3 +1,5 @@
-for (int i = 0; i < 5; i = i+1) {
+for (int i = 0; i < 5; i++) {
    i -> stdout;
 };
+% Aqui tambem da asneira porque o i nao existe fora do ciclo
+%i -> stdout;

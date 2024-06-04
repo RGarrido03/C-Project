@@ -1,16 +1,16 @@
 %% this should work
 real myRealVar = 1.0;
 int myIntVar = 1;
-real myIntVar2 = (1+1+1)*1+9 /8;
-real myIntVar3 = 9 / 8 + myIntVar2;
-string myStringVar = "Hello";
-bool myBoolVar = true;
-myRealVar = 2.0;
-
-string myStringVar2 = stdin "Enter a string: ";
-myStringVar2 = stdin "Enter another string: ";
-myStringVar2 = stdin "Enter another string: ";
-string StdinLouco = stdin stdin "teste"; 
+real myIntVar2 = (1+1+1)*1+9//8;
+%real myIntVar3 = 9/8 + myIntVar2;
+%string myStringVar = "Hello";
+%bool myBoolVar = true;
+%myRealVar = 2.0;
+%
+%string myStringVar2 = stdin "Enter a string: ";
+%myStringVar2 = stdin "Enter another string: ";
+%myStringVar2 = stdin "Enter another string: ";
+%string StdinLouco = stdin stdin "teste"; 
 
 % this should not work
 % comment multiple lines and let one uncommented

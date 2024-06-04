@@ -28,6 +28,17 @@ def int recursiveWithPen(pen p, int i){
     };
     return 0;
 };
+def int recursiveWithPen2(pen p, int i){
+    if (false){
+        p left (360 / 100) deg;
+        p forward 10 * PI;
+        return recursiveWithPen(p,i+1);
+    };
+    % return 0; %% TODO isto tem de dar um warning da asneira
+};
+
+
+
 
 
 def int funcPartir(pen p){
@@ -52,6 +63,7 @@ define pen PenType1 {
 pen p = new PenType1;
 p down;
 int resultadoRecursivoComPen = recursiveWithPen(p,0);
+int resultadoRecursivoComPen2 = recursiveWithPen2(p,0);
 
 % isto da asneira int resultado2 = myFunc1(1);
 

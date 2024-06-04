@@ -8,8 +8,8 @@ expression
 	// SEEME this shit makes everything wrong
 	| op = ('+' | '-') e2 = expression						# ExprUnary
 	| op = ('~' | '!' | 'not') expression					# ExprConditionNot
-	| expression op = ('==' | '!=') expression				# ExprConditionEquals
 	| expression op = ('<' | '<=' | '>' | '>=') expression	# ExprConditionOrderRelation
+	| expression op = ('==' | '!=') expression				# ExprConditionEquals
 	| expression op = ('and' | 'or') expression				# ExprConditionAndOr
 	| typeCast												# ExprCast
 	| stdin													# ExprStdIn

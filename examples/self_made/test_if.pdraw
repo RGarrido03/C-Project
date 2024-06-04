@@ -37,3 +37,14 @@ if (myStringVar == "Hi" or myIntVar == 1) {
 if (myIntVar < 5) {
     "Less than" -> stdout;
 };
+
+% AQUI DA ASNEIRA porque acede a variaveis de scope
+%int ar = 6;
+%if (ar > 5) {
+%    "Greater than" -> stdout;
+%    int tryVar = 1;
+%    tryVar = 2;
+%};
+%
+%tryVar -> stdout;
+%
