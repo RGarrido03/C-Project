@@ -219,11 +219,13 @@ p2 -> stdout;
 ### Operadores
 
 | Operador | Descrição                          |
-| -------- | ---------------------------------- | ------------------------------------------------------------- |
+| -------- | ---------------------------------- |
 | +        | Adição                             |
+| ++       | Incremento                         |
+| --       | Decremento                         |
 | -        | Subtração                          |
 | /        | Divisão                            |
-| //       | Divisão inteira                    | == tem menor precedência do que as setas, mas aí nós fazemos. |
+| //       | Divisão inteira                    |
 | \*       | Multiplicação                      |
 | ^        | Potência                           |
 | ==       | Igual                              |
@@ -239,7 +241,7 @@ p2 -> stdout;
 | pause    | Pausa o programa por milissegundos |
 
 > [!NOTE]
-> A árvore sintática não está a fazer a verificação da precedência para o operador **and** e para o operador **or**, no entanto, inferimos as regras do python e por isso não criámos regras novas. Por isso, o **and** percebe o **or**. No caso **==** (igual), criámos regras para que este tenha menor precedência do que as setas.
+> A árvore sintática não está a fazer a verificação da precedência para o operador **and** e para o operador **or**, no entanto, inferimos as regras do python e por isso não criámos regras novas. Por isso, o **and** precede o **or**. No caso **==** (igual), criámos regras para que este tenha menor precedência do que as setas.
 
 ### Tipos de dados
 
