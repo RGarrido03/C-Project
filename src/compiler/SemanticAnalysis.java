@@ -1,10 +1,5 @@
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 import types.*;
 
@@ -814,17 +809,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return true;
     }
 
-    // Concatenação de strings
-    if (
-      ctx.op.getText().equals("+") &&
-      left_ctx.symbol.getType().isString() &&
-      right_ctx.symbol.getType().isString()
-    ) {
-      ctx.symbol =
-        new Symbol(new StringType(), left_ctx.getText() + right_ctx.getText());
-      return true;
-    }
-
     ErrorHandling.printError(
       ctx,
       String.format(
@@ -974,7 +958,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitExprBool(pdrawParser.ExprBoolContext ctx) {
     Boolean res = true;
     String x = ctx.BOOL().getText();
-    ctx.symbol = new Symbol(new BoolType(), (x)); // TODO this should be a random string
+    ctx.symbol = new Symbol(new BoolType(), (x));
     return res;
   }
 
@@ -989,7 +973,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       );
       return false;
     }
-    ctx.symbol = symbolTable.get(ctx.getText()); // TODO this should be a random string
+    ctx.symbol = symbolTable.get(ctx.getText());
     return res;
   }
 

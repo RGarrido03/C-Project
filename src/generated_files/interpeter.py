@@ -21,11 +21,9 @@ def parseType(type_):
 
 
 def handleCondition(ctx,exp1, exp2):
-    if not ((isinstance(exp1, Number) and isinstance(exp2, Number)) or (
-        isinstance(exp1, type(exp2)))):
+    if not ((isinstance(exp1, Number) and isinstance(exp2, Number)) or (isinstance(exp1, type(exp2)))):
 
-        ErrorHandling.print_error_ctx(ctx,f"Values '{exp1}' and '{\
-                                exp2}' are not of the same type")
+        ErrorHandling.print_error_ctx(ctx,f"Values '{exp1}' and '{exp2}' are not of the same type")
         sys.exit(1)
     return True
 
@@ -49,8 +47,7 @@ class SymbolTable:
         
 
         else:
-            ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' and value '{\
-                                    value}' are not of the same type")
+            ErrorHandling.print_error_ctx(ctx, f"Variable '{name}' and value '{value}' are not of the same type")
             sys.exit(1)
 
     def get_variable(self,ctx, name):
@@ -67,8 +64,7 @@ class SymbolTable:
             elif isinstance(self.variables[name], type(value)):
                 self.variables[name] = value
             else:
-                ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' and value '{\
-                                        value}' are not of the same type")
+                ErrorHandling.print_error_ctx(ctx, f"Variable '{name}' and value '{value}' are not of the same type")
                 sys.exit(1)
         else:
             ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' not found")

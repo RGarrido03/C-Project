@@ -45,12 +45,11 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
 
 ## 2. Como executar
 
+Dar permissão para executar o script _run.sh_ (executa antlr4-build,run,cria enviroment):
+
 ```bash
-antlr4 -o ../compiler -visitor pdraw.g4 -listener pdraw.g4
-cd src
-../antlr4-build_mod.sh -o compiler
-# TO RUN WITH GUI
-# cat ../../examples/p1.pdraw  | antlr4-test pdraw main -gui
+chmod +x ./run.sh
+./run.sh
 ```
 
 ## 3. Estrutura
@@ -106,6 +105,76 @@ Com esta ferramenta podemos configurar com ações especifícas e personalizadas
 
 **Compiler** e **SemanticAnalysis** são os Visitors que foram implementados neste projeto.
 
+A seguir, demonstramos um exemplo do fluxo do projeto (caneta pode fazer __up__ e __down__), passando pela gramática, depois pela análise semântica e acabando no compilador com o tipo String Template.
+
+### Exemplo - InstructionPenAction
+
+1. Gramática
+```antlr4
+instruction:
+	variable (move | rotate | pause | write)+	# InstructionMoveRotateAction
+	| variable penAction						# InstructionPenAction
+	| variable '<-' arrowProps					# InstructionArrowProps;
+
+```
+
+2. Análise semântica
+```java
+  @Override
+  public Boolean visitInstructionPenAction(
+    pdrawParser.InstructionPenActionContext ctx
+  ) {
+    String variable = ctx.variable().getText();
+    // if variable (pen) is not in the Symbol Table.
+    if (!symbolTable.containsKey(variable)) {
+      ErrorHandling.printError(
+        ctx,
+        String.format("Variable %s not defined", variable)
+      );
+      return false;
+    // variable is Type PEN. We only allow for the words "down" and "up". If so, the return value is true and it passes the semantic analysis.
+    } else {
+      Type type = symbolTable.get(variable).getType();
+      if (type instanceof PenTAD) {
+        Boolean penAction =
+          ctx.penAction().getText().equals("down") ||
+          ctx.penAction().getText().equals("up");
+        if (penAction) {
+          return true;
+        } else {
+          ErrorHandling.printError(ctx, "Instructions are not valid");
+          return false;
+        }
+      } else {
+        ErrorHandling.printError(
+          ctx,
+          String.format("Variable %s is not a pen", variable)
+        );
+        return false;
+      }
+    }
+  }
+```
+
+3. String template
+```s
+instruction(variable, action, value, fontsize) ::= "<variable>.<action>(<value><if(fontsize)>, <fontsize><endif>)"
+```
+
+4. Compiler
+```java
+  @Override
+  public ST visitInstructionPenAction(
+    pdrawParser.InstructionPenActionContext ctx
+  ) {
+    // add tokens in StringTemplate
+    ST res = pdrawTemplate.getInstanceOf("instruction");
+    res.add("variable", visit(ctx.variable()));
+    res.add("action", ctx.penAction().getText());
+    return res;
+  }
+```
+
 ## 7. Variáveis, métodos, operadores e tipos de dados
 
 ### Variáveis e métodos
@@ -144,7 +213,7 @@ p2 -> stdout;
 | +        | Adição                 |
 | -        | Subtração              |
 | /        | Divisão                |
-| //       | Divisão inteira        |
+| //       | Divisão inteira        |== tem menor precedência do que as setas, mas aí nós fazemos.
 | *        | Multiplicação          |
 | ^        | Potência               |
 | ==       | Igual                  |
@@ -158,6 +227,10 @@ p2 -> stdout;
 | up       | Levanta a caneta       |
 | down     | Baixa a caneta        |
 | pause   | Pausa o programa por milissegundos |
+
+
+> [!NOTE]
+> A árvore sintática não está a fazer a verificação da precedência para o operador __and__ e para o operador __or__, no entanto, inferimos as regras do python e por isso não criámos regras novas. Por isso, o __and__ percebe o __or__. No caso __==__ (igual), criámos regras para que este tenha menor precedência do que as setas. 
 
 ### Tipos de dados
 
@@ -343,12 +416,14 @@ A utilização destes templates vai permitir gerar código ou texto de saída du
 
 ## 13. Exemplos
 
-Como mencionado anteriormente o *ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw* e exemplors criados personalizados para cada ocasião em qonde é testado cada operação para efeitos de de testes.
+Como mencionado anteriormente o *p1.ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw*, *p4.pdraw* e exemplors criados personalizados para cada ocasião em qonde é testado cada operação para efeitos de de testes.
   
 ```bash
+├── p1.ipdraw
 ├── p1.pdraw
 ├── p2.pdraw
 ├── p3.pdraw
+├── p4.pdraw
 └── self_made
     ├── test_addpoint.pdraw
     ├── test_assignment.pdraw
@@ -361,6 +436,7 @@ Como mencionado anteriormente o *ipdraw*, *p1.pdraw* , *p2.pdraw*, *p3.pdraw* e 
     ├── test_create_canvas.pdraw
     ├── test_definepen_assignpen.pdraw
     ├── test_for.pdraw
+    ├── test_function.pdraw
     ├── test_if.pdraw
     ├── test_ipdraw.ipdraw
     ├── test_multiple_ass_one_line.pdraw
