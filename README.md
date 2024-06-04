@@ -45,13 +45,10 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
 
 ## 2. Como executar
 
-Give execute permission to your script:
+Dar permissão para executar o script _run.sh_ (executa antlr4-build,run,cria enviroment):
+
 ```bash
 chmod +x ./run.sh
-```
-
-And to run your script:
-```bash
 ./run.sh
 ```
 
