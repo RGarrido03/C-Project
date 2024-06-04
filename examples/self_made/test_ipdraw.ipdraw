@@ -1,92 +1,91 @@
 
-int a =[10,20];
+int arr =[10,20];
 
-a[0]=20;
-a[10]=30;
+arr[0]=20;
+arr[10]=30;
 
-a[0] -> stdout;
-len a -> stdout;
-del a[1];
-len a -> stdout;
-
-
+arr[0] -> stdout;
+len arr -> stdout;
+del arr[1];
+len arr -> stdout;
 
 
-%position (0,100);
-%down;
-%pressure 1;
-%thickness 5;
-%color red;
-%write "Hello World",20;
-%
-%pause 10000000;
 
-%stdin  stdin "how are you? "  -> stdout;
-%
-%int a = 2;
-%a ++ ;
-%a -> stdout;
-%int b = a++ * 2;
-%b -> stdout;
-%a-- -> stdout;
-%
-%int ola = 2, oi = 3;
-%ola -> stdout;
-%oi -> stdout;
 
-% if( 1 neq 1){
-%     "sim" -> stdout;
-% } else if (1 gt 2){
-%     "nao" -> stdout;
-% } else if (1 gt 2){
-%     "nao2" -> stdout;
-% } else {
-%     "ola" -> stdout;
-%}
-%
-%position (100,100);
-%down;
-%
-%pressure 1;
-%thickness 5;
-%color red;
-%forward 100;
-%right 90º;
-%forward 100;
-%right 90º;
-%forward 100;
-%right 90º;
-%forward 100;
-%up;
-%
-%
-%position (200,200);
-%thickness 10;
-%color blue;
-%down;
-%forward 100;
-%right 90º;
-%forward 100;
-%right 90º;
-%forward 100;
-%right 90º;
-%forward 100;
-%up;
-%
-%% usar a abordagem com while
-%position (0,0);
-%thickness 2;
-%color green;
-%int i = 0;
-%down;
-%while (i lt 5) {
-%   forward 100;
-%   right 90º;
-%   i = i + 1;
-%};
-%
-%up;
-%"Acabei" " junta te " "please" -> stdout;
-%
-%
-%
+position (0,100);
+down;
+pressure 1;
+thickness 5;
+color red;
+write "Hello World",20;
+
+pause 10000000;
+
+stdin  stdin "how are you? "  -> stdout;
+
+int a = 2;
+a ++ ;
+a -> stdout;
+int b = a++ * 2;
+b -> stdout;
+a-- -> stdout;
+
+int ola = 2, oi = 3;
+ola -> stdout;
+oi -> stdout;
+
+ if( 1 neq 1){
+     "sim" -> stdout;
+ } else if (1 gt 2){
+     "nao" -> stdout;
+ } else if (1 gt 2){
+     "nao2" -> stdout;
+ } else {
+     "ola" -> stdout;
+};
+
+position (100,100);
+down;
+
+pressure 1;
+thickness 5;
+color red;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+up;
+
+
+position (200,200);
+thickness 10;
+color blue;
+down;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+right 90º;
+forward 100;
+up;
+
+% usar a abordagem com while
+position (0,0);
+thickness 2;
+color green;
+int i = 0;
+down;
+while (i lt 5) {
+   forward 100;
+   right 90º;
+   i = i + 1;
+};
+
+up;
+"Acabei" " junta te " "please" -> stdout;
+
+
