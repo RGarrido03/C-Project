@@ -334,6 +334,12 @@ define canvas Canvas1 "Example 1" (100,100);
 Canvas2 background red;
 ```
 
+Podemos também definir qual a canvas ativa:
+
+```
+set Canvas1;
+```
+
 ## 10. Setas de atributos
 
 As setas de atributos são usadas quando queremos alterar um atributo de uma caneta. Por exemplo, se quisermos alterar a cor de uma caneta, podemos fazer:
