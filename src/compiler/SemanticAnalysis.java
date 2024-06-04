@@ -359,7 +359,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return false;
     }
     if (!symbolTable.containsKey(name)) {
-      ErrorHandling.printInfo(expressionCtx.getText());
       System.out.println(
         expressionCtx.symbol.getType().toString() + " " + type
       );
@@ -414,7 +413,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         return false;
       }
       if (!symbolTable.containsKey(name)) {
-        ErrorHandling.printInfo(expressionCtx.getText());
         System.out.println(
           expressionCtx.symbol.getType().toString() + " " + type
         );
@@ -949,7 +947,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitExprInteger(pdrawParser.ExprIntegerContext ctx) {
     Boolean res = true;
     String x = ctx.INT().getText();
-    ErrorHandling.printInfo(ctx.getText());
     ctx.symbol = new Symbol(new IntType(), x);
     return res;
   }
