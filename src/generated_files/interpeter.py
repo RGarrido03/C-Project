@@ -47,8 +47,7 @@ class SymbolTable:
         
 
         else:
-            ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' and value '{\
-                                    value}' are not of the same type")
+            ErrorHandling.print_error_ctx(ctx, f"Variable '{name}' and value '{value}' are not of the same type")
             sys.exit(1)
 
     def get_variable(self,ctx, name):
@@ -65,8 +64,7 @@ class SymbolTable:
             elif isinstance(self.variables[name], type(value)):
                 self.variables[name] = value
             else:
-                ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' and value '{\
-                                        value}' are not of the same type")
+                ErrorHandling.print_error_ctx(ctx, f"Variable '{name}' and value '{value}' are not of the same type")
                 sys.exit(1)
         else:
             ErrorHandling.print_error_ctx(ctx,f"Variable '{name}' not found")
