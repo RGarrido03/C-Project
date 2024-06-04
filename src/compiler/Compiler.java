@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
@@ -523,7 +526,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitExprString(pdrawParser.ExprStringContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("other");
-    res.add("text", ctx.STRING().getText());
+    res.add("text", ctx.STRING().stream().map(ParseTree::getText).collect(Collectors.joining(" ")));
     return res;
   }
 

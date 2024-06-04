@@ -18,7 +18,7 @@ expression
 	| getLength												# ExprLength
 	| INT													# ExprInteger
 	| FLOAT													# ExprFloat // FIXME change this
-	| STRING												# ExprString
+	| STRING+												# ExprString
 	| BOOL													# ExprBool
 	| variable												# ExprVariable
 	| functionCall											# ExprFunctionCall
