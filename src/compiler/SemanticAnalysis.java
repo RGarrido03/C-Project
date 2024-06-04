@@ -949,8 +949,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitExprString(pdrawParser.ExprStringContext ctx) {
     Boolean res = true;
-    String x = ctx.STRING().getText();
-    ctx.symbol = new Symbol(new StringType(), (x)); // TODO this should be a random string
+    Optional<String> x = ctx.STRING().stream().map(ParseTree::getText).reduce((a, b) -> a + b);
+    ctx.symbol = new Symbol(new StringType(), x.orElse(""));
     return res;
   }
 
