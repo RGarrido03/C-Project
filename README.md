@@ -33,7 +33,7 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
   - [11. Instruções condicionais e loops](#11-instruções-condicionais-e-loops)
     - [If](#if)
     - [For](#for)
-    - [While](#while)
+    - [While/Until](#whileuntil)
   - [12. StringTemplates (ST)](#12-stringtemplates-st)
   - [13. Exemplos](#13-exemplos)
   - [14. Contribuições](#14-contribuições)
@@ -380,9 +380,9 @@ for (int i = 0; i < 5; i = i+1) {
 };
 ```
 
-### While
+### While/Until
 
-Exemplo de um **while**:
+Exemplo de um **until**:
 
 ```
 until (done) {
