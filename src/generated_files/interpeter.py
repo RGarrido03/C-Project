@@ -558,7 +558,7 @@ class Interpreter(ipdrawVisitor):
         self.pen.set_position(self.visit(ctx.tuple_()))
 
         return None
-    def visitArrowPosition(self, ctx: ipdrawParser.ArrowPositionContext):
+    def visitArrowSpeed(self, ctx: ipdrawParser.ArrowSpeedContext):
         self.pen.set_speed(self.visit(ctx.expression()))
 
         return None
