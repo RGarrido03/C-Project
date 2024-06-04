@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 cd src/compiler || exit 1
 
 # Build compiler
@@ -18,7 +20,7 @@ elif [ -d "env" ]; then
 else
   # Create venv
   read -r -p "No virtual environment found. Create one? (Y/n) " confirm
-  if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
+  if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ] || [ -z "$confirm" ]; then
     python3 -m venv venv
     source venv/bin/activate
     pip install antlr4-python3-runtime
