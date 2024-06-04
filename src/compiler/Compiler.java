@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
+
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-import types.RealType;
-import types.Symbol;
 
 @SuppressWarnings("CheckReturnValue")
 public class Compiler extends pdrawBaseVisitor<ST> {
@@ -123,8 +122,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitInstructionMoveRotateAction(
-    pdrawParser.InstructionMoveRotateActionContext ctx
-  ) {
+      pdrawParser.InstructionMoveRotateActionContext ctx) {
     ST main = pdrawTemplate.getInstanceOf("instructionPipeline");
 
     for (int a = 1; a < ctx.children.size(); a++) {
@@ -133,9 +131,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
         continue;
       }
       main.add(
-        "statements",
-        visit(ctx.variable()).render() + visit(ctx.children.get(a)).render()
-      );
+          "statements",
+          visit(ctx.variable()).render() + visit(ctx.children.get(a)).render());
     }
 
     return main;
@@ -148,10 +145,39 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     res.add("value", visit(ctx.expression()));
     return res;
   }
+  
+  
+  @Override
+  public ST visitArray(pdrawParser.ArrayContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("array");
+    res.add("variable", visit(ctx.variable()));
+    for(pdrawParser.ExpressionContext exp : ctx.expression()){
+      res.add("elements", visit(exp));
+    }
+    return res;
+  }
+
+  @Override
+  public ST visitAddArray(pdrawParser.AddArrayContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("arrayAdd");
+    res.add("variable", visit(ctx.variable()));
+    res.add("index", visit(ctx.expression(0)));
+    res.add("value", visit(ctx.expression(1)));
+
+    return res;
+  }
+
+  @Override
+  public ST visitRemoveArray(pdrawParser.RemoveArrayContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("arrayRemove");
+    res.add("variable", visit(ctx.variable()));
+    res.add("index", visit(ctx.expression()));
+
+    return res;
+  }
 
   @Override
   public ST visitWrite(pdrawParser.WriteContext ctx) {
-    // write: 	'write' expression ',' expression;
     ST res = pdrawTemplate.getInstanceOf("instruction");
     res.add("action", "write");
     res.add("value", visit(ctx.expression(0)));
@@ -187,8 +213,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitInstructionPenAction(
-    pdrawParser.InstructionPenActionContext ctx
-  ) {
+      pdrawParser.InstructionPenActionContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("instruction");
     res.add("variable", visit(ctx.variable()));
     res.add("action", ctx.penAction().getText());
@@ -197,8 +222,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitInstructionArrowProps(
-    pdrawParser.InstructionArrowPropsContext ctx
-  ) {
+      pdrawParser.InstructionArrowPropsContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("arrowProps");
     res.add("variable", visit(ctx.variable()));
     res.add("value1", visit(ctx.arrowProps()));
@@ -219,8 +243,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitAssignmentMultipleVars(
-    pdrawParser.AssignmentMultipleVarsContext ctx
-  ) {
+      pdrawParser.AssignmentMultipleVarsContext ctx) {
     String type = ctx.Type().getText();
     ST buffer = pdrawTemplate.getInstanceOf("other");
     System.out.println("VisitAssignmentMultipleVars");
@@ -232,7 +255,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
       // se o i for impar
       if (!(i % 2 == 0)) {
         vars.add(visit(ctx.getChild(i)).render());
-      } else vars.add(ctx.getChild(i).getText());
+      } else
+        vars.add(ctx.getChild(i).getText());
     }
 
     for (int i = 0; i < vars.size(); i += 3) {
@@ -250,8 +274,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitAssignmentVarsNoValue(
-    pdrawParser.AssignmentVarsNoValueContext ctx
-  ) {
+      pdrawParser.AssignmentVarsNoValueContext ctx) {
     String type = ctx.Type().getText();
 
     ST res = pdrawTemplate.getInstanceOf("assignment");
@@ -264,7 +287,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
       // se o i for impar
       if (!(i % 2 == 0)) {
         vars.add(visit(ctx.getChild(i)).render());
-      } else vars.add(ctx.getChild(i).getText());
+      } else
+        vars.add(ctx.getChild(i).getText());
     }
 
     for (int i = 0; i < vars.size(); i += 1) {
@@ -308,9 +332,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitPause(pdrawParser.PauseContext ctx) {
     ST pause = pdrawTemplate.getInstanceOf("pause");
-    int sec = Integer.parseInt(ctx.INT().getText());
-
-    pause.add("INT", sec);
+    pause.add("INT", visit(ctx.expression()));
     return pause;
   }
 
@@ -342,7 +364,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitCreateCanvas(pdrawParser.CreateCanvasContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("createCanvasClass");
     res.add("canvasName", visit(ctx.variable()));
-    //TODO STring title can dar asneira
+    // TODO STring title can dar asneira
     res.add("title", ctx.STRING().getText());
     if (ctx.tuple() != null) {
       res.add("tuple", visit(ctx.tuple()));
@@ -356,7 +378,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     res.add("canvasName", visit(ctx.variable()));
     if (ctx.HexaColor() != null) {
       res.add("color", ctx.HexaColor().getText());
-    } else res.add("color", ctx.Word().getText());
+    } else
+      res.add("color", ctx.Word().getText());
 
     return res;
   }
@@ -396,25 +419,22 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("other");
     if (ctx.expression() != null) {
       res.add(
-        "text",
-        ctx.op.getText() + "(" + visit(ctx.expression()).render() + ")"
-      );
+          "text",
+          ctx.op.getText() + "(" + visit(ctx.expression()).render() + ")");
     } else if (ctx.angle() != null) {
       res.add(
-        "text",
-        ctx.op.getText() + "(" + visit(ctx.angle()).render() + ")"
-      );
+          "text",
+          ctx.op.getText() + "(" + visit(ctx.angle()).render() + ")");
     } else if (ctx.tuple() != null) {
       res.add(
-        "text",
-        ctx.op.getText() + "(" + visit(ctx.tuple()).render() + ")"
-      );
+          "text",
+          ctx.op.getText() + "(" + visit(ctx.tuple()).render() + ")");
     } else if (ctx.Word() != null) {
       res.add("text", ctx.op.getText() + "(\"" + ctx.Word().getText() + "\")");
-    } else res.add(
-      "text",
-      ctx.op.getText() + "(" + visit(ctx.HexaColor()).render() + ")"
-    );
+    } else
+      res.add(
+          "text",
+          ctx.op.getText() + "(" + visit(ctx.HexaColor()).render() + ")");
 
     return res;
   }
@@ -424,7 +444,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("object");
     res.add("variable", visit(ctx.variable(0)));
 
-    if (ctx.variable(1) != null) res.add("penType", visit(ctx.variable(1)));
+    if (ctx.variable(1) != null)
+      res.add("penType", visit(ctx.variable(1)));
     return res;
   }
 
@@ -447,6 +468,16 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   @Override
   public ST visitExprIncDec(pdrawParser.ExprIncDecContext ctx) {
     return visit(ctx.incdec());
+  }
+
+  @Override
+  public ST visitExprGetArray(pdrawParser.ExprGetArrayContext ctx) {
+    return visit(ctx.getArray());
+  }
+
+  @Override
+  public ST visitExprGetLength(pdrawParser.ExprGetLengthContext ctx) {
+    return visit(ctx.getLength());
   }
 
   @Override
@@ -495,16 +526,14 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("other");
     String str = ctx.BOOL().getText();
     res.add(
-      "text",
-      str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase()
-    );
+        "text",
+        str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase());
     return res;
   }
 
   @Override
   public ST visitExprAddSubMultDivModPow(
-    pdrawParser.ExprAddSubMultDivModPowContext ctx
-  ) {
+      pdrawParser.ExprAddSubMultDivModPowContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("expression");
     res.add("e1", visit(ctx.expression(0)).render());
     res.add("op", ctx.op.getText());
@@ -534,8 +563,10 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("incdec");
     ST str = visit(ctx.variable());
     String op = ctx.op.getText();
-    if (op.equals("++")) op = "+";
-    if (op.equals("--")) op = "-";
+    if (op.equals("++"))
+      op = "+";
+    if (op.equals("--"))
+      op = "-";
 
     res.add("variable", str);
     res.add("op", op);
@@ -547,6 +578,21 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = elementsTemplate.getInstanceOf("tuple");
     res.add("e1", visit(ctx.expression(0)));
     res.add("e2", visit(ctx.expression(1)));
+    return res;
+  }
+
+  @Override
+  public ST visitGetLength(pdrawParser.GetLengthContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("arrayGetLength");
+    res.add("variable", visit(ctx.variable()));
+    return res;
+  }
+
+  @Override
+  public ST visitGetArray(pdrawParser.GetArrayContext ctx) {
+    ST res = elementsTemplate.getInstanceOf("arrayGetArray");
+    res.add("variable", visit(ctx.variable()));
+    res.add("index", visit(ctx.expression()));
     return res;
   }
 
@@ -620,8 +666,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("if");
     res.add("condition", visit(ctx.expression()));
     ctx
-      .statement()
-      .forEach(statement -> res.add("statements", visit(statement)));
+        .statement()
+        .forEach(statement -> res.add("statements", visit(statement)));
 
     if (ctx.elseif() != null) {
       ctx.elseif().forEach(elseif -> res.add("elif", visit(elseif)));
@@ -638,8 +684,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     ST res = pdrawTemplate.getInstanceOf("elif");
     res.add("condition", visit(ctx.expression()));
     ctx
-      .statement()
-      .forEach(statement -> res.add("statements", visit(statement)));
+        .statement()
+        .forEach(statement -> res.add("statements", visit(statement)));
     return res;
   }
 
@@ -647,8 +693,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitElse(pdrawParser.ElseContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("else");
     ctx
-      .statement()
-      .forEach(statement -> res.add("statements", visit(statement)));
+        .statement()
+        .forEach(statement -> res.add("statements", visit(statement)));
     return res;
   }
 
@@ -658,8 +704,8 @@ public class Compiler extends pdrawBaseVisitor<ST> {
     res.add("assignment", visit(ctx.assignment(0)));
     res.add("condition", visit(ctx.expression()));
     ctx
-      .statement()
-      .forEach(statement -> res.add("statements", visit(statement)));
+        .statement()
+        .forEach(statement -> res.add("statements", visit(statement)));
     res.add("statements", visit(ctx.assignment(1)));
     return res;
   }
@@ -668,18 +714,18 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   public ST visitWhile(pdrawParser.WhileContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("while");
     System.out.println(ctx.op.getText());
-    if (ctx.op.getText().equals("until")) res.add("isUntil", "true");
+    if (ctx.op.getText().equals("until"))
+      res.add("isUntil", "true");
     res.add("condition", visit(ctx.expression()));
     ctx
-      .statement()
-      .forEach(statement -> res.add("statements", visit(statement)));
+        .statement()
+        .forEach(statement -> res.add("statements", visit(statement)));
     return res;
   }
 
   @Override
   public ST visitExprConditionOrderRelation(
-    pdrawParser.ExprConditionOrderRelationContext ctx
-  ) {
+      pdrawParser.ExprConditionOrderRelationContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("expression");
     res.add("e1", visit(ctx.expression(0)));
     res.add("op", ctx.op.getText());
@@ -698,8 +744,7 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExprConditionEquals(
-    pdrawParser.ExprConditionEqualsContext ctx
-  ) {
+      pdrawParser.ExprConditionEqualsContext ctx) {
     ST res = pdrawTemplate.getInstanceOf("expression");
     res.add("e1", visit(ctx.expression(0)));
     res.add("op", ctx.op.getText());

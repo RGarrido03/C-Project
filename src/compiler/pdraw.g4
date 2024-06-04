@@ -18,10 +18,20 @@ statement: (
 		| pause
 		| instructionsCanvas
 		| incdec
+		| array
+		| addArray
+		| removeArray
 		| functionDefinition
 		| functionCall /// apenas nas funcoes
 		| returnStatement // Nao permitir no semantico que seja usado o return fora de uma funcao
 	) ';';
+
+
+array: Type variable '=' '[' (expression (',' expression)*)? ']';
+
+addArray: variable '[' expression ']' '=' expression;
+
+removeArray: 'del' variable '[' expression ']';
 
 // high level stuff Function Definitions
 functionDefinition:
@@ -69,7 +79,7 @@ assignment
 stdin: 'stdin' expression;
 
 // Medium level
-pause: 'pause' INT;
+pause: 'pause' expression;
 print:
 	(expression) '->' 'stdout'		# stdout
 	| (expression) '->' 'stderr'	# stderr;

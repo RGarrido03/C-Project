@@ -76,6 +76,12 @@ pdrawListener.java
 pdrawParser.java
 pdrawVisitor.java
 
+# ipdraw.g4 garbage
+ipdraw.interp
+ipdraw.tokens
+ipdrawLexer.interp
+ipdrawLexer.tokens
+
 # python garbage
 *.pyc
 *.pyo

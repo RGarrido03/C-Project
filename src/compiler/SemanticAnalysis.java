@@ -498,10 +498,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitPause(pdrawParser.PauseContext ctx) {
-    try {
-      Integer.parseInt(ctx.INT().getText());
-      return true;
-    } catch (NumberFormatException e) {
+    if (!visit(ctx.expression())) {
       return false;
     }
   }
@@ -937,7 +934,6 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   public Boolean visitExprInteger(pdrawParser.ExprIntegerContext ctx) {
     Boolean res = true;
     String x = ctx.INT().getText();
-    ErrorHandling.printInfo(ctx.getText());
     ctx.symbol = new Symbol(new IntType(), x);
     return res;
   }

@@ -4,3 +4,4 @@ forward 10;
 left 45º;
 backward 5;
 
+forward 200 left 90º forward 200 right 90º forward 100;
