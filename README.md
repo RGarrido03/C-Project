@@ -45,9 +45,14 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
 
 ## 2. Como executar
 
+Give execute permission to your script:
 ```bash
-antlr4 -o ../compiler -visitor pdraw.g4 -listener pdraw.g4
-cd src
+chmod +x ./run.sh
+```
+
+And to run your script:
+```bash
+./run.sh
 ```
 
 ## 3. Estrutura
@@ -228,7 +233,7 @@ p2 -> stdout;
 
 
 > [!NOTE]
-> Existe precedência para o operador __and__ e só depois para o operador __or__, no entanto, inferimos as regras do python e por isso não criámos regras novas. No caso __==__ (igual), criámos regras para que este tenha menor precedência do que as setas. 
+> A árvore sintática não está a fazer a verificação da precedência para o operador __and__ e para o operador __or__, no entanto, inferimos as regras do python e por isso não criámos regras novas. Por isso, o __and__ percebe o __or__. No caso __==__ (igual), criámos regras para que este tenha menor precedência do que as setas. 
 
 ### Tipos de dados
 
