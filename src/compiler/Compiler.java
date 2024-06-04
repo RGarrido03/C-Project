@@ -726,6 +726,13 @@ public class Compiler extends pdrawBaseVisitor<ST> {
   }
 
   @Override
+  public ST visitExprConditionNot(pdrawParser.ExprConditionNotContext ctx) {
+    ST res = pdrawTemplate.getInstanceOf("not");
+    res.add("condition", visit(ctx.expression()));
+    return res;
+  }
+
+  @Override
   public ST visitExprConditionOrderRelation(
     pdrawParser.ExprConditionOrderRelationContext ctx
   ) {

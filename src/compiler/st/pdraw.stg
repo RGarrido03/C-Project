@@ -96,6 +96,8 @@ print(expression, stdErr) ::= "print(<expression><if(stdErr)>, file=sys.stderr<e
 
 input(text) ::= "input(<text>)"
 
+not(condition) ::= "not (<condition>)"
+
 if(condition, statements, elif, elseStat) ::= <<
 
 if <condition>:

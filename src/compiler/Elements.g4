@@ -7,6 +7,7 @@ expression
 	| expression op = ('+' | '-' | '/' | '//' | '*' | '^') expression	# ExprAddSubMultDivModPow
 	// SEEME this shit makes everything wrong
 	| op = ('+' | '-') e2 = expression						# ExprUnary
+	| op = ('~' | '!' | 'not') expression			        # ExprConditionNot
 	| expression op = ('==' | '!=') expression				# ExprConditionEquals
 	| expression op = ('<' | '<=' | '>' | '>=') expression	# ExprConditionOrderRelation
 	| expression op = ('and' | 'or') expression				# ExprConditionAndOr
@@ -57,7 +58,6 @@ typeCast: Type '(' expression ')';
 // Numerical
 INT: [0-9]+;
 FLOAT: [0-9]+ '.' [0-9]+;
-FRACTION: INT '/' INT;
 BOOL: 'true' | 'false';
 
 // Misc

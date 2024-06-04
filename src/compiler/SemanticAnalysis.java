@@ -498,9 +498,7 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitPause(pdrawParser.PauseContext ctx) {
-    if (!visit(ctx.expression())) {
-      return false;
-    }
+    return visit(ctx.expression());
   }
 
   @Override
@@ -1312,6 +1310,24 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       return false;
     }
     return ctx.statement().stream().allMatch(this::visit);
+  }
+
+  @Override
+  public Boolean visitExprConditionNot(pdrawParser.ExprConditionNotContext ctx) {
+    if (!visit(ctx.expression())) {
+      return false;
+    }
+
+    if (!(ctx.expression().symbol.getType() instanceof BoolType)) {
+      ErrorHandling.printError(
+              ctx,
+              ctx.expression().getText() + " is not a bool"
+      );
+      return false;
+    }
+
+    ctx.symbol = new Symbol(new BoolType(), "!" + ctx.expression().getText());
+    return true;
   }
 
   @Override
