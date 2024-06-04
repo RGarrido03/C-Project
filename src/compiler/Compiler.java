@@ -363,10 +363,13 @@ public class Compiler extends pdrawBaseVisitor<ST> {
 
   @Override
   public ST visitExecute(pdrawParser.ExecuteContext ctx) {
-    ST res = pdrawTemplate.getInstanceOf("execute");
-    res.add("filename", visit(ctx.expression()));
-    res.add("pen", visit(ctx.variable()));
-    visitChildren(ctx);
+    ST res = pdrawTemplate.getInstanceOf("instructionPipeline");
+    for (pdrawParser.VariableContext variable : ctx.variable()) {
+      ST execute = pdrawTemplate.getInstanceOf("execute");
+      execute.add("filename", visit(ctx.expression()));
+      execute.add("pen", visit(variable));
+      res.add("statements", execute);
+    }
     return res;
   }
 

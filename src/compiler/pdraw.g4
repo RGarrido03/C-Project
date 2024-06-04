@@ -85,6 +85,4 @@ print:
 	(expression) '->' 'stdout'		# stdout
 	| (expression) '->' 'stderr'	# stderr;
 
-execute: variable '<-' 'execute' expression;
-
-// TODO: Refactor to expression TODO aqui vai surgir uma feature poder redirecionar para todo o lado
+execute: variable (',' variable)* '<-' 'execute' expression;

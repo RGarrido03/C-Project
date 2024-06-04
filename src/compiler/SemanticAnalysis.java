@@ -1,6 +1,8 @@
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Pattern;
+
+import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
 import types.*;
 
 @SuppressWarnings("CheckReturnValue")
@@ -534,26 +536,27 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitExecute(pdrawParser.ExecuteContext ctx) {
-    String var = ctx.variable().getText();
+    for (String var: ctx.variable().stream().map(RuleContext::getText).toList()) {
 
-    if (!symbolTable.containsKey(var)) {
-      ErrorHandling.printError(
-        ctx,
-        String.format("Variable %s not defined", var)
-      );
-      return false;
+      if (!symbolTable.containsKey(var)) {
+        ErrorHandling.printError(
+                ctx,
+                String.format("Variable %s not defined", var)
+        );
+        return false;
+      }
+
+      Type type = symbolTable.get(var).getType();
+      if (!(type instanceof PenTAD)) {
+        ErrorHandling.printError(
+                ctx,
+                String.format("Variable %s is not a pen", var)
+        );
+        return false;
+      }
     }
 
-    Type type = symbolTable.get(var).getType();
-    if (type instanceof PenTAD) {
-      return true;
-    }
-
-    ErrorHandling.printError(
-      ctx,
-      String.format("Variable %s is not a pen", var)
-    );
-    return false;
+    return true;
   }
 
   @Override
