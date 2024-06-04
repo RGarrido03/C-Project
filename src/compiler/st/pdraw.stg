@@ -63,6 +63,17 @@ constants(constName)::="math.<constName>"
 
 instruction(variable, action, value, fontsize) ::= "<variable>.<action>(<value><if(fontsize)>, <fontsize><endif>)"
 
+arrayAdd(variable,index,value)::="<variable>[<index>]=<value>"
+
+arrayRemove(variable,index)::="<variable>.pop(<index>)"
+
+array(variable,elements)::=<<
+<variable>=[<elements; separator=",">]
+>>
+
+arrayGetLength(variable)::="len(<variable>)"
+arrayGetArray(variable,index)::="<variable>[<index>]"
+
 instructionPipeline(statements) ::= <<
 <statements; separator="\n">
 >>

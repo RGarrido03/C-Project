@@ -12,7 +12,7 @@ import types.*;
 public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   private static final Set<String> htmlColorNames = new HashSet<>();
-  private static Map<String, Symbol> symbolTable = new HashMap<>();
+  private final Map<String, Symbol> symbolTable = new HashMap<>();
   private static final Pattern hexPattern = Pattern.compile("#[a-fA-F0-9]{6}");
   // function symbol table
   private final Map<String, Map<String, Symbol>> functionsTable = new HashMap<>();
