@@ -4,15 +4,14 @@ Cadeira: Compiladores
 
 Ano Letivo: 2023/2024
 
-Este projeto tem como objectivo construir uma linguagem de programação compilada, que crie programas em Python (linguagem escolhida). A ideia é parecida com a abstração usada na biblioteca turtle do Python. Desta forma, tem-se que seja possível executar desenhos 2D a partir de canetas.
-
-Com o ANTLR (ANother Tool for Language Recognition) atingimos este objetivo, um poderoso gerador para ler, processar, executar ou traduzir texto estruturado ou ficheiros binários. Foi usada a versão 4 do ANTLR na implementação do pdraw: [ANTLR4 (versão 4)](https://www.antlr.org/download.html).
-
-Para além desta poderosa ferramenta foi necessário o envolvimento com **StringTemplates** para a geração de código na linguagem destino (Python).
+O presente projeto tem como objetivo construir um compilador e um interpretador para a linguagem **PDraw** e **iPdraw**, respetivamente. A linguagem **PDraw** compila os programas **PDraw** para Python. O programa compilado pode eventualmente executar um _script_ **iPdraw** que será interpretado em tempo de execução.
+Ambas as linguagens permitem aos utilizadores a criação imagens e formas, proporcionando-lhes uma tela virtual. A linguagem segue a abstração da biblioteca python `turtle`.
 
 ---
 
-### Index
+## Index
+
+[Relatório - tema **PDraw**, grupo **pdraw-t02**](#relatório---tema-pdraw-grupo-pdraw-t02)
 
 - [Relatório - tema **PDraw**, grupo **pdraw-t02**](#relatório---tema-pdraw-grupo-pdraw-t02)
   - [Index](#index)
@@ -47,7 +46,7 @@ Para além desta poderosa ferramenta foi necessário o envolvimento com **String
 | 112974 | ANDRÉ PEDRO RIBEIRO            |     0.0%     |
 | 68264  | BRUNO RAFAEL DOS SANTOS LOPES  |     0.0%     |
 | 108712 | DIOGO ALEXANDRE MARQUES FALCÃO |     0.0%     |
-| 107927 | RUBEN TAVARES GARRIDO          |     0.0%     |
+| 107927 | RÚBEN TAVARES GARRIDO          |     0.0%     |
 | 113170 | VIOLETA BATISTA RAMOS          |     0.0%     |
 
 ## 2. Como executar
@@ -58,8 +57,9 @@ Dar permissão para executar o script _run.sh_ (executa antlr4-build,run,cria en
 chmod +x ./run.sh
 ./run.sh [options] <filename>
 ```
->[!Note]
->O script _run.sh_ foi criado para facilitar a compilação e execução do pdraw.
+
+> [!Note]
+> O script _run.sh_ foi criado para facilitar a compilação e execução do pdraw.
 
 ## 3. Estrutura
 
@@ -314,6 +314,7 @@ pen psec = new;
 | **orientation** | Ângulo em graus da orientação da caneta                       |
 | **thickness**   | Espessura da caneta                                           |
 | **pressure**    | Pressão com que a caneta está a ser usada (_up_, _down_)      |
+| **speed**       | Velocidade da caneta a desenhar                               |
 
 Podemos também adicionar/subtrair pontos à caneta (o que resulta na alteração da posição da caneta):
 
