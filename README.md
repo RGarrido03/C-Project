@@ -52,11 +52,11 @@ Ambas as linguagens permitem aos utilizadores a criação imagens e formas, prop
 
 |  NMec  | Nome                           | Participação |
 | :----: | :----------------------------- | :----------: |
-| 112974 | ANDRÉ PEDRO RIBEIRO            |     0.0%     |
-| 68264  | BRUNO RAFAEL DOS SANTOS LOPES  |     0.0%     |
-| 108712 | DIOGO ALEXANDRE MARQUES FALCÃO |     0.0%     |
-| 107927 | RÚBEN TAVARES GARRIDO          |     0.0%     |
-| 113170 | VIOLETA BATISTA RAMOS          |     0.0%     |
+| 112974 | ANDRÉ PEDRO RIBEIRO            |    28.8%     |
+| 68264  | BRUNO RAFAEL DOS SANTOS LOPES  |     6.8%     |
+| 108712 | DIOGO ALEXANDRE MARQUES FALCÃO |     6.8%     |
+| 107927 | RUBEN TAVARES GARRIDO          |    28.8%     |
+| 113170 | VIOLETA BATISTA RAMOS          |    28.8%     |
 
 ## 2. Como executar
 
@@ -575,5 +575,164 @@ examples
 
 ## 7. Contribuições
 
-Use esta secção para expôr as contribuições individuais dos vários elementos do grupo e que
-justificam as participações individuais globais apresentadas no início.
+<table>
+    <tr>
+        <th>Funcionalidade</th>
+        <th>Scope</th>
+        <th>Autor</th>
+    </tr>
+    <tr>
+        <td>Arrays</td>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Casts entre tipos de dados</td>
+        <td>Compilador</td>
+        <td>Diogo e Rúben</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Constants</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td>Escrita de texto no canvas</td>
+        <td>Compilador e Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td>Escrita de texto no stdout</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td>Executar interpretador</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td rowspan="2"><code>for</code> loop</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td>Funções</td>
+        <td>Compilador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td rowspan="2"><code>if</code> condition</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Increment / Decrement</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td>Instrução de pausa</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Leitura de texto do stdin</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Mudança de atributos de canetas</td>
+        <td>Compilador</td>
+        <td>Diogo</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Movimento de canetas</td>
+        <td>Compilador</td>
+        <td>Bruno</td>
+    </tr>
+    <tr>
+        <td>Compilador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Operações de relação e igualdade</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Pipelines de canetas</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td>Relatório</td>
+        <td>Outros</td>
+        <td>Todos</td>
+    </tr>
+    <tr>
+        <td>Script de execução</td>
+        <td>Outros</td>
+        <td>André e Rúben</td>
+    </tr>
+    <tr>
+        <td>Somar pontos a canetas</td>
+        <td>Compilador</td>
+        <td>André, Bruno e Violeta</td>
+    </tr>
+    <tr>
+        <td>Variáveis sem valor inicial</td>
+        <td>Compilador e Interpretador</td>
+        <td>André, Rúben e Violeta</td>
+    </tr>
+    <tr>
+        <td>Verificação semântica de tipos</td>
+        <td>Compilador e Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+    <tr>
+        <td rowspan="2"><code>while</code> & <code>until</code> loops</td>
+        <td>Compilador</td>
+        <td>Rúben</td>
+    </tr>
+    <tr>
+        <td>Interpretador</td>
+        <td>André e Violeta</td>
+    </tr>
+</table>
