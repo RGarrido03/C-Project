@@ -6,7 +6,7 @@ define pen penTypeGrossa {
 };
 
 define pen penTypeFina {
-    color= YELLOW;
+    color= #f0f0f0;
     position=(0,0);
     thickness= 5;
     orientation= 10 rad;
@@ -19,4 +19,4 @@ pen instanciaPenTypeFina = new penTypeFina;
 
 pen instanciaPenTypeGrossa2 = new penTypeGrossa;
 
-pen instanciaPenTypeFina2 = new penTypeFinatrsrs;
+%pen instanciaPenTypeFina2 = new penTypeFinatrsrs;

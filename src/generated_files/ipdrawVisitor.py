@@ -154,6 +154,11 @@ class ipdrawVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ipdrawParser#AssignmentVarNoValue.
+    def visitAssignmentVarNoValue(self, ctx:ipdrawParser.AssignmentVarNoValueContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ipdrawParser#ReAssignmentVar.
     def visitReAssignmentVar(self, ctx:ipdrawParser.ReAssignmentVarContext):
         return self.visitChildren(ctx)

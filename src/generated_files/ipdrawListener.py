@@ -269,6 +269,15 @@ class ipdrawListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ipdrawParser#AssignmentVarNoValue.
+    def enterAssignmentVarNoValue(self, ctx:ipdrawParser.AssignmentVarNoValueContext):
+        pass
+
+    # Exit a parse tree produced by ipdrawParser#AssignmentVarNoValue.
+    def exitAssignmentVarNoValue(self, ctx:ipdrawParser.AssignmentVarNoValueContext):
+        pass
+
+
     # Enter a parse tree produced by ipdrawParser#ReAssignmentVar.
     def enterReAssignmentVar(self, ctx:ipdrawParser.ReAssignmentVarContext):
         pass

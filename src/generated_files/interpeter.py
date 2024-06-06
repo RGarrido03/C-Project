@@ -355,6 +355,17 @@ class Interpreter(ipdrawVisitor):
 
 
         return None
+    def visitAssignmentVarNoValue(self, ctx: ipdrawParser.AssignmentVarNoValueContext):
+        tipo = ctx.Type().getText()
+        i = 0
+        
+        for i, var in enumerate(ctx.variable()):
+            value = parseType(tipo)()
+            print("PIXA", value)
+            self.symbols.add_variable(ctx,var.getText(), value, tipo)
+
+
+        return None
 
     def visitReAssignmentVar(self, ctx: ipdrawParser.ReAssignmentVarContext):
         var_name = ctx.variable().getText()

@@ -15,31 +15,40 @@ Ambas as linguagens permitem aos utilizadores a criação imagens e formas, prop
 
 - [Relatório - tema **PDraw**, grupo **pdraw-t02**](#relatório---tema-pdraw-grupo-pdraw-t02)
   - [Index](#index)
-  - [1. Constituição dos grupos e participação individual global](#1-constituição-dos-grupos-e-participação-individual-global)
+  - [1. Constituição do grupo e participação individual](#1-constituição-do-grupo-e-participação-individual)
   - [2. Como executar](#2-como-executar)
   - [3. Estrutura](#3-estrutura)
   - [4. Pdraw](#4-pdraw)
-  - [5. Gramática](#5-gramática)
-  - [6. Visitors](#6-visitors)
-    - [Exemplo - InstructionPenAction](#exemplo---instructionpenaction)
-  - [7. Variáveis, métodos, operadores e tipos de dados](#7-variáveis-métodos-operadores-e-tipos-de-dados)
-    - [Variáveis e métodos](#variáveis-e-métodos)
-    - [Operadores](#operadores)
-    - [Tipos de dados](#tipos-de-dados)
-  - [8. Caneta](#8-caneta)
-  - [9. Canvas](#9-canvas)
-  - [10. Setas de atributos](#10-setas-de-atributos)
-  - [11. Instruções condicionais e loops](#11-instruções-condicionais-e-loops)
-    - [If](#if)
-    - [For](#for)
-    - [While/Until](#whileuntil)
-  - [12. StringTemplates (ST)](#12-stringtemplates-st)
-  - [13. Exemplos](#13-exemplos)
-  - [14. Contribuições](#14-contribuições)
+    - [4.1. Gramática](#41-gramática)
+    - [4.2. Visitors](#42-visitors)
+      - [Exemplo - InstructionPenAction](#exemplo---instructionpenaction)
+    - [4.3. Variáveis, métodos, operadores e tipos de dados](#43-variáveis-métodos-operadores-e-tipos-de-dados)
+      - [Variáveis e métodos](#variáveis-e-métodos)
+      - [Operadores](#operadores)
+      - [Tipos de dados](#tipos-de-dados)
+    - [4.4 Caneta](#44-caneta)
+    - [4.5 Canvas](#45-canvas)
+    - [4.6 Setas de atributos](#46-setas-de-atributos)
+    - [4.7 Instruções condicionais e loops](#47-instruções-condicionais-e-loops)
+      - [If](#if)
+      - [For](#for)
+      - [While/Until](#whileuntil)
+      - [Pipeline de comandos](#pipeline-de-comandos)
+    - [4.8 StringTemplates (ST)](#48-stringtemplates-st)
+    - [4.9 Funções](#49-funções)
+    - [4.10 Pipeline de comandos](#410-pipeline-de-comandos)
+    - [4.11 Escrever texto no ecrã](#411-escrever-texto-no-ecrã)
+  - [5. iPdraw](#5-ipdraw)
+    - [5.1. Gramática](#51-gramática)
+    - [5.2. Visitors](#52-visitors)
+    - [5.3 Variáveis, Loops, Conditional Structures, Pipeline de comandos,Escrever texto no ecrã](#53-variáveis-loops-conditional-structures-pipeline-de-comandosescrever-texto-no-ecrã)
+    - [5.4 Arrays](#54-arrays)
+  - [6. Exemplos](#6-exemplos)
+  - [7. Contribuições](#7-contribuições)
 
 ---
 
-## 1. Constituição dos grupos e participação individual global
+## 1. Constituição do grupo e participação individual
 
 |  NMec  | Nome                           | Participação |
 | :----: | :----------------------------- | :----------: |
@@ -51,7 +60,7 @@ Ambas as linguagens permitem aos utilizadores a criação imagens e formas, prop
 
 ## 2. Como executar
 
-Dar permissão para executar o script _run.sh_ (executa antlr4-build,run,cria enviroment):
+Dar permissão para executar o script _run.sh_ (_workflow_: antlr4-build,run,cria enviroment):
 
 ```bash
 chmod +x ./run.sh
@@ -65,7 +74,7 @@ chmod +x ./run.sh
 
 Organização do repositório (diretórios):
 
-```
+```tree
 ├── doc
 ├── examples
 │   └── self_made
@@ -82,88 +91,86 @@ Organização do repositório (diretórios):
 - **scripts**: Scripts de apoio ao desenvolvimento
 - **src**: Código fonte do projeto
   - **compiler**: Código fonte do compilador
-    - **st**: Código fonte dos _StringTemplates_
+    - **st**: Código fonte dos templates _StringTemplate_
     - **types**: Código fonte dos tipos de dados
   - **generated_files**: Ficheiros gerados pelo ANTLR4
 
 ## 4. Pdraw
 
-A linguagem **PDraw** é uma linguagem de programação compilada que permite a criação de programas em Python. Permite aos utilizadores criar imagens e formas, proporcionando-lhes uma tela virtual.
+A linguagem **PDraw** é uma linguagem de programação compilada que compila programas para Python.
 
-Todas as instruções são executadas em relação a uma caneta que é configurada com várias variáveis. A caneta é movida para cima ou para baixo, permitindo ao utilizador desenhar formas e imagens no ecrã.
+Todas as instruções são executadas em relação a uma caneta que é configurada com várias variáveis. Permite ter várias canetas numa determinada janela. As canetas são movidas para cima ou para baixo (_'levantadas/colocadas do/no papel'_), rodadas (_clockwise ou anticlockwise_) e deslizadas para a esquerda ou direita permitindo ao utilizador desenhar formas e imagens no ecrã.
 
 Todas as instruções de atributos da caneta devem acabar com um ponto e vírgula e todas as linhas devem permitir a criação de comentários com o símbolo %.
 
-## 5. Gramática
+### 4.1. Gramática
 
-Em ANTLR4 ao definirmos uma gramática formula-se regras sintáticas(_parser_) e léxicas(_lexer_) gerando uma árvore sintática em que cada nó corresponde a um token. Neste projeto a gramática tem a seguinte estrutura.
+Em ANTLR4 ao definirmos uma gramática formulamos regras sintáticas(_parser_) e léxicas(_lexer_) gerando uma árvore sintática em que cada nó corresponde a um token. Neste projeto a gramática tem a seguinte estrutura.
 
 | Ficheiros       | Descricão                                                 |
 | --------------- | --------------------------------------------------------- |
 | **Elements.g4** | Definição de expressões aritmétricas e comandos da caneta |
-| **Class.g4**    | Criação e configuração de objetos de classes              |
+| **Class.g4**    | Criação e configuração de Canvas e Pens                   |
 | **pgdraw**      | Gramática Principal                                       |
 
-O _pgdraw.g4_ importa a _Elements.g4_ e _Class.g4_ para ter mais simplicidade e organização da gramática.
+O _pgdraw.g4_ importa a _Elements.g4_ e _Class.g4_ para ter maior abstração e uma melhor organização da gramática.
 
-## 6. Visitors
+### 4.2. Visitors
 
 Como já mencionado anteriormente, na árvore de análise sintática (_parse tree_) gerada pelo parser, pretendemos interagir com cada nó e é aqui que entra o **Visitor**.
 Com esta ferramenta podemos configurar com ações especifícas e personalizadas sobre a estrutura de objetos tornando o código mais modular, reutilizável e fácil manutenção.
 
 **Compiler** e **SemanticAnalysis** são os Visitors que foram implementados neste projeto.
 
-A seguir, demonstramos um exemplo do fluxo do projeto (caneta pode fazer **up** e **down**), passando pela gramática, depois pela análise semântica e acabando no compilador com o tipo String Template.
+A seguir, demonstramos um exemplo de fluxo do projeto (caneta pode fazer **up** e **down**), passando pela gramática, depois pela análise semântica e acabando no compilador com o tipo StringTemplate.
 
-### Exemplo - InstructionPenAction
+#### Exemplo - InstructionPenAction
 
 1. Gramática
 
 ```antlr4
 instruction:
 	variable (move | rotate | pause | write)+	# InstructionMoveRotateAction
-	| variable penAction						# InstructionPenAction
-	| variable '<-' arrowProps					# InstructionArrowProps;
+	| variable penAction						          # InstructionPenAction
+	| variable '<-' arrowProps					      # InstructionArrowProps;
 
 ```
 
 2. Análise semântica
 
 ```java
-  @Override
+@Override
   public Boolean visitInstructionPenAction(
     pdrawParser.InstructionPenActionContext ctx
   ) {
     String variable = ctx.variable().getText();
-    // if variable (pen) is not in the Symbol Table.
     if (!symbolTable.containsKey(variable)) {
+    // if variable (pen) is not in the Symbol Table.
       ErrorHandling.printError(
         ctx,
         String.format("Variable %s not defined", variable)
       );
       return false;
-    // variable is Type PEN. We only allow for the words "down" and "up". If so, the return value is true and it passes the semantic analysis.
-    } else {
-      Type type = symbolTable.get(variable).getType();
-      if (type instanceof PenTAD) {
-        Boolean penAction =
-          ctx.penAction().getText().equals("down") ||
-          ctx.penAction().getText().equals("up");
-        if (penAction) {
-          return true;
-        } else {
-          ErrorHandling.printError(ctx, "Instructions are not valid");
-          return false;
-        }
-      } else {
-        ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s is not a pen", variable)
-        );
-        return false;
-      }
     }
+    // variable is Type PEN. We only allow for the words "down" and "up". If so, the return value is true and it passes the semantic analysis.
+    Type type = symbolTable.get(variable).getType();
+    if (type instanceof PenTAD) {
+      Boolean penAction =
+        ctx.penAction().getText().equals("down") ||
+        ctx.penAction().getText().equals("up");
+      if (penAction) {
+        return true;
+      }
+      ErrorHandling.printError(ctx, "Instructions are not valid");
+      return false;
+    }
+    ErrorHandling.printError(
+      ctx,
+      String.format("Variable %s is not a pen", variable)
+    );
+    return false;
   }
+
 ```
 
 3. String template
@@ -187,13 +194,13 @@ instruction(variable, action, value, fontsize) ::= "<variable>.<action>(<value><
   }
 ```
 
-## 7. Variáveis, métodos, operadores e tipos de dados
+### 4.3. Variáveis, métodos, operadores e tipos de dados
 
-### Variáveis e métodos
+#### Variáveis e métodos
 
 As variáveis em **PDraw** são declaradas com o tipo de dados e o nome da variável. Atributos podem ser definidos para as variáveis e as Strings têm de ser concatenadas.
 
-```
+```matlab
 int add = 3 + 1;
 int sub = 3 - 1;
 int mul = 3 * 1;
@@ -201,24 +208,32 @@ real div = 3 / 1;
 int dre = 3 // 1;
 int pow = 3 ^ 2;
 int par = (3 + 2) * 4;
-string word = "Love" + "C";
+par = sub--;
+par = add++;
+mult++;
+string word = "Love" "C"; % Concatenation
+int i,x,t; % Default value
+int k=0, w=0;
+pen p = new PenType1;
 ```
 
 As variáveis também podem ser declaradas com input.
 
-```
-x = int(stdin "x: ");
-y = int(stdin "y: ");
+```matlab
+int x = int(stdin "x: ");
+int y = int(stdin "y: ");
+string w = stdin stdin "Choose your stdin name: ";
 ```
 
-Por último, podemos dar print a variáveis.
+Por último, podemos dar print de variáveis.
 
-```
+```c
 p2 -> stdout;
 "\n" -> stdout;
+"FALHOU" -> stderr;
 ```
 
-### Operadores
+#### Operadores
 
 | Operador | Descrição                          |
 | -------- | ---------------------------------- |
@@ -240,19 +255,18 @@ p2 -> stdout;
 | or       | Ou lógico                          |
 | up       | Levanta a caneta                   |
 | down     | Baixa a caneta                     |
-| pause    | Pausa o programa por milissegundos |
+| pause    | Pausa o programa por microsegundos |
 
 > [!NOTE]
-> A árvore sintática não está a fazer a verificação da precedência para o operador **and** e para o operador **or**, no entanto, inferimos as regras do python e por isso não criámos regras novas. Por isso, o **and** precede o **or**. No caso **==** (igual), criámos regras para que este tenha menor precedência do que as setas.
+> A árvore sintática não está a fazer a verificação da precedência para os operadores **and**, **or**, **\***, **^**,**/**,**//**, no entanto, inferimos as regras do python e por isso não criámos regras novas. Por isso, o **and** precede o **or**. No caso **==** (igual), criámos regras para que este tenha menor precedência do que as setas.
 
-### Tipos de dados
+#### Tipos de dados
 
 Tipos (**Type**):
 
 - **Angle**
 - **Bool**
 - **Canvas**
-- **Fraction**
 - **Function**
 - **Int**
 - **PenTAD**
@@ -277,7 +291,7 @@ r = real(1);
 r = real("1");
 ```
 
-## 8. Caneta
+### 4.4 Caneta
 
 Existem 2 formas de criar uma caneta em **PDraw**:
 
@@ -313,7 +327,7 @@ pen psec = new;
 | **position**    | Posição inicial representada por um ponto (tuplo)             |
 | **orientation** | Ângulo em graus da orientação da caneta                       |
 | **thickness**   | Espessura da caneta                                           |
-| **pressure**    | Pressão com que a caneta está a ser usada (_up_, _down_)      |
+| **pressure**    | Pressão com que a caneta está a ser usada                     |
 | **speed**       | Velocidade da caneta a desenhar                               |
 
 Podemos também adicionar/subtrair pontos à caneta (o que resulta na alteração da posição da caneta):
@@ -323,7 +337,7 @@ pen p1 = new PenType1;
 p1 = p1 + (5,5);
 ```
 
-## 9. Canvas
+### 4.5 Canvas
 
 A canvas é a tela virtual onde são desenhadas as figuras. Por predifinição, a canvas tem 500x500 de tamanho, sem nome e branco. Porém, pode ser alterada:
 
@@ -343,7 +357,7 @@ Podemos também definir qual a canvas ativa:
 set Canvas1;
 ```
 
-## 10. Setas de atributos
+### 4.6 Setas de atributos
 
 As setas de atributos são usadas quando queremos alterar um atributo de uma caneta. Por exemplo, se quisermos alterar a cor de uma caneta, podemos fazer:
 
@@ -355,13 +369,15 @@ Assim como se quisermos mudar a posição da caneta (tendo o x e y já anteriorm
 
 ```
 p1 <-position (x,y);
+p1 <-speed 100+x;
+
 ```
 
-## 11. Instruções condicionais e loops
+### 4.7 Instruções condicionais e loops
 
-### If
+#### If
 
-Para o **if**, tivemos que tomar em atenção as operações lógicas e aritméticas, assim como elifs e else.
+Para o **if**, tivemos que tomar em atenção as operações lógicas e aritméticas, assim como elifs e else, para além disso também tivemos em atenção o scope dos ifs, variáveis definidas no if só estão disponiveis no if.
 
 ```
 if (myStringVar == "Hello") {
@@ -373,30 +389,39 @@ if (myStringVar == "Hello") {
 };
 ```
 
-### For
+#### For
 
-Para o **for**, tivemos que tomar em atenção a inicialização, condição e incremento.
+Para o **for**, tivemos que tomar em atenção a inicialização, condição, incremento e scope.
 
 ```
-for (int i = 0; i < 5; i = i+1) {
+for (int i = 0; i < 5; i++) {
    i -> stdout;
 };
 ```
 
-### While/Until
+#### While/Until
 
 Exemplo de um **until**:
 
 ```
 until (done) {
    length = int(stdin "length: ");
-   angle = real(stdin "rotation angle (degrees): ") / 180;
+   angle = real(stdin "rotation angle (degrees): ") / 180 * PI;
    string t = stdin "finish (y/N)?: ";
    done = t;
 };
 ```
 
-## 12. StringTemplates (ST)
+#### Pipeline de comandos
+
+Exemplo de uma **Pipeline**:
+
+```matlab
+p1 forward 10 right 144º forward 10 right 144º;
+p1 forward 20 right 100º pause 1000 forward 10 pause 2000 right 144º;
+```
+
+### 4.8 StringTemplates (ST)
 
 Como StringTemplates divimos também em três secções para ser mais legível de leitura e compreensão.
 
@@ -436,11 +461,89 @@ tuple(e1, e2) ::= "(<e1>,<e2>)"
 
 A utilização destes templates vai permitir gerar código ou texto de saída durante a compilação.
 
-## 13. Exemplos
+### 4.9 Funções
 
-Como mencionado anteriormente o _p1.ipdraw_, _p1.pdraw_ , _p2.pdraw_, _p3.pdraw_, _p4.pdraw_ e exemplors criados personalizados para cada ocasião em qonde é testado cada operação para efeitos de de testes.
+As funções em **PDraw** são definidas com o tipo de retorno, o nome da função e os argumentos. A função tem de ser chamada com os argumentos necessários e com o tipo correto. Todas as variáveis definidas dentro da função são locais e não podem ser acedidas fora da função.
+
+Exemplo de uma função que desenha um círculo:
+
+```python
+def int recursiveWithPen(pen p, int i){
+    if (i < 100){
+        p left (360 / 100) deg;
+        p forward 10 * PI;
+        return recursiveWithPen(p,i+1);
+    };
+    return 0;
+};
+```
+
+### 4.10 Pipeline de comandos
+
+A pipeline de comandos é uma sequência de comandos que são executados em sequência. Cada comando é separado por um espaço.
+
+```matlab
+p1 forward 10 right 144º forward 10 right 144º;
+p1 forward 20 right 100º pause 1000 forward 10 pause 2000 right 144º;
+```
+
+### 4.11 Escrever texto no ecrã
+
+Para escrever texto no ecrã, usamos a função **write**. Esta função recebe uma string e escreve-a no ecrã.
+
+```matlab
+pen p1 = new PenType1;
+p1 down;
+% pen write texto, fontsize;
+p1 write "ola", 30;
+```
+
+## 5. iPdraw
+
+A linguagem **iPdraw** é uma linguagem de programação interpretada que executa programas **iPdraw**. A linguagem **iPdraw** permite todas as operações que a linguagem **PDraw** permite (com exceção de funções) com a adição de manipulação de arrays, no entanto, apenas permite a execução de comandos para uma Pen.
+
+### 5.1. Gramática
+
+A gramática do **iPdraw** é muito semelhante à gramática do **PDraw**. No entanto, a gramática do **iPdraw** é mais simples e não permite a definição de funções e permite a criação/manipulação de arrays.
+
+### 5.2. Visitors
+
+O visitor `interpreter.py` é responsável por interpretar o código **iPdraw** e fazer a verificação semântica comando a comando que é feita em execution time.
+
+### 5.3 Variáveis, Loops, Conditional Structures, Pipeline de comandos,Escrever texto no ecrã
+
+Todas as estruturas desta secção são declaradas exatamente da mesma forma que em **PDraw**.
+
+### 5.4 Arrays
+
+A linguagem **iPdraw** permite a criação e manipulação de arrays.
+
+```c
+int arr =[10,20, 30,40,50,60,70,80,90,100,110,120,140];
+
+arr[0]=20;
+arr[10]=30;
+
+arr[0] -> stdout;
+len arr -> stdout;
+del arr[1];
+len arr -> stdout;
+
+int j;
+
+while (j lt len arr){
+    arr[j] -> stdout;
+    j++;
+};
+
+```
+
+## 6. Exemplos
+
+Como mencionado anteriormente o _p1.ipdraw_, _p1.pdraw_ , _p2.pdraw_, _p3.pdraw_, _p4.pdraw_ e exemplos criados personalizados para cada ocasião onde é testada cada operação para efeitos de testes. Os exemplos criados por nós estão na pasta `self_made`
 
 ```bash
+examples
 ├── p1.ipdraw
 ├── p1.pdraw
 ├── p2.pdraw
@@ -470,7 +573,7 @@ Como mencionado anteriormente o _p1.ipdraw_, _p1.pdraw_ , _p2.pdraw_, _p3.pdraw_
     └── test_write.pdraw
 ```
 
-## 14. Contribuições
+## 7. Contribuições
 
 Use esta secção para expôr as contribuições individuais dos vários elementos do grupo e que
 justificam as participações individuais globais apresentadas no início.

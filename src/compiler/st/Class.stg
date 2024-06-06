@@ -3,8 +3,8 @@ group Class;
 createPenClass(className, classProps) ::= <<
 class <className>(Pen):
     def __init__(self) -> None:
-        super().__init__()
         <classProps; separator="\n">
+        super().__init__()
 >>
 
 classProps(prop, expression) ::= "self.<prop> = <expression>"

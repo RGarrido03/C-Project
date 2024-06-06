@@ -131,6 +131,7 @@ execute(filename, pen) ::= "execute(<filename>, <pen>)"
 functionDefinition(name, args, statements, returnType) ::= <<
 def <name>(<args>)-><returnType>:
     <statements; separator="\n">
+    return <returnType>()
 >>
 
 functionCall(name, args) ::= "<name>(<args>)"

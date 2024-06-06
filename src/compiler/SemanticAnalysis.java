@@ -1,6 +1,5 @@
 import java.util.*;
 import java.util.regex.Pattern;
-
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import types.*;
@@ -292,26 +291,23 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
         String.format("Variable %s not defined", variable)
       );
       return false;
-    } else {
-      Type type = symbolTable.get(variable).getType();
-      if (type instanceof PenTAD) {
-        Boolean penAction =
-          ctx.penAction().getText().equals("down") ||
-          ctx.penAction().getText().equals("up");
-        if (penAction) {
-          return true;
-        } else {
-          ErrorHandling.printError(ctx, "Instructions are not valid");
-          return false;
-        }
-      } else {
-        ErrorHandling.printError(
-          ctx,
-          String.format("Variable %s is not a pen", variable)
-        );
-        return false;
-      }
     }
+    Type type = symbolTable.get(variable).getType();
+    if (type instanceof PenTAD) {
+      Boolean penAction =
+        ctx.penAction().getText().equals("down") ||
+        ctx.penAction().getText().equals("up");
+      if (penAction) {
+        return true;
+      }
+      ErrorHandling.printError(ctx, "Instructions are not valid");
+      return false;
+    }
+    ErrorHandling.printError(
+      ctx,
+      String.format("Variable %s is not a pen", variable)
+    );
+    return false;
   }
 
   @Override
@@ -536,12 +532,15 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
 
   @Override
   public Boolean visitExecute(pdrawParser.ExecuteContext ctx) {
-    for (String var: ctx.variable().stream().map(RuleContext::getText).toList()) {
-
+    for (String var : ctx
+      .variable()
+      .stream()
+      .map(RuleContext::getText)
+      .toList()) {
       if (!symbolTable.containsKey(var)) {
         ErrorHandling.printError(
-                ctx,
-                String.format("Variable %s not defined", var)
+          ctx,
+          String.format("Variable %s not defined", var)
         );
         return false;
       }
@@ -549,8 +548,8 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
       Type type = symbolTable.get(var).getType();
       if (!(type instanceof PenTAD)) {
         ErrorHandling.printError(
-                ctx,
-                String.format("Variable %s is not a pen", var)
+          ctx,
+          String.format("Variable %s is not a pen", var)
         );
         return false;
       }
@@ -952,7 +951,11 @@ public class SemanticAnalysis extends pdrawBaseVisitor<Boolean> {
   @Override
   public Boolean visitExprString(pdrawParser.ExprStringContext ctx) {
     Boolean res = true;
-    Optional<String> x = ctx.STRING().stream().map(ParseTree::getText).reduce((a, b) -> a + b);
+    Optional<String> x = ctx
+      .STRING()
+      .stream()
+      .map(ParseTree::getText)
+      .reduce((a, b) -> a + b);
     ctx.symbol = new Symbol(new StringType(), x.orElse(""));
     return res;
   }

@@ -8,7 +8,6 @@ statement: (
 		instruction+
 		| assignment
 		| ifStatement
-		// | execute
 		| whileLoop
 		| forLoop
 		| print
@@ -73,6 +72,7 @@ instruction:
 // Define assignments and reassignments
 assignment:
 	Type variable '=' expression (',' variable '=' expression)?	# AssignmentVar
+	| Type variable+											# AssignmentVarNoValue
 	| variable '=' expression									# ReAssignmentVar;
 
 // Define standard input
